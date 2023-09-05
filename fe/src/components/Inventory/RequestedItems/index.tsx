@@ -1,23 +1,55 @@
-import { useEffect, useState } from "react";
-import { IUser } from "../../../types/User"
+import React, { useEffect, useState } from "react";
+import { IRequest, IUser } from "../../../types/User";
 import axios from "axios";
+import { Zoom,Fade } from "react-reveal";
 
-const RequestedItems:React.FC<IUser> =({userName,role})=>{
-    const[requests,setRequests] = useState()
+const RequestedItems: React.FC<IUser> = ({userName,role}) => {
+  const [requests, setRequests] = useState<IRequest[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        axios.get('http://localhost:7000/api/user/requests/list')
-       .then(response => {
-           console.log(response.data)
-         setRequests(response.data);
-       })
-       .catch(error => {
-         console.error('Error:', error);
-       });
-     }, []);
-     console.log(requests,userName,role)
-    return<></>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:7000/api/list-requested-item');
+        console.log(response.data);
+        setRequests(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
 
-}
+    fetchData(); // Call fetchData when the component mounts
 
-export default RequestedItems
+  }, []);
+
+  console.log(requests);
+
+  return (
+    <div>
+      {!loading ? (
+        requests.map((item, idx) => (
+          <div>
+            {(role==='ADMIN')?<Fade up>
+            <div key={idx} className={`flex justify-between items-center py-1`}>
+              <div className="flex-1">{item.name}</div>
+              <div className="flex-1">{item.userName}</div>
+            </div>
+            </Fade>
+            :
+            <Zoom>
+            <div key={idx} className={`flex justify-between items-center py-1 ${item.userName.toLowerCase().includes(userName)?"solid":"hidden"}`}>
+              <div className="flex-1">{item.name}</div>
+            </div>
+            </Zoom>
+            }
+          </div>
+        ))
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
+};
+
+export default RequestedItems;

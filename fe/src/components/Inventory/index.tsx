@@ -18,18 +18,22 @@ const ProtectedRoute = () => {
   }
 
   useEffect(() => {
-     axios.post('http://localhost:7000/api/user/auth',{}, {
-      headers: {
-        Authorization: `${(localStorage.getItem('token'))}`,
-      },
-    })
-    .then(response => {
-        console.log(response.data)
-      setData(response.data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+    const fetchdata = async()=>{
+      await axios.post('http://localhost:7000/api/user/auth',{}, {
+        headers: {
+          Authorization: `${(localStorage.getItem('token'))}`,
+        },
+      })
+      .then(response => {
+          console.log(response.data)
+        setData(response.data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+    fetchdata()
+
   }, [field,showAddItem]);
 
 
@@ -71,7 +75,7 @@ const ProtectedRoute = () => {
           </div>          
         </div>
 
-        {((field=='requested'&& showAddItem==false)?<>
+        {((field=='requested'&& showAddItem==false && data)?<>
         <div className='bg-[#232323] py-2 px-3 text-[#c3c3c4] rounded-b-md rounded-r-md'>
           {/* {requestedItem && JSON.parse(requestedItem).map((item:string,idx:number)=>{return<div key={idx}>{item}</div>})} */}
           <RequestedItems {...data}/>

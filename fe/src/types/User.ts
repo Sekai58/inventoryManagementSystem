@@ -9,3 +9,8 @@ export interface IItems{
     reserved:number,
     price:number
 }
+
+export interface IRequest{
+    userName:string,
+    name:string
+}
