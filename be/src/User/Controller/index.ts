@@ -78,3 +78,14 @@ export const requestItem = async (req:Request,res:Response,next:NextFunction)=>{
         //res.status(500).json(e)
     }
 }
+
+export const listRequestedItem = async (req:Request,res:Response,next:NextFunction)=>{
+    try{
+        res.status(201).json(await UserService.listRequestedItem())
+    }
+    catch(e){
+        console.log(e)
+       next(e)
+        //res.status(500).json(e)
+    }
+}

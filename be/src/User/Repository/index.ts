@@ -121,3 +121,16 @@ export const requestItem= async(item:any)=>{
         throw e
     }
 }
+
+export const listRequestedItem= async()=>{
+    try{
+        const inventory = database.collection('requests')
+        const items = await inventory.find({}).toArray()
+        console.log(items)
+        return items
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}

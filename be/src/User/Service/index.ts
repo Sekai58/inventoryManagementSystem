@@ -137,3 +137,13 @@ export const requestItem = (item:any)=>{
         throw e
     }
 }
+
+export const listRequestedItem = ()=>{
+    try{
+        return UserRepository.listRequestedItem()
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}

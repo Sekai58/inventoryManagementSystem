@@ -7,6 +7,7 @@ import {verifyJwt} from "./Middleware";
 const router = Router();
 
 const routes = () => {
+    router.get("/list-requested-item",UserController.listRequestedItem)
     router.post("/user/register",UserController.registerUser)
     router.post("/user/login",UserController.loginUser)
     router.post("/user/auth",verifyJwt,UserController.authUser)
