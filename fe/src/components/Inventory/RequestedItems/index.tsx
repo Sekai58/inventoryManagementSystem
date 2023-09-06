@@ -19,7 +19,7 @@ const RequestedItems: React.FC<IUser> = ({userName,role}) => {
       }
     };
 
-    fetchData(); // Call fetchData when the component mounts
+    fetchData();
 
   }, []);
 
@@ -30,14 +30,14 @@ const RequestedItems: React.FC<IUser> = ({userName,role}) => {
       {!loading ? (
         requests.map((item, idx) => (
           <div>
-            {(role==='ADMIN')?<Fade up>
+            {(role==='ADMIN')?<Fade right delay={500}>
             <div key={idx} className={`flex justify-between items-center py-1`}>
               <div className="flex-1">{item.name}</div>
               <div className="flex-1">{item.userName}</div>
             </div>
             </Fade>
             :
-            <Zoom>
+            <Zoom delay={600}>
             <div key={idx} className={`flex justify-between items-center py-1 ${item.userName.toLowerCase().includes(userName)?"solid":"hidden"}`}>
               <div className="flex-1">{item.name}</div>
             </div>

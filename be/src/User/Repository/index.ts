@@ -2,6 +2,8 @@ import { ObjectId } from "mongodb";
 import {IItem, IUser } from "./User.types"
 const { MongoClient } = require("mongodb");
 const jwt = require("jsonwebtoken")
+const bcrypt = require('bcrypt');
+
 //connection to database
 
 // const uri = "mongodb+srv://fellow:yvq1V3UUdLwvlaEz@webdevelopment.tuy8pst.mongodb.net/";
@@ -12,8 +14,10 @@ const database = client.db('webdevelopment')
 export const registerUser = async(user:Partial<IUser>)=>{
     try{
         const users = database.collection('users')
-        const insertedUser = await users.insertOne(user)
-        return (JSON.stringify(insertedUser))
+        user.password = await bcrypt.hash(user.password, 10)
+        const newUser = {...user,role:'USER'}
+        const insertedUser = await users.insertOne(newUser)
+        return "User successfully inserted"
     }
     catch(e){
         throw e

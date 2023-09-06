@@ -1,5 +1,7 @@
 import * as UserRepository from '../Repository'
 import { IItem, IUser } from '../Repository/User.types'
+const bcrypt = require('bcrypt');
+
 //business logic
 
 const jwt = require("jsonwebtoken")
@@ -21,7 +23,7 @@ export const loginUser = async (user:Partial<IUser>)=>{
     try{
         const data = await UserRepository.loginUser(user)
         console.log("At service",data)
-        if(data && user.password===data.password){
+        if(data && await bcrypt.compare(user.password, data.password)){
             const user = {"userName":data.userName,"role":data.role}
             const token = jwt.sign(user,process.env.SECRET_KEY)
             console.log("this is token",token,{"userName":data.userName})
