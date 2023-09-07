@@ -77,64 +77,65 @@ export const authReset= async(user:Partial<IUser>,decoded:any)=>{
     }
 }
 
-export const addItem= async(item:IItem)=>{
-    try{
-        const inventory = database.collection('inventory')
-        const updateUser = await inventory.insertOne(item)
-        console.log("item inserted",updateUser.insertedId)
-        return updateUser
-    }
-    catch(e){
-        throw e
-        return e
-    }
-}
+// export const addItem= async(item:IItem)=>{
+//     try{
+//         const inventory = database.collection('inventory')
+//         const newItem = {...item,reserved:0}
+//         const updateItem = await inventory.insertOne(newItem)
+//         console.log("item inserted",updateItem.insertedId)
+//         return updateItem
+//     }
+//     catch(e){
+//         throw e
+//         return e
+//     }
+// }
 
-export const listItems= async()=>{
-    try{
-        const inventory = database.collection('inventory')
-        const items = await inventory.find({}).toArray()
-        console.log(items)
-        return items
-    }
-    catch(e){
-        console.log(e)
-        throw e
-        return e
-    }
-}
+// export const listItems= async()=>{
+//     try{
+//         const inventory = database.collection('inventory')
+//         const items = await inventory.find({}).toArray()
+//         //console.log(items)
+//         return items
+//     }
+//     catch(e){
+//         console.log(e)
+//         throw e
+//         return e
+//     }
+// }
 
-export const requestItem= async(item:any)=>{
-    try{
-        const inventory = database.collection('requests')
-        const checkRequest = await inventory.findOne(item)
-        if(checkRequest){
-            const err = new Error
-            err.message = "Already requested"
-            err.name = '403'
-            throw err
-        }
-        else{
-            const updateUser = await inventory.insertOne(item)
-            console.log("item inserted",updateUser.insertedId)
-            return updateUser
-        } 
-    }
-    catch(e){
-        console.log(e)
-        throw e
-    }
-}
+// export const requestItem= async(item:any)=>{
+//     try{
+//         const inventory = database.collection('requests')
+//         const checkRequest = await inventory.findOne(item)
+//         if(checkRequest){
+//             const err = new Error
+//             err.message = "Already requested"
+//             err.name = '403'
+//             throw err
+//         }
+//         else{
+//             const updateUser = await inventory.insertOne(item)
+//             console.log("item inserted",updateUser.insertedId)
+//             return updateUser
+//         } 
+//     }
+//     catch(e){
+//         console.log(e)
+//         throw e
+//     }
+// }
 
-export const listRequestedItem= async()=>{
-    try{
-        const inventory = database.collection('requests')
-        const items = await inventory.find({}).toArray()
-        console.log(items)
-        return items
-    }
-    catch(e){
-        console.log(e)
-        throw e
-    }
-}
+// export const listRequestedItem= async()=>{
+//     try{
+//         const inventory = database.collection('requests')
+//         const items = await inventory.find({}).toArray()
+//         console.log(items)
+//         return items
+//     }
+//     catch(e){
+//         console.log(e)
+//         throw e
+//     }
+// }

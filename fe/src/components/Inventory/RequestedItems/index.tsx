@@ -27,13 +27,18 @@ const RequestedItems: React.FC<IUser> = ({userName,role}) => {
 
   return (
     <div>
+      <div className="flex justify-between items-center py-1">
+        <div className="flex-1">User</div>
+        <div className="flex-1">Item</div>
+      </div>
+      <div className="h-[0.8px] bg-gradient-to-r to-[#343434] via-[#7878bc] from-[#343434] mb-3"></div> 
       {!loading ? (
         requests.map((item, idx) => (
-          <div>
+          <div key={idx}>
             {(role==='ADMIN')?<Fade right delay={500}>
             <div key={idx} className={`flex justify-between items-center py-1`}>
-              <div className="flex-1">{item.name}</div>
               <div className="flex-1">{item.userName}</div>
+              <div className="flex-1">{item.name}</div>
             </div>
             </Fade>
             :
@@ -43,6 +48,7 @@ const RequestedItems: React.FC<IUser> = ({userName,role}) => {
             </div>
             </Zoom>
             }
+              <div className="h-[0.8px] bg-[#444444]"></div>  
           </div>
         ))
       ) : (

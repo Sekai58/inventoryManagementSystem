@@ -1,6 +1,7 @@
 import axios from "axios";
 import { IItems } from "../../../types/User";
 import {useEffect, useState} from 'react'
+import {Fade} from 'react-reveal'
 
 const InventoryItemsAdmin = (props:any) => {
   const [items,setItems] = useState<IItems[]>([])
@@ -21,10 +22,12 @@ const InventoryItemsAdmin = (props:any) => {
   // }
   return (
   <div className="">
-    {items.map((item,idx)=>{return<div><div key={idx} className={`flex justify-between items-center py-1 ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}`}>
+    {items.map((item,idx)=>{return<div key={idx}><div className={`flex justify-between items-center py-1 ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}`}>
+    <Fade right>
     <div className="flex-1">{item.name}</div>
     <div className="flex-1">{item.available}</div>
-    <div className="flex-1">0</div>
+    <div className="flex-1">{item.reserved}</div>
+    </Fade>
     {/* <div className="flex-1">{item.price}</div> */}
     {/* <div className="flex-1"><button className="px-2 py-1 bg-[#7878bc] rounded-full" onClick={()=>handleClick(idx)}>Approve</button></div> */}
     {/* <div  className="flex-1"><button className="px-2 py-1 bg-[#7878bc] rounded-full">View Details</button></div> */}

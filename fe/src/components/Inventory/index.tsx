@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IUser } from '../../types/User';
 import {Zoom} from 'react-reveal'
+import { io } from 'socket.io-client';
+
 import InventoryItemsUser from '../InventoryItems/User';
 import InventoryItemsAdmin from '../InventoryItems/Admin';
 import AddItemModal from '../Model';
@@ -12,10 +14,33 @@ const ProtectedRoute = () => {
   const [field,setField] = useState('allitems')
   const [query,setQuery] = useState('')
   const [showAddItem,setShowAddItem] = useState(false)
+  const [socket,setSocket] = useState<any>(null)
+  const [notification,setNotification] = useState('')
+  const [showNotification,setShowNotification] = useState(true)
 
   const handleClose = (close:boolean)=>{
     setShowAddItem(!close)
   }
+
+  useEffect(()=>{
+    const socket = io('http://localhost:7000')
+    setSocket(socket)
+    console.log(socket)
+
+    socket?.emit('fromclient', 'Hello from the client!');
+
+    socket?.on('fromserver', (message:any) => {
+      console.log('Received message from server:', message);
+    });
+  },[])
+
+  useEffect(()=>{
+    socket?.on('getMessage',(message:any)=>{console.log("notification from user",message)
+    setNotification(message)
+    localStorage.setItem("count",JSON.stringify(1))
+  })
+    
+  })
 
   useEffect(() => {
     const fetchdata = async()=>{
@@ -50,7 +75,10 @@ const ProtectedRoute = () => {
             <input type="text" className="pl-7 h-8 w-56 bg-transparent text-[#929191] rounded-full transition-all duration-300 ease-in-out focus:w-80 focus:border-2 focus:border-[#7878bc]" onChange={(e)=>setQuery(e.target.value)}/>
           </div>
           <div className='flex gap-3'>
-            <i className="fa-regular fa-bell text-[#7878bc] text-2xl"></i>
+            <div className='relative'>
+            <button><i className="fa-regular fa-bell text-[#7878bc] text-2xl" onClick={()=>setShowNotification(!notification)}></i></button>
+            <div className={`${(data.role=='ADMIN' && showNotification==true)?'solid':'hidden'} absolute top-7 right-0 text-white`}>{notification}</div>
+            </div>
             <select className='border-x-2 border-y-0 border-[#555555] rounded-full text-[#7878bc] bg-transparent' defaultValue='Sekai'>
               <option className='text-[#c4c3c3] border-2 border-slate-500 bg-slate-700'>@{data.userName}</option>
               <option disabled className='text-[#c4c3c3] border-2 border-slate-500 bg-slate-700'>role:{data.role}</option>
@@ -71,13 +99,12 @@ const ProtectedRoute = () => {
             <button className={`px-3 py-1 rounded-t-md ${(field=='requested')?'bg-[#232323]':'bg-[#24243b]'}`} onClick={()=>{setField("requested")}}>Requested</button>
           </div>
           <div className={`${data.role==='ADMIN'?'solid':'hidden'}`}>
-            <button className='px-2 py-1 border-2 rounded-sm border-[#7878bc]' onClick={()=>setShowAddItem(true)}>Add item</button>
+            <button className='px-2 py-1 border-2 rounded-md text-[#ffffff] border-[#7878bc] hover:scale-105 hover:bg-[#7878bc]' onClick={()=>setShowAddItem(true)}><span className='text-red-500'>&#10006;</span>Add Item</button>
           </div>          
         </div>
 
         {((field=='requested'&& showAddItem==false && data)?<>
         <div className='bg-[#232323] py-2 px-3 text-[#c3c3c4] rounded-b-md rounded-r-md'>
-          {/* {requestedItem && JSON.parse(requestedItem).map((item:string,idx:number)=>{return<div key={idx}>{item}</div>})} */}
           <RequestedItems {...data}/>
         </div>
         </>
@@ -96,7 +123,7 @@ const ProtectedRoute = () => {
             
             </div>
             <div className="h-[0.8px] bg-gradient-to-r to-[#343434] via-[#7878bc] from-[#343434] mb-3"></div> 
-            {(data.role=='ADMIN')?<InventoryItemsAdmin query={query}/>:<InventoryItemsUser query={query} user={data.userName} /> } 
+            {(data.role=='ADMIN')?<InventoryItemsAdmin query={query} socket={socket}/>:<InventoryItemsUser query={query} user={data.userName} socket={socket} /> } 
                
           </div>
         </>

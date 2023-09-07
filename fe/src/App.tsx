@@ -30,8 +30,8 @@ function App() {
         <Routes>
           <Route path="/register/*" element={<Forms/>}></Route>
           <Route path="/login/*" element={isAuthenticated ? <Navigate to="/auth" /> : <Login />} />
-          {/* <Route path="/auth/*" element={isAuthenticated ? <ProtectedRoute /> : <Navigate to="/login" />} /> */}
-          <Route path="/auth" element={<ProtectedRoute/>}/>
+          <Route path="/auth/*" element={isAuthenticated ? <ProtectedRoute /> : <Navigate to="/login" />} />
+          {/* <Route path="/auth" element={<ProtectedRoute/>}/> */}
           <Route path="/logout" element={<Navigate to='/login' replace />} />
           <Route path="/forgetpassword" element={<ForgetPassword />} />
           <Route path="/resetpassword" element={<ResetPassword/>} />
