@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import * as UserService from '../Service';
 //return only status
 
-
 export const loginUser = async (req:Request,res:Response,next:NextFunction)=>{
     try{
         res.status(201).json(await UserService.loginUser(req.body))
@@ -19,7 +18,6 @@ export const registerUser = async (req:Request,res:Response,next:NextFunction)=>
     }
     catch(e){
         next(e)
-        //res.status(500).json(e)
     }
 }
 

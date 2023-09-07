@@ -23,6 +23,7 @@ const InventoryItemsUser = (props:any) => {
 
   const handleRequest =(name:string)=>{
     setRequest(name)
+    console.log(request)
     axios.post('http://localhost:7000/api/user/requests',{"name":name,"userName":props.user})
     .then(response => {
         console.log(response.data)

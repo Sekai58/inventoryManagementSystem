@@ -1,5 +1,5 @@
 import * as UserRepository from '../Repository'
-import { IItem, IUser } from '../Repository/User.types'
+import { IUser } from '../Repository/User.types'
 const bcrypt = require('bcrypt');
 
 //business logic

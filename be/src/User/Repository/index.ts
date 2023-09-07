@@ -1,11 +1,10 @@
 import { ObjectId } from "mongodb";
-import {IItem, IUser } from "./User.types"
+import {IUser } from "./User.types"
 const { MongoClient } = require("mongodb");
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcrypt');
 
 //connection to database
-
 // const uri = "mongodb+srv://fellow:yvq1V3UUdLwvlaEz@webdevelopment.tuy8pst.mongodb.net/";
 const uri ="mongodb+srv://sekai:pkQPAJ6iYRtXODVZ@cluster0.n4wsw5o.mongodb.net/";
 const client = new MongoClient(uri);
@@ -67,9 +66,6 @@ export const authReset= async(user:Partial<IUser>,decoded:any)=>{
         const users = database.collection('users')
         const updateUser = await users.updateOne({"email":decoded.email},{"$set": { "password":user.password }})
         console.log("finding email from decoded value",decoded)
-        // const data = await users.findOne({"email":decoded.email})
-        // console.log("At repo",data)
-        // console.log(decoded)
         return "Password updated"
     }
     catch(e){
