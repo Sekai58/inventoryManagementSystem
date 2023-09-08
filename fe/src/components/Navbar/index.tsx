@@ -1,5 +1,7 @@
 import {useState,useEffect} from 'react'
-import Zoom from 'react-reveal/Zoom'
+import {Zoom} from 'react-reveal'
+// import { Link } from 'react-router-dom'
+
 const Navbar = () => {
   const [isAuthenticated,setIsAuthenticated] = useState(false)
   const [isClicked,setIsClicked] = useState('inventory')
@@ -30,10 +32,12 @@ const Navbar = () => {
         </div>
         <Zoom>
         <div className='flex'>
+          <a href='/'>
           <button className={`flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(isClicked=='home')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`} onClick={()=>setIsClicked('home')}>
             <i className="fa-regular fa-snowflake"></i>
             <span className=' text-[#ababab]'>Home</span>
           </button>
+          </a>
           <button className={`flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(isClicked=='about')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`} onClick={()=>setIsClicked('about')}>
             <i className="fa-regular fa-snowflake"></i>
             <span className=' text-[#ababab]'>About</span>

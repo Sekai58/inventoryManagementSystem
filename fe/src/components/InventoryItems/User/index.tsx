@@ -3,6 +3,7 @@ import { IItems } from "../../../types/User";
 import {useEffect, useState} from 'react'
 import { toast } from "react-toastify";
 import { io } from 'socket.io-client';
+import img from '../../../assets/images/laptop.png'
 
 
 const InventoryItemsUser = (props:any) => {
@@ -27,7 +28,7 @@ const InventoryItemsUser = (props:any) => {
     axios.post('http://localhost:7000/api/user/requests',{"name":name,"userName":props.user})
     .then(response => {
         console.log(response.data)
-        toast.success("Item successfully requested")
+        toast.success("Item successfully requested",{theme:"dark"})
           const socket = io('http://localhost:7000')
           console.log(socket)
           const notify:string = `${props.user} requested ${name}`
@@ -36,14 +37,15 @@ const InventoryItemsUser = (props:any) => {
     })
     .catch(error => {
       console.error('Error:', error);
-      toast.error("Item already requested")
+      toast.error("Item already requested",{theme:"dark"})
     });
   }
 
   return (
   <div className="">
     {items.map((item,idx)=>{return<div key={idx}>
-      <div className={`flex justify-between items-center py-1 ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}`}>
+      <div className={`flex justify-between items-center py-3 ${(item.name.toLowerCase().includes(props.query.toLowerCase()))?"solid":"hidden"}`}>
+        <img src={img} className="h-8 w-10 mr-2"/>
         <div className="flex-1">{item.name}</div>
         <div className="flex-1">{item.available}</div>
         <div className="flex-1">0</div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import Fade from 'react-reveal/Fade';
+import {Fade} from 'react-reveal';
 
 type Inputs = {
   firstName:string,
@@ -28,11 +28,11 @@ const Forms=()=> {
     axios.post("http://localhost:7000/api/user/register",data)
     .then(res=>{
       console.log(res.data)
-      toast.success(res.data);
+      toast.success(res.data,{theme:"dark"});
       navigate('/login')
     })
     .catch(error=>{console.log(error)
-    toast.error("Unauthoried")})
+    toast.error("User already exists",{theme:"dark"})})
     console.log(JSON.stringify(data))
     reset();
   }

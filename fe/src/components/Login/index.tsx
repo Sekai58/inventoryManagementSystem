@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState,useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import {Navigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {Fade} from 'react-reveal'
 import LoadingBar from 'react-top-loading-bar';
@@ -31,7 +31,7 @@ const Login: React.FC = () => {
     formState: { errors },
   } = useForm<LoginFormInput>();
 
-  //const navigate = useNavigate()
+  const navigate = useNavigate()
   const [progress,setProgress] =useState(0)
 
   const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
@@ -39,13 +39,13 @@ const Login: React.FC = () => {
     await axios.post("http://localhost:7000/api/user/login",data)
     .then(res=>{console.log(res.data.token)
       localStorage.setItem("token",res.data.token)
-      toast.success("Success")
+      toast.success("Login Success",{theme:"dark"})
       setIsAuthenticated(true)
-      //navigate('/auth')
+      navigate('/auth')
       window.location.reload();
     })
     .catch(error=>{console.log(error)
-    toast.error(error.message)})
+    toast.error("User not found",{theme:"dark"})})
     console.log(data);
     setProgress(100)
     reset();
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
     <>
       {/* <div className="fixed top-30 right-0 "> <ToastContainer position="bottom-right" className=""/></div> */}
     <LoadingBar color="#7878bc"  progress={progress} onLoaderFinished={() => setProgress(0)} />
-    {(isAuthenticated==false)?
+    {/* {(isAuthenticated==false)? */}
     <Fade top>
     {/* <div className="fixed top-0 left-0 min-h-screen w-full bg-black bg-opacity-50 z-5"></div> */}
       <div className="flex justify-center items-center h-full w-full">
@@ -86,7 +86,7 @@ const Login: React.FC = () => {
       </form>
       </div>
       </Fade>
-    :<Navigate to="/auth"/>}
+    {/* :<Navigate to="/auth"/>} */}
     </>
   );
 };

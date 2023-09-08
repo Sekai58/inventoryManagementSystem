@@ -7,6 +7,7 @@ import Forms from './components/Register'
 import ProtectedRoute from './components/Inventory'
 import ForgetPassword from './components/ForgetPassword';
 import ResetPassword from './components/ResetPassword';
+import Home from './components/Home';
 
 
 function App() {
@@ -28,13 +29,14 @@ function App() {
       <main className='py-20 min-h-screen'>
       <BrowserRouter>
         <Routes>
+          <Route path='/*' element={<Home/>}></Route>
           <Route path="/register/*" element={<Forms/>}></Route>
           <Route path="/login/*" element={isAuthenticated ? <Navigate to="/auth" /> : <Login />} />
           <Route path="/auth/*" element={isAuthenticated ? <ProtectedRoute /> : <Navigate to="/login" />} />
           {/* <Route path="/auth" element={<ProtectedRoute/>}/> */}
           <Route path="/logout" element={<Navigate to='/login' replace />} />
-          <Route path="/forgetpassword" element={<ForgetPassword />} />
-          <Route path="/resetpassword" element={<ResetPassword/>} />
+          <Route path="/forgetpassword/*" element={<ForgetPassword />} />
+          <Route path="/resetpassword/*" element={<ResetPassword/>} />
         </Routes>
       </BrowserRouter>
       </main>

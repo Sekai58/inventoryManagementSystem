@@ -42,6 +42,7 @@ export const requestItem= async(item:any)=>{
         const inventory = database.collection('requests')
         const checkRequest = await inventory.findOne(item)
         if(checkRequest){
+            console.log("checking user",item.userName)
             const err = new Error
             err.message = "Already requested"
             err.name = '403'

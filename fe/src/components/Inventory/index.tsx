@@ -105,7 +105,7 @@ const ProtectedRoute = () => {
 
         {((field=='requested'&& showAddItem==false && data)?<>
         <div className='bg-[#232323] py-2 px-3 text-[#c3c3c4] rounded-b-md rounded-r-md'>
-          <RequestedItems {...data}/>
+          <RequestedItems user={data} query={query}/>
         </div>
         </>
         :<>
