@@ -1,8 +1,12 @@
 import {DoughnutChart,BarChart} from "../Chart"
+// import {useSelector} from 'react-redux'
 
 const Home=()=>{
     const a = 10
     const r = 5
+    // const data = useSelector((c:any)=>{
+    //     console.log("redux state here",c.show.value)
+    // })
     return(<>
         {/* <div className="flex justify-between gap-10 px-10 text-white py-5 flex-wrap"> */}
         <div className="grid gap-5 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 py-5 px-2 sm:px-10 text-white">

@@ -5,6 +5,8 @@ import {useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {Fade} from 'react-reveal'
 import LoadingBar from 'react-top-loading-bar';
+import {useDispatch} from 'react-redux'
+import {authenticate } from '../../features/showSlice';
 
 type LoginFormInput = {
   userName: string;
@@ -12,6 +14,8 @@ type LoginFormInput = {
 };
 
 const Login: React.FC = () => {
+
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -29,8 +33,9 @@ const Login: React.FC = () => {
     .then(res=>{console.log(res.data.token)
       localStorage.setItem("token",res.data.token)
       toast.success("Login Success",{theme:"dark"})
+      dispatch(authenticate())
       navigate('/auth')
-      window.location.reload();
+      // window.location.reload();
     })
     .catch(error=>{console.log(error)
     toast.error("User not found",{theme:"dark"})})

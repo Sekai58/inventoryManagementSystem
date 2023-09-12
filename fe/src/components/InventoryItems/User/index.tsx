@@ -51,7 +51,7 @@ const InventoryItemsUser = (props:any) => {
 
   }, [items,request]);
 
-  const handleRequest =(id:string,available:number)=>{
+  const handleRequest =(id:string,name:string,available:number)=>{
     // setRequest(!request)
     console.log("id here",id)
     if(available<=0)return 0
@@ -61,7 +61,7 @@ const InventoryItemsUser = (props:any) => {
         toast.success("Item successfully requested",{theme:"dark"})
         const socket = io('http://localhost:7000')
         console.log(socket)
-        const notify:string = `${props.user} requested ${id}`
+        const notify:string = `${props.user} requested ${name}`
         socket?.emit("sendMessage",notify)
         setRequest(!request)
     })
@@ -79,7 +79,7 @@ const InventoryItemsUser = (props:any) => {
         <div className="flex-1">{item.name}</div>
         <div className="flex-1">{item.available}</div>
         <div className="flex-1">{item.reserved}</div>
-        <div className="flex-1"><button className={`px-2 py-1  bg-opacity-10 border-2  ${(filteredData.includes(item.name) || item.available<=0)?'border-[#862a2a] bg-[#e9585f] bg-opacity-30':'bg-[#3de97c] border-[#1b662d]'} rounded-md hover:bg-opacity-30 hover:text-white`} onClick={()=>{handleRequest(item._id,item.available)}}>Request</button></div>
+        <div className="flex-1"><button className={`px-2 py-1  bg-opacity-10 border-2  ${(filteredData.includes(item.name) || item.available<=0)?'border-[#862a2a] bg-[#e9585f] bg-opacity-30':'bg-[#3de97c] border-[#1b662d]'} rounded-md hover:bg-opacity-30 hover:text-white`} onClick={()=>{handleRequest(item._id,item.name,item.available)}}>Request</button></div>
         {/* <div  className="flex-1"><button className="px-2 py-1 bg-[#e9585f] bg-opacity-10 border-2 border-[#862a2a] rounded-md hover:bg-opacity-30 hover:text-white">View Details</button></div> */}
       </div>
       <div className="h-[0.8px] bg-[#444444]"></div>  

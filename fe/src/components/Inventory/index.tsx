@@ -16,7 +16,7 @@ const ProtectedRoute = () => {
   const [showAddItem,setShowAddItem] = useState(false)
   const [socket,setSocket] = useState<any>(null)
   const [notification,setNotification] = useState('')
-  const [showNotification,setShowNotification] = useState(true)
+  const [showNotification,setShowNotification] = useState(false)
 
   const handleClose = (close:boolean)=>{
     setShowAddItem(!close)
@@ -37,6 +37,7 @@ const ProtectedRoute = () => {
   useEffect(()=>{
     socket?.on('getMessage',(message:any)=>{console.log("notification from user",message)
     setNotification(message)
+    setShowNotification(true)
     localStorage.setItem("count",JSON.stringify(1))
   })
     
@@ -75,8 +76,8 @@ const ProtectedRoute = () => {
           </div>
           <div className='flex gap-3 mb-2'>
             <div className='relative'>
-            <button><i className="fa-regular fa-bell text-[#7878bc] text-2xl" onClick={()=>setShowNotification(!notification)}></i></button>
-            <div className={`${(data.role=='ADMIN' && showNotification==true)?'solid':'hidden'} absolute top-7 right-0 text-white`}>{notification}</div>
+            <button><i className={`fa-regular fa-bell ${showNotification?'text-[#7878bc]':'text-[#ffffff]'} text-2xl`} onClick={()=>setShowNotification(!showNotification)}></i></button>
+            <div className={`${(data.role=='ADMIN' && showNotification==true)?'solid':'hidden'} bg-black border-2 border-black bg-opacity-20 p-2 absolute top-7 right-0 text-white`}>{notification}</div>
             </div>
             <select className='border-x-2 border-y-0 border-[#555555] rounded-full text-[#7878bc] bg-transparent' defaultValue='Sekai'>
               <option className='text-[#c4c3c3] border-2 border-slate-500 bg-slate-700'>@{data.userName}</option>

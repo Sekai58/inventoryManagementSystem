@@ -1,25 +1,22 @@
-import {useState,useEffect} from 'react'
+import {useState} from 'react'
 import {Zoom} from 'react-reveal'
 import { Link } from 'react-router-dom'
-// import { Link } from 'react-router-dom'
+import {useSelector,useDispatch} from 'react-redux'
+import {unauthenticate} from '../../features/showSlice';
+
 
 const Navbar = () => {
-  const [isAuthenticated,setIsAuthenticated] = useState(false)
   const [isClicked,setIsClicked] = useState('about')
+  const dispatch = useDispatch()
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, [isAuthenticated]);
+  const data = useSelector((c:any)=>{
+    console.log("redux state here",c.show.value)
+    return c.show.value
+})
 
   const handleLogout = ()=>{
     localStorage.removeItem('token')
-    setIsAuthenticated(false)
+    dispatch(unauthenticate())
   }
 
   return (
@@ -48,11 +45,11 @@ const Navbar = () => {
         </div>
         </Zoom>
 
-        {isAuthenticated?(
+        {data?(
           <div>
-            <a href='/logout'>
+            <Link to='/logout'>
               <button className=" px-4 py-1 mr-2 text-white border-[1.6px] border-[#7878bc] bg-transparent shadow-[#7878bc] shadow-sm hover:shadow-md hover:shadow-[#7878bc] rounded-md" onClick={handleLogout} >Log out</button>
-            </a>
+            </Link>
           </div>
         ):(
           <div className="flex">
