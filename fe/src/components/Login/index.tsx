@@ -1,7 +1,7 @@
 import axios from 'axios';
-import React, { useState,useEffect } from 'react';
+import React, { useState} from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import {Navigate, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {Fade} from 'react-reveal'
 import LoadingBar from 'react-top-loading-bar';
@@ -12,17 +12,6 @@ type LoginFormInput = {
 };
 
 const Login: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, []);
 
   const {
     register,
@@ -40,7 +29,6 @@ const Login: React.FC = () => {
     .then(res=>{console.log(res.data.token)
       localStorage.setItem("token",res.data.token)
       toast.success("Login Success",{theme:"dark"})
-      setIsAuthenticated(true)
       navigate('/auth')
       window.location.reload();
     })
@@ -52,7 +40,6 @@ const Login: React.FC = () => {
   };
   return (
     <>
-      {/* <div className="fixed top-30 right-0 "> <ToastContainer position="bottom-right" className=""/></div> */}
     <LoadingBar color="#7878bc"  progress={progress} onLoaderFinished={() => setProgress(0)} />
     {/* {(isAuthenticated==false)? */}
     <Fade top>
@@ -73,16 +60,7 @@ const Login: React.FC = () => {
         </div>
         <a href='/forgetpassword' className='text-white'>Forget Password?</a>
         <button type="submit" className="border-2 border-[#888787] bg-[#7878b2] text-[#ffffff] rounded-2xl px-2 py-2 hover:shadow-md hover:shadow-white hover:border-0">Login</button>
-  
-        {/* <div className="flex items-center">
-          <div className="h-px bg-gradient-to-r to-[#7878bc] from-[#ababab] flex-grow"></div>
-          <span className="mx-2 text-white">Or</span>
-          <div className="h-px bg-gradient-to-r from-[#7878bc] to-[#ababab] flex-grow"></div>
-        </div> */}
-  
-        {/* <button className="border-2 border-[#888787] bg-transparent text-[#f7f7f7] rounded-2xl px-2 py-2 cursor-pointer hover:shadow-md hover:shadow-[#7878bc] hover:border-0">Continue with google</button>
-        <button className="border-2 border-[#888787] bg-transparent text-[#f7f7f7] rounded-2xl px-2 py-2 cursor-pointer hover:shadow-md hover:shadow-[#7878bc] hover:border-0">Continue with facebook</button>
-        <button className="border-2 border-[#888787] bg-transparent text-[#f7f7f7] rounded-2xl px-2 py-2 cursor-pointer hover:shadow-md hover:shadow-[#7878bc] hover:border-0">Login with email</button> */}
+
       </form>
       </div>
       </Fade>

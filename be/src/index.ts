@@ -40,7 +40,6 @@ io.on("connection", (socket:any) => {
   })
 });
 
-
 app.use("/api", userRoutes())
 app.use("/api", itemRoutes())
 
@@ -56,4 +55,3 @@ server.listen(process.env.PORT, () => {
     console.log(`server is running at port http://localhost:${process.env.PORT}`);
 
 })
-

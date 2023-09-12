@@ -1,10 +1,11 @@
 import {useState,useEffect} from 'react'
 import {Zoom} from 'react-reveal'
+import { Link } from 'react-router-dom'
 // import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   const [isAuthenticated,setIsAuthenticated] = useState(false)
-  const [isClicked,setIsClicked] = useState('inventory')
+  const [isClicked,setIsClicked] = useState('about')
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -14,7 +15,7 @@ const Navbar = () => {
     } else {
       setIsAuthenticated(false);
     }
-  }, []);
+  }, [isAuthenticated]);
 
   const handleLogout = ()=>{
     localStorage.removeItem('token')
@@ -32,22 +33,18 @@ const Navbar = () => {
         </div>
         <Zoom>
         <div className='flex'>
-          <a href='/'>
-          <button className={`flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(isClicked=='home')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`} onClick={()=>setIsClicked('home')}>
+          <button className={`hidden sm:flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(isClicked=='home')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`} onClick={()=>setIsClicked('home')}>
             <i className="fa-regular fa-snowflake"></i>
-            <span className=' text-[#ababab]'>Home</span>
+            <span className=' text-[#ababab]'><Link to='/'>Home</Link></span>
           </button>
-          </a>
-          <button className={`flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(isClicked=='about')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`} onClick={()=>setIsClicked('about')}>
+          <button className={`hidden sm:flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(isClicked=='about')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`} onClick={()=>setIsClicked('about')}>
             <i className="fa-regular fa-snowflake"></i>
-            <span className=' text-[#ababab]'>About</span>
+            <span className=' text-[#ababab]'><Link to='/about'>About</Link></span>
           </button>
-          <a href='/auth'>
-          <button className={`flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(isClicked=='inventory')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`} onClick={()=>setIsClicked('inventory')}>
+          <button className={`hidden sm:flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(isClicked=='inventory')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`} onClick={()=>setIsClicked('inventory')}>
             <i className="fa-regular fa-snowflake"></i>
-            <span className=' text-[#ababab]'>Inventory</span>
+            <span className=' text-[#ababab]'><Link to='/auth'>Inventory</Link></span>
           </button>
-          </a>
         </div>
         </Zoom>
 
@@ -60,19 +57,18 @@ const Navbar = () => {
         ):(
           <div className="flex">
           <div>
-            <a href="/login">
+            <Link to="/login">
               <button className=" px-4 py-1 mr-2 text-white border-[1.6px] border-[#7878bc] bg-transparent shadow-[#7878bc] shadow-sm hover:shadow-md hover:shadow-[#7878bc] rounded-md" >Log in</button>
-            </a>
+            </Link>
           </div>
           <div>
-            <a href="/register">
+            <Link to="/register">
               <button className="px-4 py-1 border-[1.5px] border-[#7878bc] bg-[#7878bc] shadow-[#ffffff] shadow-sm hover:shadow-md hover:shadow-[#ffffff] rounded-md text-white" >Sign up</button>
-            </a>
+            </Link>
           </div>
         </div>  
         )}
     </div>
-    {/* <hr className=" border-transparent border-0 h-[1px] bg-gradient-to-r from-[#0b0b0b] via-[#6e6e6e] to-[#060606]"></hr> */}
 </div>
   )
   }

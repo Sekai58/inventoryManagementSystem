@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto'
 
 interface IPiechart {
@@ -7,17 +8,17 @@ interface IPiechart {
     reserved:number
 }
 
-const AnimatedDoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
+export const DoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
   const [chartData, setChartData] = useState({
-    labels: ['Unallocated','Reserved'],
+    // labels: ['Unallocated','Reserved'],
     options: {
       plugins: {
         legend: {
           position: 'right',
         },
       },
-      // responsive: true,
-      // maintainAspectRatio: false,
+      responsive: true,
+      maintainAspectRatio: false,
     },
     datasets: [
       {
@@ -59,6 +60,43 @@ const AnimatedDoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
   );
 };
 
-export default AnimatedDoughnutChart;
+//BarChart
+export const BarChart = () => {
+  const data = {
+    labels: ['January', 'February', 'March', 'April', 'May'],
+    datasets: [
+      {
+        label: 'Unallocated',
+        data: [12, 19, 3, 5, 2],
+        backgroundColor: 'rgba(29, 207, 165,0.3)',
+        borderColor: 'rgba(29, 207, 165,1)',
+        borderWidth: 1,
+      },
+      {
+        label: 'Reserved',
+        data: [4, 5, 3, 6, 10],
+        backgroundColor: 'rgba(209,13,72,0.3)', 
+        borderColor: 'rgba(209,13,72,1)', 
+        borderWidth: 1,
+      },
+    ],
+  };
 
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+    // maintainAspectRatio: false, // Disable the default aspect ratio
+    // responsive: true,
+  };
 
+  return (
+    <div>
+      <Bar data={data} options={options} />
+    </div>
+  );
+};
+
+// export default BarChart;

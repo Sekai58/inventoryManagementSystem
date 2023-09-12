@@ -50,7 +50,7 @@ const ProtectedRoute = () => {
         },
       })
       .then(response => {
-          console.log(response.data)
+          console.log("user data here",response.data)
         setData(response.data);
       })
       .catch(error => {
@@ -61,20 +61,19 @@ const ProtectedRoute = () => {
 
   }, [field,showAddItem]);
 
-
   return (
-    <div className='px-10'>
+    <div className='sm:px-10'>
         <div className={`${showAddItem?'solid':'hidden'}`}>
           <AddItemModal onClose={handleClose}/>
         </div>
       <Zoom>
       <div className='min-h-[500px] bg-[rgba(34,33,33,0.5)] shadow-2xl shadow-black rounded-md'>
-        <div className='w-full rounded-t-md flex justify-between items-center px-2 py-1'>
+        <div className='w-full rounded-t-md flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center px-2 py-1'>
           <div className="relative text-[#818080]">
             <span className="absolute left-2 top-1"><i className="fa-solid fa-magnifying-glass"></i></span>
-            <input type="text" className="pl-7 h-8 w-56 bg-transparent text-[#929191] rounded-full transition-all duration-300 ease-in-out focus:w-80 focus:border-2 focus:border-[#7878bc]" onChange={(e)=>setQuery(e.target.value)}/>
+            <input type="text" className="pl-7 h-8 w-28 sm:w-56 border-1 bg-transparent text-[#929191] rounded-full transition-all duration-300 ease-in-out sm:focus:w-80 focus:w-full focus:border-2 focus:border-[#7878bc]" onChange={(e)=>setQuery(e.target.value)}/>
           </div>
-          <div className='flex gap-3'>
+          <div className='flex gap-3 mb-2'>
             <div className='relative'>
             <button><i className="fa-regular fa-bell text-[#7878bc] text-2xl" onClick={()=>setShowNotification(!notification)}></i></button>
             <div className={`${(data.role=='ADMIN' && showNotification==true)?'solid':'hidden'} absolute top-7 right-0 text-white`}>{notification}</div>
@@ -116,7 +115,8 @@ const ProtectedRoute = () => {
             <p className='flex-1'>Reserved</p>
             {data.role==='USER'?<>
             <p className='flex-1'>Action</p>
-            <p className='flex-1'>Details</p></>
+            {/* <p className='flex-1'>Details</p> */}
+            </>
             :
             <></>
             }

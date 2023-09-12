@@ -42,3 +42,14 @@ export const listRequestedItem = async (req:Request,res:Response,next:NextFuncti
         //res.status(500).json(e)
     }
 }
+
+export const deleteItem = async (req:Request,res:Response,next:NextFunction)=>{
+    try{
+        res.status(201).json(await UserService.deleteItem(req.body))
+    }
+    catch(e){
+        console.log(e)
+       next(e)
+        //res.status(500).json(e)
+    }
+}

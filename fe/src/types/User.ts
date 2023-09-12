@@ -4,6 +4,7 @@ export interface IUser{
 }
 
 export interface IItems{
+    _id:string
     name:string,
     available:number,
     reserved:number,

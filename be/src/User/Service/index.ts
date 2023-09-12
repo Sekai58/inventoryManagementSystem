@@ -25,7 +25,7 @@ export const loginUser = async (user:Partial<IUser>)=>{
         console.log("At service",data)
         if(data && await bcrypt.compare(user.password, data.password)){
             const user = {"userName":data.userName,"role":data.role}
-            const token = jwt.sign(user,process.env.SECRET_KEY)
+            const token = jwt.sign(data,process.env.SECRET_KEY)
             console.log("this is token",token,{"userName":data.userName})
             console.log(JSON.stringify(data))
             return ({token})

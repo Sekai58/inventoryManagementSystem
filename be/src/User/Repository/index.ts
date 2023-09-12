@@ -38,7 +38,7 @@ export const loginUser= async(user:Partial<IUser>)=>{
 
 export const authUser= async(user:Partial<IUser>,decoded:any)=>{
     try{
-        console.log(decoded)
+        // console.log("decoded here",decoded)
         return decoded
     }
     catch(e){

@@ -38,3 +38,13 @@ export const listRequestedItem = ()=>{
         throw e
     }
 }
+
+export const deleteItem = (item:any)=>{
+    try{
+        return UserRepository.deleteItem(item)
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}

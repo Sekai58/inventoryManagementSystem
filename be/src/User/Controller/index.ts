@@ -23,6 +23,7 @@ export const registerUser = async (req:Request,res:Response,next:NextFunction)=>
 
 export const authUser = async (req:Request,res:Response)=>{
     try{
+        console.log("at auth user",req.user)
         res.status(201).json(await UserService.authUser(req.body,req.user))
     }
     catch(e){
