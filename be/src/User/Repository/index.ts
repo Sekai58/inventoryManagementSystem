@@ -13,6 +13,15 @@ const database = client.db('webdevelopment')
 export const registerUser = async(user:Partial<IUser>)=>{
     try{
         const users = database.collection('users')
+        const checkUserName = await users.findOne({"userName":user.userName})
+        const checkEmail = await users.findOne({"email":user.email})
+        console.log(checkEmail,checkUserName)
+        if(checkUserName){
+            throw Error("UserName taken")
+        }
+        if(checkEmail){
+            throw Error("Email taken")
+        }
         user.password = await bcrypt.hash(user.password, 10)
         const newUser = {...user,role:'USER'}
         const insertedUser = await users.insertOne(newUser)
@@ -38,7 +47,6 @@ export const loginUser= async(user:Partial<IUser>)=>{
 
 export const authUser= async(user:Partial<IUser>,decoded:any)=>{
     try{
-        // console.log("decoded here",decoded)
         return decoded
     }
     catch(e){
@@ -65,7 +73,7 @@ export const authReset= async(user:Partial<IUser>,decoded:any)=>{
     try{
         const users = database.collection('users')
         const updateUser = await users.updateOne({"email":decoded.email},{"$set": { "password":user.password }})
-        console.log("finding email from decoded value",decoded)
+        // console.log("finding email from decoded value",decoded)
         return "Password updated"
     }
     catch(e){

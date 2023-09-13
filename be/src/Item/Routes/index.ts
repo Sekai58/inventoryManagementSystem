@@ -10,6 +10,7 @@ const routes = () => {
     router.post('/admin/add-item',UserController.addItem)
     router.get('/admin/list-item',UserController.listItems)
     router.delete('/user/requests',UserController.deleteItem)
+    router.get('/count-item',UserController.countItems)
 
     return router;
 }

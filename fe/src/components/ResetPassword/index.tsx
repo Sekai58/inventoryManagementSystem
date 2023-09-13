@@ -7,6 +7,7 @@ import LoadingBar from 'react-top-loading-bar';
 
 type LoginFormInput = {
     password: string;
+    confirmpassword:string
   };
 
 const ResetPassword = ()=>{
@@ -20,20 +21,20 @@ const ResetPassword = ()=>{
         register,
         handleSubmit,
         reset,
+        watch,
         formState: { errors },
       } = useForm<LoginFormInput>();
 
       const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
         setProgress(70)
-        await axios.post("http://localhost:7000/api/user/auth/resetpassword",data,{
+        console.log("over here",data)
+        await axios.post("http://localhost:7000/api/user/auth/resetpassword",{"password":data.password},{
             headers: {
               Authorization: `${token}`,
             },})
         .then(res=>{console.log(res.data.token)
-          //localStorage.setItem("resettoken",res.data.token)
           toast.success("Password successfully updated")
           navigate('/login')
-          //window.location.reload();
         })
         .catch(error=>{console.log(error)
         toast.error("Unauthorized")})
@@ -50,6 +51,9 @@ const ResetPassword = ()=>{
         <label className="text-[#ffffff] ">New Password:</label>
         <input type="password" placeholder='Enter password' {...register('password', { required: 'Password is required',pattern:/^.{6,}$/ })} className=" mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
         {errors.password && <p className='text-red-400'>{errors.password.message}</p>}
+        <label className="text-[#ffffff] ">Confirm Password:</label>
+        <input type="password" placeholder='Enter password' {...register('confirmpassword', { required: 'Password is required',pattern:/^.{6,}$/,validate: (value) =>value === watch('password') || 'Passwords do not match' })} className=" mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
+        {errors.confirmpassword && <p className='text-red-400'>{errors.confirmpassword.message}</p>}
       </div>
       <button type="submit" className="border-2 border-[#888787] bg-[#7878b2] text-[#ffffff] rounded-2xl px-2 py-2 hover:shadow-md hover:shadow-white hover:border-0">Update Password</button>
         </form>

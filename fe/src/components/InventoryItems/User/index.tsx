@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IItems, IRequest } from "../../../types/User";
+import { IItems} from "../../../types/User";
 import {useEffect, useState} from 'react'
 import { toast } from "react-toastify";
 import { io } from 'socket.io-client';
@@ -25,6 +25,7 @@ const InventoryItemsUser = (props:any) => {
       // console.log("after request",res.data)
     })
     .catch(e=>console.log(e))
+    setRequest(false)
   },[request])
 
   // useEffect(()=>{
@@ -63,7 +64,7 @@ const InventoryItemsUser = (props:any) => {
         console.log(socket)
         const notify:string = `${props.user} requested ${name}`
         socket?.emit("sendMessage",notify)
-        setRequest(!request)
+        setRequest(true)
     })
     .catch(error => {
       console.error('Error:', error);

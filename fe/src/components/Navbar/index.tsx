@@ -6,7 +6,7 @@ import {unauthenticate} from '../../features/showSlice';
 
 
 const Navbar = () => {
-  const [isClicked,setIsClicked] = useState('about')
+  const [isClicked,setIsClicked] = useState('home')
   const dispatch = useDispatch()
 
   const data = useSelector((c:any)=>{

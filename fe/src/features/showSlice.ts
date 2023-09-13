@@ -14,9 +14,25 @@ export const showSlice = createSlice({
         },
         unauthenticate:(state)=>{
             state.value = false
+        },
+    }
+})
+
+const itemState ={value:false}
+export const itemSlice = createSlice({
+    name: "item",
+    initialState:itemState,
+    reducers:{
+        showItem:(state)=>{
+            state.value = state.value
+        },
+        addItem:(state)=>{
+            state.value = true
         }
     }
 })
 
 export const {showAuthenticate,authenticate,unauthenticate} = showSlice.actions
-export default showSlice.reducer
+export const {showItem,addItem} = itemSlice.actions
+
+export default {first:showSlice.reducer,second:itemSlice.reducer}

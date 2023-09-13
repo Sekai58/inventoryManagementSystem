@@ -34,7 +34,7 @@ const InventoryItemsAdmin = (props:any) => {
     {/* <div className="flex-1"><button className="px-2 py-1 bg-[#7878bc] rounded-full" onClick={()=>handleClick(idx)}>Approve</button></div> */}
     {/* <div  className="flex-1"><button className="px-2 py-1 bg-[#7878bc] rounded-full">View Details</button></div> */}
     </div>
-    <div className="h-[0.8px] bg-[#444444]"></div>  
+    <div className={`h-[0.8px] bg-[#444444] ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}`}></div>  
     </div>})}
   </div>
   );

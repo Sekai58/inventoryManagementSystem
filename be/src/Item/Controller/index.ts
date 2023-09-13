@@ -53,3 +53,13 @@ export const deleteItem = async (req:Request,res:Response,next:NextFunction)=>{
         //res.status(500).json(e)
     }
 }
+
+export const countItems = async (req:Request,res:Response)=>{
+    try{
+        res.status(201).json(await UserService.countItems())
+    }
+    catch(e){
+        console.log(e)
+        //res.status(500).json(e)
+    }
+}

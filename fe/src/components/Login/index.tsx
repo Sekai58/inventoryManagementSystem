@@ -32,21 +32,18 @@ const Login: React.FC = () => {
     await axios.post("http://localhost:7000/api/user/login",data)
     .then(res=>{console.log(res.data.token)
       localStorage.setItem("token",res.data.token)
-      toast.success("Login Success",{theme:"dark"})
+      toast.success(`Welcome ${data.userName}`,{theme:"dark"})
       dispatch(authenticate())
-      navigate('/auth')
-      // window.location.reload();
+      navigate('/')
     })
     .catch(error=>{console.log(error)
     toast.error("User not found",{theme:"dark"})})
-    console.log(data);
     setProgress(100)
     reset();
   };
   return (
     <>
     <LoadingBar color="#7878bc"  progress={progress} onLoaderFinished={() => setProgress(0)} />
-    {/* {(isAuthenticated==false)? */}
     <Fade top>
     {/* <div className="fixed top-0 left-0 min-h-screen w-full bg-black bg-opacity-50 z-5"></div> */}
       <div className="flex justify-center items-center h-full w-full">
@@ -69,7 +66,6 @@ const Login: React.FC = () => {
       </form>
       </div>
       </Fade>
-    {/* :<Navigate to="/auth"/>} */}
     </>
   );
 };

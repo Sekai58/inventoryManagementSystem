@@ -9,6 +9,7 @@ interface IPiechart {
 }
 
 export const DoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
+  console.log("data",available,reserved)
   const [chartData, setChartData] = useState({
     // labels: ['Unallocated','Reserved'],
     options: {

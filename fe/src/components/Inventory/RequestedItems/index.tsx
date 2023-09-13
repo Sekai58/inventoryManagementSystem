@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IRequest, IUser } from "../../../types/User";
+import {IUser } from "../../../types/User";
 import axios from "axios";
 import {Fade } from "react-reveal";
 import img from '../../../assets/images/laptop.png'
@@ -28,10 +28,10 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
       }
     };
     fetchData();
+    setApprove(false)
   }, [approve]);
 
   const handleApprove =(id:any,userName:string)=>{
-    setApprove(!approve)
     axios.delete('http://localhost:7000/api/user/requests',{data:{
       product_id:id,
       userName:userName
@@ -39,11 +39,12 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
     .then(response => {
         console.log(response.data)
         toast.success("Item successfully approved",{theme:"dark"})
+        setApprove(true)
     })
     .catch(error => {
       console.error('Error:', error);
       toast.error("Unauthorized",{theme:"dark"})
-    });
+    })
   }
 
   return (

@@ -130,3 +130,32 @@ export const deleteItem= async(item:any)=>{
         throw e
     }
 }
+
+
+export const countItems= async()=>{
+    try{
+        const countRequests = await database.collection('requests').countDocuments()
+        const countUsers = await database.collection('users').countDocuments()
+        // console.log(countRequests)
+        const pipeline = [
+            {
+              $group: {
+                _id: null,
+                totalItems: { $sum: '$available' },
+              },
+            },
+            {
+                $unwind:'$totalItems',
+            }
+          ];
+        
+        const available = await database.collection('inventory').aggregate(pipeline).toArray((err:any,result:any)=>{console.log(result)})
+        // console.log("aavailable",available)
+        return {requests:countRequests,users:countUsers,available:available[0].totalItems}
+    }
+    catch(e){
+        console.log(e)
+        throw e
+        return e
+    }
+}

@@ -48,3 +48,13 @@ export const deleteItem = (item:any)=>{
         throw e
     }
 }
+
+export const countItems = ()=>{
+    try{
+        return UserRepository.countItems()
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}

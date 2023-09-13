@@ -7,10 +7,17 @@ import ProtectedRoute from './components/Inventory'
 import ForgetPassword from './components/ForgetPassword';
 import ResetPassword from './components/ResetPassword';
 import Home from './components/Home';
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
+import { authenticate } from './features/showSlice'
 
 
 function App() {
+
+  const token = localStorage.getItem("token")
+  const dispatch = useDispatch()
+  if(token){
+    dispatch(authenticate())
+  }
 
   const data = useSelector((c:any)=>{
         console.log("redux state here",c.show.value)

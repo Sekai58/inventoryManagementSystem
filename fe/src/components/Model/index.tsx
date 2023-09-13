@@ -1,17 +1,17 @@
 // AddItemModal.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IItems } from '../../types/User';
 import axios from 'axios';
 import {toast } from 'react-toastify';
-import {Zoom} from 'react-reveal'
+import {Zoom} from 'react-reveal';
 
 interface AddItemModalProps {
-  onClose: (close:boolean) => void;
+  onClose: () => void;
 }
 
-
 const AddItemModal: React.FC<AddItemModalProps> = ({onClose}) => {
+
     const {
         register,
         handleSubmit,
@@ -22,9 +22,9 @@ const AddItemModal: React.FC<AddItemModalProps> = ({onClose}) => {
       const onSubmit: SubmitHandler<IItems> = async (data,e) => {
         e?.preventDefault()
         await axios.post("http://localhost:7000/api/admin/add-item",data)
-        .then(res=>{console.log(res.data.token)
+        .then(res=>{console.log("Ack state",res.data)
           toast.success("Success")
-          onClose(true)
+          onClose()
         })
         .catch(error=>{console.log(error)
         toast.error(error.message)})
@@ -38,7 +38,7 @@ const AddItemModal: React.FC<AddItemModalProps> = ({onClose}) => {
     <div className='fixed top-50 left-50 z-20'>
     <div className='flex justify-between'>
       <p className="text-[#7878b2] font-semibold text-xl"><Zoom>Add Item to Inventory</Zoom></p>
-      <button onClick={()=>onClose(true)} className='text-xl text-white bg-[#1c1b1b] px-2 hover:bg-red-500 rounded-t-sm'><i className="fa-solid fa-xmark"></i></button>
+      <button onClick={()=>onClose()} className='text-xl text-white bg-[#1c1b1b] px-2 hover:bg-red-500 rounded-t-sm'><i className="fa-solid fa-xmark"></i></button>
       </div>
     <form  className='flex flex-col gap-5 border-2 border-[#1c1b1b] p-5 bg-[#1c1b1b] shadow-[#000000] shadow-2xl rounded-sm' onSubmit={handleSubmit(onSubmit)}>
       <div className='flex gap-4 justify-between'>
