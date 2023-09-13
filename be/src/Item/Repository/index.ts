@@ -58,6 +58,7 @@ export const requestItem= async(item:any)=>{
             // console.log("item inserted",updateUser.insertedId)
             // return updateUser
 
+
             const insertItem = await requests.insertOne({"product_id":new ObjectId(item.id),"userName":item.userName})
             const updateItem = database.collection('inventory')
             const updated = await updateItem.updateOne({"_id":new ObjectId(item.id)},{"$inc":{"reserved":1}})
@@ -157,5 +158,23 @@ export const countItems= async()=>{
         console.log(e)
         throw e
         return e
+    }
+}
+
+export const editItem= async(item:any)=>{
+    try{
+        const inventory = database.collection('inventory')
+        const checkItem = inventory.findOne({"_id":new ObjectId(item._id)})
+        if(checkItem){
+            const items = await inventory.updateOne({"_id":new ObjectId(item._id)},{"$set":{"available":item.available,"reserved":item.reserved,"name":item.name}})
+            return items
+        }
+        else{
+            throw Error("Unauthorized")
+        }
+    }
+    catch(e){
+        console.log(e)
+        throw e
     }
 }

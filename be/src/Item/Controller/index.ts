@@ -63,3 +63,13 @@ export const countItems = async (req:Request,res:Response)=>{
         //res.status(500).json(e)
     }
 }
+
+export const editItem = async (req:Request,res:Response)=>{
+    try{
+        res.status(201).json(await UserService.editItem(req.body))
+    }
+    catch(e){
+        console.log(e)
+        res.status(500).json(e)
+    }
+}

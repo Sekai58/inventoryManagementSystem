@@ -1,5 +1,5 @@
 import * as UserRepository from '../Repository'
-import { IUser } from '../Repository/User.types'
+import { IUser,IItem } from '../Repository/User.types'
 const bcrypt = require('bcrypt');
 
 //business logic
@@ -112,14 +112,14 @@ export const authReset = (user:Partial<IUser>,decoded:any)=>{
     }
 }
 
-// export const addItem = (item:IItem)=>{
-//     try{
-//         return UserRepository.addItem(item)
-//     }
-//     catch(e){
-//         console.log(e)
-//     }
-// }
+export const deleteItem = (item:IItem)=>{
+    try{
+        return UserRepository.deleteItem(item)
+    }
+    catch(e){
+        console.log(e)
+    }
+}
 
 // export const listItems = ()=>{
 //     try{

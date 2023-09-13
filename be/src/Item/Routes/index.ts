@@ -11,6 +11,7 @@ const routes = () => {
     router.get('/admin/list-item',UserController.listItems)
     router.delete('/user/requests',UserController.deleteItem)
     router.get('/count-item',UserController.countItems)
+    router.put("/admin/edit-item",UserController.editItem)
 
     return router;
 }

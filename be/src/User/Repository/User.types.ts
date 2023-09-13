@@ -15,11 +15,11 @@ export interface IUser{
     role:string
 }
 
-// export interface IItem{
-//     name:string
-//     available:number,
-//     reserved:number
-// }
+export interface IItem{
+    name:string
+    available:number,
+    reserved:number
+}
 
 // export interface IItemRequested{
 //     userName:string,

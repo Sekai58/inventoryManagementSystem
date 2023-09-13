@@ -3,7 +3,6 @@ import axios from 'axios';
 import { IUser } from '../../types/User';
 import {Zoom} from 'react-reveal'
 import { io } from 'socket.io-client';
-// import {useSelector} from 'react-redux'
 
 import InventoryItemsUser from '../InventoryItems/User';
 import InventoryItemsAdmin from '../InventoryItems/Admin';
@@ -15,20 +14,21 @@ const ProtectedRoute = () => {
   const [field,setField] = useState('allitems')
   const [query,setQuery] = useState('')
   const [showAddItem,setShowAddItem] = useState(false)
-  // const [refreshItem,setRefreshItem] = useState(false)
+  const [refreshItem,setRefreshItem] = useState(false)
   const [socket,setSocket] = useState<any>(null)
   const [notification,setNotification] = useState('')
   const [showNotification,setShowNotification] = useState(true)
 
   const handleClose = ()=>{
     setShowAddItem(false)
-    // setRefreshItem(true)
+    setRefreshItem(true)
   }
 
   const handleAdd = ()=>{
     setShowAddItem(true)
   }
 
+  //Connection between user and Admin
   useEffect(()=>{
     const socket = io('http://localhost:7000')
     setSocket(socket)
@@ -41,6 +41,7 @@ const ProtectedRoute = () => {
     });
   },[])
 
+  //Get notification and show in admin side
   useEffect(()=>{
     socket?.on('getMessage',(message:any)=>{console.log("notification from user",message)
     setNotification(message)
@@ -67,13 +68,12 @@ const ProtectedRoute = () => {
 
     if(!showAddItem){
       fetchdata()
-      // setRefreshItem(false)
       setShowAddItem(false)
+      setRefreshItem(false)
     }
+  }, [refreshItem,showAddItem,field]);
 
-  }, [field,showAddItem]);
-
-
+  console.log("here",refreshItem)
   return (
     <div className='sm:px-10'>
         <div className={`${showAddItem?'solid':'hidden'}`}>
@@ -111,7 +111,7 @@ const ProtectedRoute = () => {
             <button className={`px-3 py-1 rounded-t-md ${(field=='requested')?'bg-[#232323]':'bg-[#24243b]'}`} onClick={()=>{setField("requested")}}>Requested</button>
           </div>
           <div className={`${data.role==='ADMIN'?'solid':'hidden'}`}>
-            <button className='px-2 py-1 border-2 rounded-md text-[#ffffff] border-[#7878bc] hover:scale-105 hover:bg-[#7878bc]' onClick={()=>handleAdd()}><span className='text-red-500'>&#10006;</span>Add Item</button>
+            <button className='px-2 py-[2px] border-2 rounded-md text-[#ffffff] border-[#7878bc] hover:scale-105 hover:bg-[#7878bc]' onClick={()=>handleAdd()}><span className='text-red-500'>&#10006;</span>Add Item</button>
           </div>          
         </div>
 
@@ -126,14 +126,9 @@ const ProtectedRoute = () => {
             <p className='flex-1'>Name</p>
             <p className='flex-1'>Available</p>
             <p className='flex-1'>Reserved</p>
-            {data.role==='USER'?<>
             <p className='flex-1'>Action</p>
-            </>
-            :
-            <></>
-            }
-            
             </div>
+            
             <div className="h-[0.8px] bg-gradient-to-r to-[#343434] via-[#7878bc] from-[#343434] mb-3"></div> 
             {(data.role=='ADMIN')?<InventoryItemsAdmin query={query} socket={socket}/>:<InventoryItemsUser query={query} user={data.userName} socket={socket} /> } 
                

@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import {IUser } from "./User.types"
+import {IUser,IItem } from "./User.types"
 const { MongoClient } = require("mongodb");
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcrypt');
@@ -81,19 +81,18 @@ export const authReset= async(user:Partial<IUser>,decoded:any)=>{
     }
 }
 
-// export const addItem= async(item:IItem)=>{
-//     try{
-//         const inventory = database.collection('inventory')
-//         const newItem = {...item,reserved:0}
-//         const updateItem = await inventory.insertOne(newItem)
-//         console.log("item inserted",updateItem.insertedId)
-//         return updateItem
-//     }
-//     catch(e){
-//         throw e
-//         return e
-//     }
-// }
+export const deleteItem= async(item:IItem)=>{
+    try{
+        const inventory = database.collection('inventory')
+        const deleteItem = await inventory.deleteOne(item)
+        console.log("item inserted",deleteItem)
+        return deleteItem
+    }
+    catch(e){
+        throw e
+        return e
+    }
+}
 
 // export const listItems= async()=>{
 //     try{

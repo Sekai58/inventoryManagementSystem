@@ -18,21 +18,21 @@ export const showSlice = createSlice({
     }
 })
 
-const itemState ={value:false}
+const editItem ={_id:'',name:'',available:0,reserved:0}
 export const itemSlice = createSlice({
     name: "item",
-    initialState:itemState,
+    initialState:editItem,
     reducers:{
-        showItem:(state)=>{
-            state.value = state.value
-        },
-        addItem:(state)=>{
-            state.value = true
+        showItem:(state,action)=>{
+            console.log("payload here",action.payload)
+           state ={ ...state, ...action.payload}
+           console.log("state here",state)
+           return state
         }
     }
 })
 
 export const {showAuthenticate,authenticate,unauthenticate} = showSlice.actions
-export const {showItem,addItem} = itemSlice.actions
+export const {showItem} = itemSlice.actions
 
 export default {first:showSlice.reducer,second:itemSlice.reducer}

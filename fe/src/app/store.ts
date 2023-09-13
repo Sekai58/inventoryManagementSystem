@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import showAuthenticate from "../features/showSlice";
+import showSlice from "../features/showSlice";
 
 export const store = configureStore({
     reducer:{
-        show:showAuthenticate.first,
-        item:showAuthenticate.second
+        show:showSlice.first,
+        item:showSlice.second
     }
 })

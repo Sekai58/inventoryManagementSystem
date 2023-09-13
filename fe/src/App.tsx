@@ -19,9 +19,9 @@ function App() {
     dispatch(authenticate())
   }
 
-  const data = useSelector((c:any)=>{
-        console.log("redux state here",c.show.value)
-        return c.show.value
+  const data = useSelector((state:any)=>{
+        console.log("redux state here",state.show.value)
+        return state.show.value
     })
 
   return (

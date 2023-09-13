@@ -58,3 +58,13 @@ export const countItems = ()=>{
         throw e
     }
 }
+
+export const editItem = (item:any)=>{
+    try{
+        return UserRepository.editItem(item)
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}
