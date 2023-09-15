@@ -1,26 +1,12 @@
-import { useEffect, useState } from "react"
 import {DoughnutChart,BarChart} from "../Chart"
-import axios from "axios"
+import useAxios from "../../libs/useAxios"
 
 const Home = ()=>{
-
-    const [itemsCount,setItemsCount] = useState<any>()
-
-    useEffect(()=>{
-        const fetch = async()=>{
-            await axios.get('http://localhost:7000/api/count-item')
-            .then(res=>{
-                console.log(res.data)
-                setItemsCount(res.data)})
-            .catch(err=>{console.log(err)})
-        }
-        fetch()
-        console.log("items count",itemsCount)
-    },[])
+    
+    const {itemsCount,error,loading} = useAxios('http://localhost:7000/api/count-item')
 
     return(<>
-        {/* <div className="flex justify-between gap-10 px-10 text-white py-5 flex-wrap"> */}
-        {itemsCount?
+        {!loading && !error?
         <>
         <div className="grid gap-5 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 py-5 px-2 sm:px-10 text-white">
             <div className="bg-[rgba(226,104,248,0.2)] min-h-32 shadow-md shadow-[rgba(226,104,248,1)] rounded-md hover:scale-105 flex flex-col justify-between">

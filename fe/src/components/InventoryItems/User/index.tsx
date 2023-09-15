@@ -60,6 +60,7 @@ const InventoryItemsUser = (props:any) => {
     .then(response => {
         console.log(response.data)
         toast.success("Item successfully requested",{theme:"dark"})
+        
         const socket = io('http://localhost:7000')
         console.log(socket)
         const notify:string = `${props.user} requested ${name}`

@@ -5,8 +5,8 @@ import {Fade} from 'react-reveal'
 import img from '../../../assets/images/laptop.png'
 import { toast } from "react-toastify";
 import EditItemModal from '../../Model/EditItem';
-import { useDispatch } from "react-redux";
-import { showItem } from "../../../features/showSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem, showItem } from "../../../features/showSlice";
 
 
 const InventoryItemsAdmin = (props:any) => {
@@ -14,12 +14,21 @@ const InventoryItemsAdmin = (props:any) => {
   const [del,setDel] = useState(false)
   const [showEditItem,setShowEditItem] = useState(false)
 
+  const addItemState = useSelector((state:any)=>{
+    return state.addItem
+  })
+  const itemValue = useSelector((state:any)=>{
+    return state.item
+  })
+
+  //Get inventory data as items
   useEffect(()=>{
     axios.get('http://localhost:7000/api/admin/list-item')
-    .then(res=>setItems(res.data))
+    .then(res=>{setItems(res.data)})
     .catch(e=>console.log(e))
     setDel(false)
-  },[del])
+    dispatch(addItem(false))
+  },[del,addItemState,itemValue])
 
   const handleDelete =(name:string)=>{
     axios.delete('http://localhost:7000/api/admin/delete-item',{data:{

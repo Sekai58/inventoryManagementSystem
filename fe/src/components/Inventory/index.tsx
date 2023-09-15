@@ -8,24 +8,24 @@ import InventoryItemsUser from '../InventoryItems/User';
 import InventoryItemsAdmin from '../InventoryItems/Admin';
 import AddItemModal from '../Model';
 import RequestedItems from './RequestedItems';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../features/showSlice';
 
 const ProtectedRoute = () => {
   const [data, setData] = useState<IUser>({userName:'',role:''});
   const [field,setField] = useState('allitems')
   const [query,setQuery] = useState('')
   const [showAddItem,setShowAddItem] = useState(false)
-  const [refreshItem,setRefreshItem] = useState(false)
   const [socket,setSocket] = useState<any>(null)
   const [notification,setNotification] = useState('')
-  const [showNotification,setShowNotification] = useState(true)
+  const [showNotification,setShowNotification] = useState(false)
 
+  const dispatch = useDispatch()
+
+  //Model add item close
   const handleClose = ()=>{
     setShowAddItem(false)
-    setRefreshItem(true)
-  }
-
-  const handleAdd = ()=>{
-    setShowAddItem(true)
+    dispatch(addItem(true))
   }
 
   //Connection between user and Admin
@@ -50,6 +50,7 @@ const ProtectedRoute = () => {
   })  
   })
 
+  //Get user info i.e. username and role
   useEffect(() => {
     const fetchdata = async()=>{
       await axios.post('http://localhost:7000/api/user/auth',{}, {
@@ -69,11 +70,9 @@ const ProtectedRoute = () => {
     if(!showAddItem){
       fetchdata()
       setShowAddItem(false)
-      setRefreshItem(false)
     }
-  }, [refreshItem,showAddItem,field]);
+  }, []);
 
-  console.log("here",refreshItem)
   return (
     <div className='sm:px-10'>
         <div className={`${showAddItem?'solid':'hidden'}`}>
@@ -111,7 +110,7 @@ const ProtectedRoute = () => {
             <button className={`px-3 py-1 rounded-t-md ${(field=='requested')?'bg-[#232323]':'bg-[#24243b]'}`} onClick={()=>{setField("requested")}}>Requested</button>
           </div>
           <div className={`${data.role==='ADMIN'?'solid':'hidden'}`}>
-            <button className='px-2 py-[2px] border-2 rounded-md text-[#ffffff] border-[#7878bc] hover:scale-105 hover:bg-[#7878bc]' onClick={()=>handleAdd()}><span className='text-red-500'>&#10006;</span>Add Item</button>
+            <button className='px-2 py-[2px] border-2 rounded-md text-[#ffffff] border-[#7878bc] hover:scale-105 hover:bg-[#7878bc]' onClick={()=>setShowAddItem(true)}><span className='text-red-500'>&#10006;</span>Add Item</button>
           </div>          
         </div>
 
@@ -130,7 +129,7 @@ const ProtectedRoute = () => {
             </div>
             
             <div className="h-[0.8px] bg-gradient-to-r to-[#343434] via-[#7878bc] from-[#343434] mb-3"></div> 
-            {(data.role=='ADMIN')?<InventoryItemsAdmin query={query} socket={socket}/>:<InventoryItemsUser query={query} user={data.userName} socket={socket} /> } 
+            {(data.role=='ADMIN')?<InventoryItemsAdmin query={query}/>:<InventoryItemsUser query={query} user={data.userName} /> } 
                
           </div>
         </>

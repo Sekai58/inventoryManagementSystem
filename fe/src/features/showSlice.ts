@@ -24,15 +24,29 @@ export const itemSlice = createSlice({
     initialState:editItem,
     reducers:{
         showItem:(state,action)=>{
-            console.log("payload here",action.payload)
+            // console.log("payload here",action.payload)
            state ={ ...state, ...action.payload}
-           console.log("state here",state)
+        //    console.log("state here",state)
            return state
+        },
+    }
+})
+
+const initialaddItem:any = {value:false}
+export const addItemSlice = createSlice({
+    name:"addItem",
+    initialState:initialaddItem,
+    reducers:{
+        addItem:(state,action)=>{
+            state.value =  action.payload
+            return state
         }
     }
 })
 
 export const {showAuthenticate,authenticate,unauthenticate} = showSlice.actions
 export const {showItem} = itemSlice.actions
+export const {addItem} = addItemSlice.actions
 
-export default {first:showSlice.reducer,second:itemSlice.reducer}
+
+export default {first:showSlice.reducer,second:itemSlice.reducer,third:addItemSlice.reducer}

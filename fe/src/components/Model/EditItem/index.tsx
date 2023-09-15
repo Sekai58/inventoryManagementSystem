@@ -1,22 +1,18 @@
 // AddItemModal.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IItems } from '../../../types/User';
 import axios from 'axios';
 import {toast } from 'react-toastify';
 import {Zoom} from 'react-reveal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { showItem } from '../../../features/showSlice';
 
 interface EditItemModalProps {
   onClose: () => void;
 }
 
 const EditItemModal: React.FC<EditItemModalProps> = ({onClose}) => {
-  const itemValue = useSelector((state:any)=>{
-    console.log("redux here",state.item)
-    return state.item
-  })
-
     const {
         register,
         handleSubmit,
@@ -24,16 +20,25 @@ const EditItemModal: React.FC<EditItemModalProps> = ({onClose}) => {
         formState: { errors },
       } = useForm<IItems>();
 
+      const itemValue = useSelector((state:any)=>{
+        return state.item
+      })
+
+      useEffect(()=>{
+        reset(itemValue)
+      },[itemValue])
+
+      const dispatch =useDispatch()
       const onSubmit: SubmitHandler<IItems> = async (data,e) => {
         e?.preventDefault()
-        await axios.post("http://localhost:7000/api/admin/add-item",data)
+        await axios.put("http://localhost:7000/api/admin/edit-item",{...data,"_id":itemValue._id})
         .then(res=>{console.log("Ack state",res.data)
           toast.success("Success")
           onClose()
         })
         .catch(error=>{console.log(error)
         toast.error(error.message)})
-        console.log(data);
+        dispatch(showItem({_id:'',name:'',available:0,reserved:0}))
         reset();
       };
 
@@ -53,12 +58,12 @@ const EditItemModal: React.FC<EditItemModalProps> = ({onClose}) => {
       {errors.name && <p className='text-red-400'>{errors.name.message}</p>}
       <div className='flex gap-4 justify-between'>
         <label className="text-[#ffffff] ">Available:</label>
-        <input type="number" value={itemValue.available} placeholder='Enter quantity' {...register('available', { required: 'Enter quantity'})} className=" mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black" />
+        <input type="number" defaultValue={itemValue.available} placeholder='Enter quantity' {...register('available', { required: 'Enter quantity'})} className=" mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black" />
       </div>
       {errors.available && <p className='text-red-400'>{errors.available.message}</p>}
       <div className='flex gap-4 justify-between'>
         <label className="text-[#ffffff] ">Reserved:</label>
-        <input type="number" value={itemValue.reserved} placeholder='Enter quantity' {...register('reserved', { required: 'Enter reserved'})} className=" mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black" />
+        <input type="number" defaultValue={itemValue.reserved} placeholder='Enter quantity' {...register('reserved', { required: 'Enter reserved'})} className=" mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black" />
       </div>
       {errors.reserved && <p className='text-red-400'>{errors.reserved.message}</p>}
       <button type="submit" className="border-2 border-[#888787] bg-[#7878b2] text-[#ffffff] rounded-2xl px-2 py-2 hover:shadow-md hover:shadow-white hover:border-0">Edit Item</button>
