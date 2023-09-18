@@ -107,10 +107,12 @@ export const listRequestedItem= async()=>{
 export const deleteItem= async(item:any)=>{
     try{
         const requests = database.collection('requests')
+        const approved = database.collection('approved')
         const checkItem = await requests.findOne({"product_id":new ObjectId(item.product_id),"userName":item.userName})
         // const checkItem = await requests.findOne(item)
         console.log("check item to delete",checkItem,item)
         if (checkItem){
+            const approvedItem = await approved.insertOne({...checkItem,"date":new Date().toLocaleDateString()})
             const items = await requests.deleteOne({"product_id":new ObjectId(item.product_id),"userName":item.userName})
             console.log("checking item name",item)
             const inventory = database.collection('inventory')
@@ -132,6 +134,34 @@ export const deleteItem= async(item:any)=>{
     }
 }
 
+export const listApprovedItem= async()=>{
+    try{
+        const pipeline = [
+            {
+              $lookup: {
+                from: 'inventory', 
+                localField: 'product_id', // Field in the "requests" collection that references products
+                foreignField: '_id', // Field in the "products" collection that matches the reference
+                as: 'productInfo', // Alias for the joined product information
+              },
+            },
+            {
+                $unwind: '$productInfo', // Unwind the productInfo array
+              },
+              {
+                $addFields: { productInfo: '$productInfo' }, // Replace the root with the productInfo object
+              },
+          ];
+
+        const result = await database.collection('approved').aggregate(pipeline).toArray();
+        // console.log(result);
+        return result
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}
 
 export const countItems= async()=>{
     try{
@@ -168,7 +198,7 @@ export const editItem= async(item:any)=>{
         const checkItem = await inventory.findOne({"_id":new ObjectId(item._id)})
         console.log(checkItem)
         if(checkItem){
-            const items = await inventory.updateOne({"_id":new ObjectId(item._id)},{"$set":{"available":item.available,"reserved":item.reserved,"name":item.name}})
+            const items = await inventory.updateOne({"_id":new ObjectId(item._id)},{"$set":{"available":Number(item.available),"reserved":Number(item.reserved),"name":item.name}})
             return items
         }
         else{

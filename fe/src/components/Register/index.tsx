@@ -14,6 +14,7 @@ type Inputs = {
   password:string,
 }
 
+//UNCOMMENT FOR ORIGINAL
 const Forms=()=> {
   const navigate = useNavigate()
   const {
@@ -75,5 +76,8 @@ const Forms=()=> {
     </Fade>
   )
 }
+//UP TO HERE
+
+
 
 export default Forms

@@ -6,6 +6,7 @@ const router = Router();
 
 const routes = () => {
     router.get("/list-requested-item",UserController.listRequestedItem)
+    router.get("/list-approved-item",UserController.listApprovedItem)
     router.post('/user/requests',UserController.requestItem)
     router.post('/admin/add-item',UserController.addItem)
     router.get('/admin/list-item',UserController.listItems)

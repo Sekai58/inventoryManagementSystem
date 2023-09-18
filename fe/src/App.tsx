@@ -26,13 +26,15 @@ function App() {
 
   return (
     <div className='p-4 pl-9 bg-gradient-to-r from-[#0b0b0b] via-[#383838] to-[#060606]'>
+    {/* <div className='p-4 pl-9 bg-[#f6f5f5]'> */}
+    {/* // <div className='p-4 pl-9 bg-hero-pattern bg-cover'> */}
       <main className='py-20 min-h-screen'>
       <BrowserRouter>
       <Navbar />
         <Routes>
           <Route path='/*' element={<Home/>}></Route>
           <Route path="/register/*" element={<Forms/>}></Route>
-          <Route path="/login/*" element={(data) ? <Navigate to="/" /> : <Login />} />
+          <Route path="/login/*" element={(data) ? <Navigate to="/auth" /> : <Login />} />
           <Route path="/auth/*" element={data ? <ProtectedRoute /> : <Navigate to="/login" />} />
           <Route path="/logout" element={<Navigate to='/login' replace />} />
           <Route path="/forgetpassword/*" element={<ForgetPassword />} />

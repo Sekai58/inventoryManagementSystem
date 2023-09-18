@@ -9,7 +9,8 @@ import InventoryItemsAdmin from '../InventoryItems/Admin';
 import AddItemModal from '../Model';
 import RequestedItems from './RequestedItems';
 import { useDispatch } from 'react-redux';
-import { addItem } from '../../features/showSlice';
+import { addItem, roleSlice, showRole } from '../../features/showSlice';
+import ApprovedItems from './ApprovedItems';
 
 const ProtectedRoute = () => {
   const [data, setData] = useState<IUser>({userName:'',role:''});
@@ -60,6 +61,7 @@ const ProtectedRoute = () => {
       })
       .then(response => {
           console.log("user data here",response.data)
+          dispatch(showRole(data))
         setData(response.data);
       })
       .catch(error => {
@@ -107,7 +109,8 @@ const ProtectedRoute = () => {
         <div className='flex text-[#8a8a8b] justify-between'>
           <div>
             <button className={`px-3 py-1 mr-2 rounded-t-md ${(field=='allitems')?'bg-[#232323]':'bg-[#24243b]'}`} onClick={()=>{setField("allitems")}}>All items</button>
-            <button className={`px-3 py-1 rounded-t-md ${(field=='requested')?'bg-[#232323]':'bg-[#24243b]'}`} onClick={()=>{setField("requested")}}>Requested</button>
+            <button className={`px-3 py-1 mr-2 rounded-t-md ${(field=='requested')?'bg-[#232323]':'bg-[#24243b]'}`} onClick={()=>{setField("requested")}}>Requested</button>
+            <button className={`px-3 py-1 rounded-t-md ${(field=='approved')?'bg-[#232323]':'bg-[#24243b]'}`} onClick={()=>{setField("approved")}}>Approved</button>
           </div>
           <div className={`${data.role==='ADMIN'?'solid':'hidden'}`}>
             <button className='px-2 py-[2px] border-2 rounded-md text-[#ffffff] border-[#7878bc] hover:scale-105 hover:bg-[#7878bc]' onClick={()=>setShowAddItem(true)}><span className='text-red-500'>&#10006;</span>Add Item</button>
@@ -120,6 +123,7 @@ const ProtectedRoute = () => {
         </div>
         </>
         :<>
+        {(field=='approved' && data)?<div className='bg-[#232323] py-2 px-3 text-[#c3c3c4] rounded-b-md rounded-r-md'><ApprovedItems user={data} query={query}/></div>:<>
           <div className='bg-[#232323] py-2 px-3 text-[#c3c3c4] rounded-b-md rounded-r-md'>
             <div className='flex justify-between pb-2'>
             <p className='flex-1'>Name</p>
@@ -127,11 +131,12 @@ const ProtectedRoute = () => {
             <p className='flex-1'>Reserved</p>
             <p className='flex-1'>Action</p>
             </div>
-            
             <div className="h-[0.8px] bg-gradient-to-r to-[#343434] via-[#7878bc] from-[#343434] mb-3"></div> 
             {(data.role=='ADMIN')?<InventoryItemsAdmin query={query}/>:<InventoryItemsUser query={query} user={data.userName} /> } 
                
           </div>
+          </>
+        }
         </>
         )}
         </div>

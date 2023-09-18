@@ -54,6 +54,17 @@ export const deleteItem = async (req:Request,res:Response,next:NextFunction)=>{
     }
 }
 
+export const listApprovedItem = async (req:Request,res:Response,next:NextFunction)=>{
+    try{
+        res.status(201).json(await UserService.listApprovedItem())
+    }
+    catch(e){
+        console.log(e)
+       next(e)
+        //res.status(500).json(e)
+    }
+}
+
 export const countItems = async (req:Request,res:Response)=>{
     try{
         res.status(201).json(await UserService.countItems())

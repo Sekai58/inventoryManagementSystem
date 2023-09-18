@@ -49,6 +49,16 @@ export const deleteItem = (item:any)=>{
     }
 }
 
+export const listApprovedItem = ()=>{
+    try{
+        return UserRepository.listApprovedItem()
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}
+
 export const countItems = ()=>{
     try{
         return UserRepository.countItems()

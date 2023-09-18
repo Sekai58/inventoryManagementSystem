@@ -18,6 +18,18 @@ export const showSlice = createSlice({
     }
 })
 
+const initialRole={}
+export const roleSlice = createSlice({
+    name: "role",
+    initialState:initialRole,
+    reducers:{
+        showRole:(state,action)=>{
+            state = {...state,...action.payload}
+            return state
+        }
+    }
+})
+
 const editItem ={_id:'',name:'',available:0,reserved:0}
 export const itemSlice = createSlice({
     name: "item",
@@ -47,6 +59,7 @@ export const addItemSlice = createSlice({
 export const {showAuthenticate,authenticate,unauthenticate} = showSlice.actions
 export const {showItem} = itemSlice.actions
 export const {addItem} = addItemSlice.actions
+export const {showRole} = roleSlice.actions
 
 
-export default {first:showSlice.reducer,second:itemSlice.reducer,third:addItemSlice.reducer}
+export default {first:showSlice.reducer,second:itemSlice.reducer,third:addItemSlice.reducer,role:roleSlice.reducer}
