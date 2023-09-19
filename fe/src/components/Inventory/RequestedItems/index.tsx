@@ -32,7 +32,7 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
   }, [approve]);
 
   const handleApprove =(id:any,userName:string)=>{
-    axios.delete('http://localhost:7000/api/user/requests',{data:{
+    axios.delete(`http://localhost:7000/api/user/requests/${id}`,{data:{
       product_id:id,
       userName:userName
     }})
@@ -64,7 +64,7 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
                 <div className="flex-1">{item.userName}</div>
                 <img src={img} className="h-8 w-10 mr-2"/>
                 <div className="flex-1">{item.productInfo.name}</div>
-                <div className="flex-1"><button className="px-2 py-1 bg-[#cbbf34] bg-opacity-10 border-2 border-[#cbbf34] rounded-md hover:bg-opacity-30 hover:text-white" onClick={()=>{handleApprove(item.product_id,item.userName)}}>Approve</button></div>
+                <div className="flex-1"><button className="px-2 py-1 bg-[#cbbf34] bg-opacity-10 border-2 border-[#cbbf34] rounded-md hover:bg-opacity-30 hover:text-white" onClick={()=>{handleApprove(item._id,item.userName)}}>Approve</button></div>
               </div>
               <div className=" mt-2 h-[0.8px] bg-[#444444]"></div>
             </div>

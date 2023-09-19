@@ -43,9 +43,10 @@ export const listRequestedItem = async (req:Request,res:Response,next:NextFuncti
     }
 }
 
-export const deleteItem = async (req:Request,res:Response,next:NextFunction)=>{
+export const approveItem = async (req:Request,res:Response,next:NextFunction)=>{
     try{
-        res.status(201).json(await UserService.deleteItem(req.body))
+        console.log(req.params.id)
+        res.status(201).json(await UserService.approveItem(String(req.params.id)))
     }
     catch(e){
         console.log(e)
@@ -81,6 +82,15 @@ export const editItem = async (req:Request,res:Response)=>{
     }
     catch(e){
         console.log(e)
+        res.status(500).json(e)
+    }
+}
+
+export const deleteItem = async (req:Request,res:Response)=>{
+    try{
+        res.status(201).json(await UserService.deleteItem(req.params.id))
+    }
+    catch(e){
         res.status(500).json(e)
     }
 }

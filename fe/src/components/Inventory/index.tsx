@@ -9,7 +9,7 @@ import InventoryItemsAdmin from '../InventoryItems/Admin';
 import AddItemModal from '../Model';
 import RequestedItems from './RequestedItems';
 import { useDispatch } from 'react-redux';
-import { addItem, roleSlice, showRole } from '../../features/showSlice';
+import { addItem,showRole } from '../../features/showSlice';
 import ApprovedItems from './ApprovedItems';
 
 const ProtectedRoute = () => {
@@ -60,8 +60,9 @@ const ProtectedRoute = () => {
         },
       })
       .then(response => {
-          console.log("user data here",response.data)
-          dispatch(showRole(data))
+          // console.log("user data here",response.data)
+          localStorage.setItem("role",response.data.role)
+          dispatch(showRole({"role":response.data.role,"userName":response.data.userName}))
         setData(response.data);
       })
       .catch(error => {

@@ -39,9 +39,9 @@ export const listRequestedItem = ()=>{
     }
 }
 
-export const deleteItem = (item:any)=>{
+export const approveItem = (item:any)=>{
     try{
-        return UserRepository.deleteItem(item)
+        return UserRepository.approveItem(item)
     }
     catch(e){
         console.log(e)
@@ -76,5 +76,14 @@ export const editItem = (item:any)=>{
     catch(e){
         console.log(e)
         throw e
+    }
+}
+
+export const deleteItem = (item:string)=>{
+    try{
+        return UserRepository.deleteItem(item)
+    }
+    catch(e){
+        console.log(e)
     }
 }

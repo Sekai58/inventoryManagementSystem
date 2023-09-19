@@ -17,10 +17,16 @@ export const registerUser = async(user:Partial<IUser>)=>{
         const checkEmail = await users.findOne({"email":user.email})
         console.log(checkEmail,checkUserName)
         if(checkUserName){
-            throw Error("UserName taken")
+            const error = new Error
+            error.message = "Username taken"
+            error.name = '401'
+            throw error
         }
         if(checkEmail){
-            throw Error("Email taken")
+            const error = new Error
+            error.message = "Email taken"
+            error.name = '401'
+            throw error
         }
         user.password = await bcrypt.hash(user.password, 10)
         const newUser = {...user,role:'USER'}
@@ -81,18 +87,18 @@ export const authReset= async(user:Partial<IUser>,decoded:any)=>{
     }
 }
 
-export const deleteItem= async(item:IItem)=>{
-    try{
-        const inventory = database.collection('inventory')
-        const deleteItem = await inventory.deleteOne(item)
-        console.log("item inserted",deleteItem)
-        return deleteItem
-    }
-    catch(e){
-        throw e
-        return e
-    }
-}
+// export const deleteItem= async(item:IItem)=>{
+//     try{
+//         const inventory = database.collection('inventory')
+//         const deleteItem = await inventory.deleteOne(item)
+//         console.log("item inserted",deleteItem)
+//         return deleteItem
+//     }
+//     catch(e){
+//         throw e
+//         return e
+//     }
+// }
 
 // export const listItems= async()=>{
 //     try{

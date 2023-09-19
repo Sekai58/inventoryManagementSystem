@@ -73,24 +73,20 @@ export const requestItem= async(item:any)=>{
 
 export const listRequestedItem= async()=>{
     try{
-        // const inventory = database.collection('requests')
-        // const items = await inventory.find({}).toArray()
-        // console.log(items)
-        // return items
         const pipeline = [
             {
               $lookup: {
                 from: 'inventory', 
-                localField: 'product_id', // Field in the "requests" collection that references products
-                foreignField: '_id', // Field in the "products" collection that matches the reference
-                as: 'productInfo', // Alias for the joined product information
+                localField: 'product_id', 
+                foreignField: '_id', 
+                as: 'productInfo',
               },
             },
             {
-                $unwind: '$productInfo', // Unwind the productInfo array
+                $unwind: '$productInfo',
               },
               {
-                $addFields: { productInfo: '$productInfo' }, // Replace the root with the productInfo object
+                $addFields: { productInfo: '$productInfo' },
               },
           ];
 
@@ -104,22 +100,24 @@ export const listRequestedItem= async()=>{
     }
 }
 
-export const deleteItem= async(item:any)=>{
+export const approveItem= async(item:any)=>{
     try{
         const requests = database.collection('requests')
         const approved = database.collection('approved')
-        const checkItem = await requests.findOne({"product_id":new ObjectId(item.product_id),"userName":item.userName})
+        console.log(item)
+        // const checkItem = await requests.findOne({"product_id":new ObjectId(item.product_id),"userName":item.userName})
+        const checkItem = await requests.findOne({"_id":new ObjectId(item)})
         // const checkItem = await requests.findOne(item)
         console.log("check item to delete",checkItem,item)
         if (checkItem){
             const approvedItem = await approved.insertOne({...checkItem,"date":new Date().toLocaleDateString()})
-            const items = await requests.deleteOne({"product_id":new ObjectId(item.product_id),"userName":item.userName})
+            const items = await requests.deleteOne(checkItem)
             console.log("checking item name",item)
             const inventory = database.collection('inventory')
-            const checkavailable = await inventory.findOne({"_id":new ObjectId(item.product_id)})
+            const checkavailable = await inventory.findOne({"_id":new ObjectId(checkItem.product_id)})
             console.log("availablecheck",checkavailable)
             if(checkavailable.available>0 && checkavailable.reserved>0){
-                const updateItem = await inventory.updateOne({"_id":new ObjectId(item.product_id)},{"$inc":{"available":-1,"reserved":-1}})
+                const updateItem = await inventory.updateOne({"_id":new ObjectId(checkItem.product_id)},{"$inc":{"available":-1,"reserved":-1}})
             }
         }
         else{
@@ -140,16 +138,16 @@ export const listApprovedItem= async()=>{
             {
               $lookup: {
                 from: 'inventory', 
-                localField: 'product_id', // Field in the "requests" collection that references products
-                foreignField: '_id', // Field in the "products" collection that matches the reference
-                as: 'productInfo', // Alias for the joined product information
+                localField: 'product_id',
+                foreignField: '_id',
+                as: 'productInfo',
               },
             },
             {
-                $unwind: '$productInfo', // Unwind the productInfo array
+                $unwind: '$productInfo',
               },
               {
-                $addFields: { productInfo: '$productInfo' }, // Replace the root with the productInfo object
+                $addFields: { productInfo: '$productInfo' },
               },
           ];
 
@@ -208,5 +206,25 @@ export const editItem= async(item:any)=>{
     catch(e){
         console.log(e)
         throw e
+    }
+}
+
+export const deleteItem= async(item:string)=>{
+    try{
+        const inventory = database.collection('inventory')
+        console.log("id here at repo",item)
+        const checkItem = await inventory.findOne({"_id":new ObjectId(String(item))})
+        if (checkItem){
+            const deleteItem = await inventory.deleteOne({"_id":new ObjectId(String(item))})
+        }
+        else{
+            throw Error("Item not found")
+        }
+        console.log("item inserted",deleteItem,checkItem)
+        return deleteItem
+    }
+    catch(e){
+        throw e
+        return e
     }
 }

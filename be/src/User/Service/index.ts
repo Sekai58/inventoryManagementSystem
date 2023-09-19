@@ -112,14 +112,14 @@ export const authReset = (user:Partial<IUser>,decoded:any)=>{
     }
 }
 
-export const deleteItem = (item:IItem)=>{
-    try{
-        return UserRepository.deleteItem(item)
-    }
-    catch(e){
-        console.log(e)
-    }
-}
+// export const deleteItem = (item:IItem)=>{
+//     try{
+//         return UserRepository.deleteItem(item)
+//     }
+//     catch(e){
+//         console.log(e)
+//     }
+// }
 
 // export const listItems = ()=>{
 //     try{

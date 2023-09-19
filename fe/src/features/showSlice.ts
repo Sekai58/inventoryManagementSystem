@@ -56,10 +56,23 @@ export const addItemSlice = createSlice({
     }
 })
 
+const initialTheme = {dark:true}
+export const themeSlice = createSlice({
+    name:"theme",
+    initialState:initialTheme,
+    reducers:{
+        changeTheme:(state)=>{
+            state =  {...state,dark:!state.dark}
+            return state
+        }
+    }
+})
+
 export const {showAuthenticate,authenticate,unauthenticate} = showSlice.actions
 export const {showItem} = itemSlice.actions
 export const {addItem} = addItemSlice.actions
 export const {showRole} = roleSlice.actions
+export const {changeTheme} = themeSlice.actions
 
 
-export default {first:showSlice.reducer,second:itemSlice.reducer,third:addItemSlice.reducer,role:roleSlice.reducer}
+export default {first:showSlice.reducer,second:itemSlice.reducer,third:addItemSlice.reducer,role:roleSlice.reducer,theme:themeSlice.reducer}

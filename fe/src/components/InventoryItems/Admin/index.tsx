@@ -30,9 +30,8 @@ const InventoryItemsAdmin = (props:any) => {
     dispatch(addItem(false))
   },[del,addItemState,itemValue])
 
-  const handleDelete =(name:string)=>{
-    axios.delete('http://localhost:7000/api/admin/delete-item',{data:{
-      name: name }})
+  const handleDelete =(id:string)=>{
+    axios.delete(`http://localhost:7000/api/admin/delete-item/${id}`)
     .then(response => {
         console.log(response.data)
         toast.success("Item successfully deleted",{theme:"dark"})
@@ -67,7 +66,7 @@ const InventoryItemsAdmin = (props:any) => {
     <div className="flex-1">{item.reserved}</div>
     <div className="flex-1 flex gap-3">
       <button><i className="fa-solid fa-pen-to-square text-[#7878bc] opacity-60 hover:opacity-100 hover:scale-110" onClick={()=>handleEdit(item)}></i></button>
-      <button><i className="fa-solid fa-delete-left text-[#fa4e4e] opacity-60 hover:opacity-100 hover:scale-110" onClick={()=>handleDelete(item.name)}></i></button></div>
+      <button><i className="fa-solid fa-delete-left text-[#fa4e4e] opacity-60 hover:opacity-100 hover:scale-110" onClick={()=>handleDelete(item._id)}></i></button></div>
     </Fade>
     </div>
     <div className={`h-[0.8px] bg-[#444444] ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}`}></div>  

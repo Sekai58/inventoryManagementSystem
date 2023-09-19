@@ -6,6 +6,7 @@ export const store = configureStore({
         show:showSlice.first,
         item:showSlice.second,
         addItem:showSlice.third,
-        role:showSlice.role
+        role:showSlice.role,
+        theme:showSlice.theme
     }
 })
