@@ -1,3 +1,4 @@
+import { all } from 'axios';
 import * as UserRepository from '../Repository'
 import { IUser,IItem } from '../Repository/User.types'
 const bcrypt = require('bcrypt');
@@ -109,6 +110,16 @@ export const authReset = (user:Partial<IUser>,decoded:any)=>{
     }
     catch(e){
         console.log(e)
+    }
+}
+
+export const listUser = async ()=>{
+    try{
+        const allusers = await UserRepository.listUser()
+        return allusers
+    }
+    catch(err){
+        throw err
     }
 }
 

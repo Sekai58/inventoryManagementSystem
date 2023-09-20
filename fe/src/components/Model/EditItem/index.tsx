@@ -13,6 +13,9 @@ interface EditItemModalProps {
 }
 
 const EditItemModal: React.FC<EditItemModalProps> = ({onClose}) => {
+
+    // const [close,setClose] = useState(false)
+
     const {
         register,
         handleSubmit,

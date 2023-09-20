@@ -8,7 +8,7 @@ export interface IItems{
     name:string,
     available:number,
     reserved:number,
-    // price:number
+    url:string
 }
 
 export interface IRequest{

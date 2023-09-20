@@ -91,7 +91,7 @@ export const listRequestedItem= async()=>{
           ];
 
         const result = await database.collection('requests').aggregate(pipeline).toArray();
-        // console.log(result);
+        console.log(result);
         return result
     }
     catch(e){

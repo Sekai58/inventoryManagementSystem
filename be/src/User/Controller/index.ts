@@ -49,6 +49,15 @@ export const authReset = async (req:Request,res:Response)=>{
     }
 }
 
+export const listUser = async (req:Request,res:Response)=>{
+    try{
+        res.status(201).json(await UserService.listUser())
+    }
+    catch(e){
+        res.status(500).json(e)
+    }
+}
+
 // export const deleteItem = async (req:Request,res:Response)=>{
 //     try{
 //         res.status(201).json(await UserService.deleteItem(req.body))

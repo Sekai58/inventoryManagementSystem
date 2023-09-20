@@ -129,32 +129,32 @@ const Forms=()=> {
       <h2 className="text-[#7878b2] font-semibold text-xl">SIGN UP</h2>
 
       <div>
-      <label className="text-[#d5d5d5]">Fullname:</label>
-      <input defaultValue="" placeholder="Enter name" {...register("firstName",{required:true})} className="py-2 px-2 bg-opacity-20 text-[#191919] border-0  border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
+      <label className={`${theme?'text-[#d5d5d5]':'text-[#191919]'}`}>Fullname:</label>
+      <input defaultValue="" placeholder="Enter name" {...register("firstName",{required:true})} className={`${theme?'text-[#d5d5d5]':'text-[#191919]'} py-2 px-2 bg-opacity-20 border-0  border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full`} />
       {errors.firstName && <span className="text-[#f34242]">{errors.firstName?.message}</span>}
       </div>
 
       <div>
-      <label className="text-[#d5d5d5]">Username:</label>
-      <input defaultValue="" placeholder="Enter username" {...register("userName",{required:true})} className="py-2 px-2 bg-opacity-20 text-[#191919] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
+      <label className={`${theme?'text-[#d5d5d5]':'text-[#191919]'}`}>Username:</label>
+      <input defaultValue="" placeholder="Enter username" {...register("userName",{required:true})} className={`${theme?'text-[#d5d5d5]':'text-[#191919]'} py-2 px-2 bg-opacity-20 border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full`} />
       {errors.userName && <span className="text-[#f34242]">This field is required</span>}
       </div>
       
       <div>
-      <label className="text-[#d5d5d5]">Email:</label>
-      <input placeholder="Enter email" {...register("email", { required: true,pattern:/^[\w\.-]+@[\w\.-]+\.\w+$/ })} className="py-2 px-2 bg-opacity-20 text-[#fffdfd] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
+      <label className={`${theme?'text-[#d5d5d5]':'text-[#191919]'}`}>Email:</label>
+      <input placeholder="Enter email" {...register("email", { required: true,pattern:/^[\w\.-]+@[\w\.-]+\.\w+$/ })} className={`${theme?'text-[#d5d5d5]':'text-[#191919]'} py-2 px-2 bg-opacity-20 border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full`} />
       {errors.email && <span className="text-[#f34242] ">Incorrect email</span>}
       </div>
 
       <div>
-      <label className="text-[#d5d5d5]">Password:</label>
-      <input type="password" placeholder='Enter password' {...register('password', { required: 'Password is required',pattern:/^.{6,}$/ })} className=" mb-3 py-2 px-2 bg-opacity-20 text-[#191919] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
+      <label className={`${theme?'text-[#d5d5d5]':'text-[#191919]'}`}>Password:</label>
+      <input type="password" placeholder='Enter password' {...register('password', { required: 'Password is required',pattern:/^.{6,}$/ })} className={`${theme?'text-[#d5d5d5]':'text-[#191919]'} mb-3 py-2 px-2 bg-opacity-20 border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full`} />
       {errors.password && <p className='text-red-400'>{errors.password.message}</p>}
       </div>
       
       <div>
-      <label className="text-[#d5d5d5]">Gender:</label>
-      <div className="flex justify-between text-[#d5d5d5]">
+      <label className={`${theme?'text-[#d5d5d5]':'text-[#191919]'}`}>Gender:</label>
+      <div className={`${theme?'text-[#d5d5d5]':'text-[#000000]'} flex justify-between`}>
         <div><input type="radio" value="male" className="checked:bg-slate-400 text-slate-400 focus:border-white" {...register("gender",{required:true})} checked /><span className="px-1">MALE</span></div>
         <div><input type="radio" value="female" className="checked:bg-slate-400 text-slate-400 focus:border-white" {...register("gender",{required:true})} /><span className="px-1">FEMALE</span></div>
         <div><input type="radio" value="other" className="checked:bg-slate-400 text-slate-400 border-0 focus:border-white" {...register("gender",{required:true})} /><span className="px-1">OTHER</span></div>

@@ -12,7 +12,7 @@ const routes = () => {
     router.post("/user/auth",verifyJwt,UserController.authUser)
     router.post('/user/resetpassword',UserController.resetPassword)
     router.post('/user/auth/resetpassword',verifyJwt,UserController.authReset)
-    // router.delete('/admin/delete-item',UserController.deleteItem)
+    router.get('/admin/list-user',UserController.listUser)
     return router;
 }
 

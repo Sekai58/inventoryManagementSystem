@@ -2,14 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto'
+import {useSelector} from 'react-redux'
 
 interface IPiechart {
     available:number,
     reserved:number
 }
 
+
+
 export const DoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
-  console.log("data",available,reserved)
+  const theme = useSelector((state:any)=>{
+    return state.theme.dark
+  })
+  
+  const colorNeutral = theme?'rgba(120,120,188,0.3)':'rgba(120,120,188,0.7)'
+  const colorReserved = theme?'rgba(209,13,72,0.3)':'rgba(209,13,72,0.7)'
+  const colorAvailable = theme?'rgba(29, 207, 165,0.3)':'rgba(29, 207, 165,0.7)'
+  // console.log("data",available,reserved)
+ 
   const [chartData, setChartData] = useState({
     // labels: ['Unallocated','Reserved'],
     options: {
@@ -25,7 +36,8 @@ export const DoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
       {
         data: [available,reserved],
         borderWidth:1,
-        backgroundColor: ['rgba(120,120,188,0.6)','rgba(209,13,72,0.3)',],
+        // backgroundColor: ['rgba(120,120,188,0.6)','rgba(209,13,72,0.3)',],
+        backgroundColor: [colorNeutral,colorReserved,],
         borderColor: ['rgba(120,120,188)','rgba(204,39,66)'],
       },
     ],
@@ -38,7 +50,7 @@ export const DoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
         {
           data: [available,reserved],
           borderWidth:1,
-          backgroundColor: ['rgba(29, 207, 165,0.3)','rgba(120,120,188,0.6)'],
+          backgroundColor: [colorAvailable,colorNeutral],
           borderColor: ['rgba(29, 207, 165)','rgba(120,120,188)',],
         },
       ]
@@ -63,20 +75,28 @@ export const DoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
 
 //BarChart
 export const BarChart = () => {
+
+  const theme = useSelector((state:any)=>{
+    return state.theme.dark
+  })
+  
+  const colorReserved = theme?'rgba(209,13,72,0.3)':'rgba(209,13,72,0.7)'
+  const colorAvailable = theme?'rgba(29, 207, 165,0.3)':'rgba(29, 207, 165,0.7)'
+
   const data = {
     labels: ['January', 'February', 'March', 'April', 'May'],
     datasets: [
       {
         label: 'Unallocated',
         data: [12, 19, 3, 5, 2],
-        backgroundColor: 'rgba(29, 207, 165,0.3)',
+        backgroundColor: colorAvailable,
         borderColor: 'rgba(29, 207, 165,1)',
         borderWidth: 1,
       },
       {
         label: 'Reserved',
         data: [4, 5, 3, 6, 10],
-        backgroundColor: 'rgba(209,13,72,0.3)', 
+        backgroundColor: colorReserved, 
         borderColor: 'rgba(209,13,72,1)', 
         borderWidth: 1,
       },

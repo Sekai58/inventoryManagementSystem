@@ -124,17 +124,17 @@ const Login: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center px-20 gap-5 border-0 rounded-r-xl w-full h-full p-5 bg-transparent bg-opacity-10'>
       <h2 className="text-[#7878b2] font-semibold text-xl">LOG IN</h2>
         <div>
-          <label className="text-[#d5d5d5]">Username:</label>
-          <input type="text" placeholder='Enter name' {...register('userName', { required: 'Username is required'})} className=" mb-2 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
+          <label className={`${theme?'text-[#d5d5d5]':'text-[#24243b]'}`}>Username:</label>
+          <input type="text" placeholder='Enter name' {...register('userName', { required: 'Username is required'})} className={`${theme?'text-[#d5d5d5]':'text-[#000000]'} mb-2 py-2 px-2 bg-opacity-20 border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full`} />
           {errors.userName && <p className='text-red-400'>{errors.userName.message}</p>}
         </div>
         <div>
-          <label className="text-[#d5d5d5]">Password:</label>
-          <input type="password" placeholder='Enter password' {...register('password', { required: 'Password is required',pattern:/^.{6,}$/ })} className=" mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
+          <label className={`${theme?'text-[#d5d5d5]':'text-[#24243b]'}`}>Password:</label>
+          <input type="password" placeholder='Enter password' {...register('password', { required: 'Password is required',pattern:/^.{6,}$/ })} className={`${theme?'text-[#d5d5d5]':'text-[#000000]'} mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full`} />
           {errors.password && <p className='text-red-400'>{errors.password.message}</p>}
         </div>
         <div className='flex justify-between'>
-        <a href='/forgetpassword' className='text-[#d5d5d5] font-serif font-medium flex-1 hover:scale-105'>Forget Password?</a>
+        <a href='/forgetpassword' className={`${theme?'text-[#d5d5d5]':'text-[#24243b]'} font-serif font-medium flex-1 hover:scale-105`}>Forget Password?</a>
         <button type="submit" className="flex-1 border-2 border-[#888787] bg-[#7878b2] text-[#ffffff] rounded-2xl px-2 py-2 hover:shadow-md hover:shadow-white hover:border-0">Login</button>
         </div>
       </form>

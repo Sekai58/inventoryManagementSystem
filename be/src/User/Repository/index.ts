@@ -53,7 +53,15 @@ export const loginUser= async(user:Partial<IUser>)=>{
 
 export const authUser= async(user:Partial<IUser>,decoded:any)=>{
     try{
-        return decoded
+        // console.log("at auth user",decoded)
+        const {userName,email,role,gender} = decoded
+        const userInfo = {
+            userName:userName,
+            email:email,
+            role:role,
+            gender:gender
+        }
+        return userInfo
     }
     catch(e){
         return e
@@ -78,12 +86,33 @@ export const resetPassword= async(user:Partial<IUser>)=>{
 export const authReset= async(user:Partial<IUser>,decoded:any)=>{
     try{
         const users = database.collection('users')
-        const updateUser = await users.updateOne({"email":decoded.email},{"$set": { "password":user.password }})
+        const updateUser = await users.updateOne({"email":decoded.email},{"$set": { "password":bcrypt.hash(user.password,10) }})
         // console.log("finding email from decoded value",decoded)
         return "Password updated"
     }
     catch(e){
         return e
+    }
+}
+
+export const listUser = async()=>{
+    try{
+        const users = database.collection('users')
+        const allUsers = database.collection('users').aggregate([
+            {
+              $project: {
+                userName: 1,
+                firstname:1,
+                email:1,
+                gender:1,
+                role:1
+              }
+            }
+          ]).toArray();          
+        return allUsers
+    }
+    catch(err){
+        throw err
     }
 }
 
