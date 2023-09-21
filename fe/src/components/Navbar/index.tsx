@@ -84,12 +84,12 @@ const Navbar = () => {
           <div className={`${theme?'text-[#ffffff]':'text-[#24243b]'} cursor-pointer`}>
           <i className={`fa-solid fa-star-and-crescent text-2xl mr-2 -rotate-45`} onClick={handleTheme}></i>
           </div>
-          <div className='hidden'>
+          <div className='lg:hidden'>
             <Link to="/login">
-              <button className=" px-4 py-1 mr-2 text-white border-[1.6px] border-[#7878bc] bg-transparent shadow-[#7878bc] shadow-sm hover:shadow-md hover:shadow-[#7878bc] rounded-md" >Log in</button>
+              <button className= {`px-4 py-1 mr-2  border-[1.6px] text-white ${theme?' border-[#7878bc] bg-transparent shadow-[#7878bc]':'bg-[#7878bc]'}    shadow-sm hover:shadow-md hover:shadow-[#7878bc] rounded-md`} >Log in</button>
             </Link>
           </div>
-          <div className='hidden'>
+          <div className='lg:hidden'>
             <Link to="/register">
               <button className="px-4 py-1 border-[1.5px] border-[#7878bc] bg-[#7878bc] shadow-[#ffffff] shadow-sm hover:shadow-md hover:shadow-[#ffffff] rounded-md text-white" >Sign up</button>
             </Link>

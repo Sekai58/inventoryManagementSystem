@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import {useNavigate } from 'react-router-dom';
 import {toast } from 'react-toastify';
 import LoadingBar from 'react-top-loading-bar';
+import { useSelector } from 'react-redux';
 
 type LoginFormInput = {
     email: string;
@@ -12,6 +13,10 @@ type LoginFormInput = {
 const ForgetPassword = ()=>{
     const navigate = useNavigate()
     const [progress,setProgress] =useState(0)
+    const theme = useSelector((state:any)=>{
+      console.log(state.theme)
+      return state.theme.dark
+    })
 
     const {
         register,
@@ -38,7 +43,7 @@ const ForgetPassword = ()=>{
     return<>
     {/* <div className="fixed top-30 right-0 "> <ToastContainer position="bottom-right" className=""/></div> */}
     <LoadingBar color="#7878bc"  progress={progress} onLoaderFinished={() => setProgress(0)} />
-      <div className="fixed top-0 left-0 min-h-screen w-full bg-black bg-opacity-80 z-[999] flex justify-center items-center">
+      <div className={`fixed top-0 left-0 min-h-screen w-full ${theme?'bg-black':'bg-white'} bg-opacity-80 z-[999] flex justify-center items-center`}>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justi gap-5 w-[70%] sm:w-[30%]  border-2 border-[#888787] p-5 bg-[#706b6b] bg-opacity-10 z-[89] shadow-[#121212] shadow-2xl'>
         <div>
         <label className="text-[#ffffff] ">Email:</label>

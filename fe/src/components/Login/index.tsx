@@ -112,14 +112,14 @@ const Login: React.FC = () => {
     <LoadingBar color="#7878bc"  progress={progress} onLoaderFinished={() => setProgress(0)} />
     <div className='flex justify-center rounded-xl'>
       < div className='flex justify-center items-center w-[1000px] shadow-2xl shadow-[#555454] rounded-xl'>
-        <div className={`border-0 rounded-l-xl flex flex-col text-white w-[30%] h-[550px] ${theme?'bg-[#2c2c2c]':'bg-white'}`}>
-        <div className='h-[30%] bg-[#7878bc] w-full border-0 rounded-br-[20px] rounded-tl-xl'></div>
+        <div className={`border-0 rounded-l-xl hidden lg:flex flex-col text-white w-[30%] h-[550px] ${theme?'bg-[#2c2c2c]':'bg-white'}`}>
+        <div className='h-[30%] bg-[#7878bc] w-full border-0 rounded-br-[20px] rounded-tl-xl '></div>
         <div className=' bg-[#7878bc] w-full flex items-end justify-end'><button className={`rounded-l-full ${theme?'bg-[#2c2c2c]':'bg-white'} pl-7 pr-5 py-3 text-[#7878bc] font-semibold`}>LOGIN</button></div>
         <div className="bg-[#7878bc] w-full flex items-end justify-end rounded-tr-[20px]"><button className="rounded-l-full rounded-tr-[20px] px-5 py-3 text-[#ffffff]"><Link to='/register'>SIGN UP</Link></button></div>
         <div className='h-full bg-[#7878bc] w-full border-0 text-end rounded-bl-xl'></div>
       </div>
       <Fade>
-      <div className={`w-[70%] h-[550px] ${theme?'':'bg-hero-pattern bg-cover'} rounded-r-xl`}>
+      <div className={`w-full lg:w-[70%] h-[550px] ${theme?'bg-[#2c2c2c] bg-opacity-70':'bg-hero-pattern bg-cover'} rounded-r-xl rounded-tr-2xl`}>
         {/* <div className='w-full h-full'></div> */}
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center px-20 gap-5 border-0 rounded-r-xl w-full h-full p-5 bg-transparent bg-opacity-10'>
       <h2 className="text-[#7878b2] font-semibold text-xl">LOG IN</h2>

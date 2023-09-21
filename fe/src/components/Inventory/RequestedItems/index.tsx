@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import {IUser } from "../../../types/User";
 import axios from "axios";
 import {Fade } from "react-reveal";
-// import img from '../../../assets/images/laptop.png'
+import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
 
 export interface IRequestedItems{
@@ -18,6 +18,10 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
 
   const theme = useSelector((state:any)=>{
     return state.theme.dark
+  })
+
+  const role = useSelector((status:any)=>{
+    return status.role.role
   })
 
   useEffect(() => {
@@ -63,35 +67,46 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
       <div className={`h-[400px] overflow-auto scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-x-hidden`}>
       {!loading ? (
         requests.map((item, idx) => (
-          <div key={idx}>
+          <div key={idx} className="flex flex-col">
+            <>
             {(user.role==='ADMIN')?<Fade>
-            <div key={idx} className={`flex flex-col justify-between py-5 ${item.productInfo.name.toLowerCase().includes(query)?'solid':'hidden'}`}>
+            <div key={idx} className={`flex flex-col justify-between py-4 ${item.productInfo.name.toLowerCase().includes(query)?'solid':'hidden'} ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
               <div className="flex flex-col justify-between">
-              <div className="flex justify-between items-center">
+              <div className={`flex justify-between items-center `}>
                 <div className="flex-1">{item.userName}</div>
                 <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
                 <div className="flex-1"><button className={`px-2 py-1 border-2 ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}  rounded-md  `} onClick={()=>{handleApprove(item._id,item.userName)}}>Approve</button></div>
               </div>
               </div>
-              <div className={`mt-2 h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div>
+              {/* <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div> */}
             </div>
             </Fade>
             :
             <Fade>
-            <div key={idx} className={`flex flex-col justify-between py-3 ${(item.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query))?"solid":"hidden"}`}>
+            <div key={idx} className={`flex flex-col justify-between py-4 ${(item.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query))?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
               <div className="flex flex-col justify-between">
               <div className="flex justify-between items-center">
                 <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
               </div>
               </div>
-              <div className={` mt-2 h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div>
+              {/* <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div> */}
             </div>
             </Fade>
-            }     
+            }   
+            </>
+            <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} ${(role=='USER')?(item.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query.toLowerCase()))?"solid":"hidden":item.productInfo.name.toLowerCase().includes(query.toLowerCase())?"solid":"hidden"}`}></div>
           </div>
         ))
       ) : (
-        <div>Loading... <img src='https://th.bing.com/th/id/OIP.Rs28iOxL2mhHWrvaDzQhTAHaHa?pid=ImgDet&rs=1'/></div>
+        <div className="h-full flex justify-center items-center">
+          <ClipLoader
+            color='#7878bc'
+            loading={loading}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
       )}
       </div>
     </div>

@@ -11,6 +11,7 @@ import RequestedItems from './RequestedItems';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem,showRole } from '../../features/showSlice';
 import ApprovedItems from './ApprovedItems';
+import { toast } from 'react-toastify';
 
 interface IUserInfo {
   firstname:string,
@@ -26,8 +27,8 @@ const ProtectedRoute = () => {
   const [query,setQuery] = useState('')
   const [showAddItem,setShowAddItem] = useState(false)
   const [socket,setSocket] = useState<any>(null)
-  const [notification,setNotification] = useState('')
-  const [showNotification,setShowNotification] = useState(false)
+  const [notification,setNotification] = useState<any>(['hithere','always here'])
+  const [showNotification,setShowNotification] = useState(true)
   const [userInfo,setUserInfo] = useState(false)
 
   const dispatch = useDispatch()
@@ -35,6 +36,9 @@ const ProtectedRoute = () => {
     return state.theme.dark
   })
 
+  const role = useSelector((state:any)=>{
+    return state.role.role
+  })
   //Model add item close
   const handleClose = ()=>{
     setShowAddItem(false)
@@ -57,7 +61,9 @@ const ProtectedRoute = () => {
   //Get notification and show in admin side
   useEffect(()=>{
     socket?.on('getMessage',(message:any)=>{console.log("notification from user",message)
-    setNotification(message)
+    const newArr = [...notification]
+    newArr.push(message)
+    setNotification(newArr)
     setShowNotification(true)
     localStorage.setItem("count",JSON.stringify(1))
   })  
@@ -89,12 +95,27 @@ const ProtectedRoute = () => {
   }, []);
 
   return (
-    <div className='sm:px-10 fixed w-[95%]'>
+    <>
+    <div className='sm:px-10 fixed  w-[95%]'>
         <div className={`${showAddItem?'solid':'hidden'}`}>
           <AddItemModal onClose={handleClose}/>
         </div>
       <Zoom>
       <div className={`min-h-[300px] ${theme?'bg-[rgba(34,33,33,0.5)] shadow-black shadow-2xl':'bg-[#ededfc] shadow-md'}  rounded-md`}>
+      {(showNotification==true && role==='ADMIN')?<>
+        <div className={`absolute top-1 right-0 z-10 flex flex-col justify-center  w-full sm:w-[30%] p-1 ${theme?'shadow-[#616060] shadow-2xl bg-[#3d3d3d] border-[#575757]':'shadow-[#898888] shadow-2xl bg-[#dbdbfa]'} rounded-lg`}>
+        <div className={`text-xl ${theme?'text-white':'text-[#24243b]'} px-[6px] rounded-full`} >
+                <i className="fa-solid fa-xmark hover:bg-red-500 rounded-full mx-1 p-1" onClick={()=>{setShowNotification(false);setNotification([])}}></i>
+              </div>
+          <div className={`${theme?'bg-[#3d3d3d] border-[#575757]':'bg-[#dbdbfa] border-[#b1b0b0]'} w-full text-red-400 shadow-md rounded-sm px-2 py-1`} onClick={()=>setShowNotification(true)}>
+            {notification.map((msg:any,idx:number)=>{return<div key={idx} className={`${theme?'bg-black bg-opacity-20':'bg-[#d2d1d1]'}  mb-1 flex justify-between py-[5px] pl-2`}>
+              <div>{msg}</div>
+              </div>})}
+          </div>
+        </div>
+        </>
+        :
+        <></>}
         <div className='w-full rounded-t-md flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center px-2 py-2'>
           <div className="relative text-[#818080]">
             <span className="absolute left-2 top-1"><i className="fa-solid fa-magnifying-glass"></i></span>
@@ -103,7 +124,7 @@ const ProtectedRoute = () => {
           <div className='flex gap-3 mb-2 pr-4'>
             <div className='relative'>
             <button><i className={`fa-regular fa-bell ${showNotification?'text-[#7878bc]':theme?'text-[#ffffff]':'text-[#24243b]'} text-2xl`} onClick={()=>setShowNotification(!showNotification)}></i></button>
-            <div className={`${(data.role=='ADMIN' && showNotification==true)?'solid':'hidden'} bg-black border-2 border-black bg-opacity-20 p-2 absolute top-7 right-0 text-white`}>{notification}</div>
+            {/* <div className={`${(data.role=='ADMIN' && showNotification==true)?'solid':'hidden'} bg-black border-2 border-black bg-opacity-20 p-2 absolute top-7 right-0 text-white`}>{notification}</div> */}
             </div>
             <div className='h-8 w-8 rounded-full flex justify-center items-center text-xl text-[#ebebfe]'>
               <img src='https://th.bing.com/th/id/R.a3c5b94042203277d3776f6bc7f11b75?rik=6kHHrWdSCAhwKA&pid=ImgRaw&r=0' className='h-8 w-8 rounded-full' onClick={()=>setUserInfo(!userInfo)} />
@@ -168,6 +189,7 @@ const ProtectedRoute = () => {
       </div>
       </Zoom>
     </div>
+    </>
   );
 };
 

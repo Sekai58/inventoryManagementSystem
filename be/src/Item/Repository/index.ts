@@ -14,7 +14,7 @@ const database = client.db('webdevelopment')
 export const addItem= async(item:IItem)=>{
     try{
         const inventory = database.collection('inventory')
-        const parsedItem = {"available":Number(item.available),"reserved":0}
+        const parsedItem = {"available":Number(item.available),"reserved":0,"url":item.url}
         const newItem = {...item,...parsedItem}
         const updateItem = await inventory.insertOne(newItem)
         console.log("item inserted",updateItem.insertedId)
@@ -52,13 +52,8 @@ export const requestItem= async(item:any)=>{
             throw err
         }
         else{
-            // const updateUser = await requests.insertOne(item)
-            // const updateItem = database.collection('inventory')
-            // const updated = await updateItem.updateOne({"name":item.name},{"$inc":{"reserved":1}})
-            // console.log("item inserted",updateUser.insertedId)
-            // return updateUser
-
-
+            const notification = database.collection('notification')
+            const addNotification = notification.insertOne({"message":item.message,"status":"Unread"})
             const insertItem = await requests.insertOne({"product_id":new ObjectId(item.id),"userName":item.userName})
             const updateItem = database.collection('inventory')
             const updated = await updateItem.updateOne({"_id":new ObjectId(item.id)},{"$inc":{"reserved":1}})
@@ -91,7 +86,7 @@ export const listRequestedItem= async()=>{
           ];
 
         const result = await database.collection('requests').aggregate(pipeline).toArray();
-        console.log(result);
+        // console.log(result);
         return result
     }
     catch(e){

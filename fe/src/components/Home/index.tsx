@@ -2,6 +2,8 @@ import {DoughnutChart,BarChart} from "../Chart"
 import useAxios from "../../libs/useAxios"
 import {useSelector} from 'react-redux'
 import { Navigate } from "react-router-dom"
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 const Home = ()=>{
     
@@ -57,7 +59,15 @@ const Home = ()=>{
         </div>
         </>
         :
-        <div className="text-white">Loading...</div>
+        <div className="h-full flex justify-center items-center">
+        <ClipLoader
+          color='#7878bc'
+          loading={loading}
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
         }
         </>
         :

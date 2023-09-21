@@ -2,7 +2,7 @@ import axios from "axios";
 import { IItems } from "../../../types/User";
 import {useEffect, useState} from 'react'
 import {Fade} from 'react-reveal'
-// import img from '../../../assets/images/laptop.png'
+import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
 import EditItemModal from '../../Model/EditItem';
 import { useDispatch, useSelector } from "react-redux";
@@ -64,7 +64,7 @@ const InventoryItemsAdmin = (props:any) => {
     <div className={`${showEditItem?'solid':'hidden'}`}>
       <EditItemModal onClose={()=>handleEditClose()}/>
     </div>
-    {!loading?(items.map((item,idx)=>{return<div key={idx}><div className={`flex justify-between items-center py-3 ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}`}>
+    {!loading?(items.map((item,idx)=>{return<div key={idx}><div className={`flex justify-between items-center py-4 ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
     <Fade>
     <div className="flex-1 flex"><img src={item.url} className="h-8 w-10 mr-2"/>{item.name}</div>
     <div className="flex-1">{item.available}</div>
@@ -74,8 +74,19 @@ const InventoryItemsAdmin = (props:any) => {
       <button><i className={`fa-solid fa-delete-left text-[#fa4e4e] ${theme?'opacity-60':'opacity-90'} hover:opacity-100 hover:scale-110`} onClick={()=>handleDelete(item._id)}></i></button></div>
     </Fade>
     </div>
-    <div className={`h-[0.8px] mt-2 ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}`}></div>  
-    </div>})):<>Loading...<img src='https://th.bing.com/th/id/OIP.Rs28iOxL2mhHWrvaDzQhTAHaHa?pid=ImgDet&rs=1'/></>}
+    <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}`}></div>  
+    </div>}))
+    :
+    <div className="h-full flex justify-center items-center">
+    <ClipLoader
+      color='#7878bc'
+      loading={loading}
+      size={150}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+    />
+    </div>
+    }
   </div>
   );
 };

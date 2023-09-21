@@ -1,7 +1,8 @@
 export interface IItem{
     name:string
     available:number,
-    reserved:number
+    reserved:number,
+    url:string
 }
 
 export interface IItemRequested{

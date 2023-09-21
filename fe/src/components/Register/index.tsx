@@ -120,7 +120,7 @@ const Forms=()=> {
       </div>
     <Fade>
     {/* <div className="sticky flex justify-center items-center h-full w-full"> */}
-    <div className={`${theme?'':'bg-hero-pattern bg-cover'} w-full lg:w-[70%] h-[550px] rounded-r-xl`}>
+    <div className={`${theme?'bg-[#2c2c2c] bg-opacity-70':'bg-hero-pattern bg-cover'} w-full lg:w-[70%] h-[550px] rounded-r-xl`}>
       {/* <div className="fixed top-30 right-0 z"> <ToastContainer position="bottom-right"/>
     </div> */}
     {/* <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 w-[70%] sm:w-[35%]  border-2 border-[#888787] p-5 bg-[#706b6b] bg-opacity-10 shadow-[#121212] shadow-2xl"> */}

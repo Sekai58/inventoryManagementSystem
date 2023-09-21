@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import useAxios from "../../libs/useAxios"
 import { useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Users:React.FC =()=>{
     const {itemsCount,loading,error}  = useAxios('http://localhost:7000/api/admin/list-user')
@@ -45,7 +46,15 @@ const Users:React.FC =()=>{
                 </div>
             </div>
             :
-            <div>Loading....</div>
+            <div className="h-full flex justify-center items-center">
+            <ClipLoader
+              color='#7878bc'
+              loading={loading}
+              size={150}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </div>
             }
         </div>
         :
