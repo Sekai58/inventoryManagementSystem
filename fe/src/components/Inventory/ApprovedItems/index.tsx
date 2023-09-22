@@ -52,7 +52,7 @@ const ApprovedItems: React.FC<IRequestedItems> = ({user,query}) => {
             {(user.role==='ADMIN')?<Fade>
             <div key={idx} className={`flex flex-col justify-between py-4 ${item.productInfo.name.toLowerCase().includes(query)?'solid':'hidden'}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
               <div className="flex justify-between items-center">
-                <div className="flex-1">{item.userName}</div>
+                <div className="flex-1 flex"><img src={item.userInfo.url} className="h-8 w-8 rounded-full mr-2"/>{item.userInfo.userName}</div>
                 <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
                 <div className="flex-1">{item.date}</div>
               </div>
@@ -61,7 +61,7 @@ const ApprovedItems: React.FC<IRequestedItems> = ({user,query}) => {
             </Fade>
             :
             <Fade>
-            <div key={idx} className={`flex flex-col justify-between py-3 ${(item.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query))?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
+            <div key={idx} className={`flex flex-col justify-between py-3 ${(item.userInfo.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query))?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
               <div className="flex justify-between items-center">
               <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
               <div className="flex-1">{item.date}</div>
@@ -71,7 +71,7 @@ const ApprovedItems: React.FC<IRequestedItems> = ({user,query}) => {
             </Fade>
             }  
             </>
-            <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} ${(role=='USER')?(item.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query.toLowerCase()))?"solid":"hidden":item.productInfo.name.toLowerCase().includes(query.toLowerCase())?"solid":"hidden"}`}></div>
+            <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} ${(role=='USER')?(item.userInfo.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query.toLowerCase()))?"solid":"hidden":item.productInfo.name.toLowerCase().includes(query.toLowerCase())?"solid":"hidden"}`}></div>
           </div>
         ))
       ) : (

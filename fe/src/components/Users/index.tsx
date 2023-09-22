@@ -33,7 +33,7 @@ const Users:React.FC =()=>{
                     <div key={idx} className={`flex flex-col justify-between py-5 `}>
                       <div className="flex flex-col justify-between">
                       <div className="flex justify-between items-center">
-                        <div className="flex-1">{user.userName}</div>
+                        <div className="flex-1 flex items-center"><img src={user.url} className="w-8 h-8 rounded-full mr-2" />{user.userName}</div>
                         <div className="flex-1 ">{user.email}</div>
                         <div className="flex-1 ">{user.gender.toUpperCase()}</div>
                         <div className="flex-1">{user.role}</div>

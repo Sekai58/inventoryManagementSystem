@@ -52,18 +52,24 @@ const Navbar = () => {
         {data?
         <Zoom>
         <div className='flex'>
-          <button className={`hidden ${(role==='ADMIN')?'sm:flex':'sm:hidden'} items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(location.pathname=='/')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`}>
+        <Link to='/'>
+          <button className={`${(role==='ADMIN')?'flex':'hidden'} items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(location.pathname=='/')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`}>
             <i className="fa-solid fa-gauge"></i>
-            <span className={`${theme?'text-[#ababab]':'text-[#232323]'}`}><Link to='/'>Dashboard</Link></span>
+            <span className={`${theme?'text-[#ababab]':'text-[#232323]'} hidden sm:block`}>Dashboard</span>
           </button>
-          <button className={`hidden ${(role==='ADMIN')?'sm:flex':'sm:hidden'} items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(location.pathname=='/users')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`}>
+          </Link>
+          <Link to='/users'>
+          <button className={`${(role==='ADMIN')?'flex':'hidden'} items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(location.pathname=='/users')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`}>
             <i className="fa-solid fa-users"></i>
-            <span className={`${theme?'text-[#ababab]':'text-[#232323]'}`}><Link to='/users'>Users</Link></span>
+            <span className={`${theme?'text-[#ababab]':'text-[#232323]'} hidden sm:block`}>Users</span>
           </button>
-          <button className={`hidden sm:flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(location.pathname=='/auth')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`}>
+          </Link>
+          <Link to='/auth'>
+          <button className={`flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(location.pathname=='/auth')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`}>
             <i className="fa-solid fa-boxes-stacked"></i>
-            <span className={`${theme?'text-[#ababab]':'text-[#232323]'}`}><Link to='/auth'>Inventory</Link></span>
+            <span className={`${theme?'text-[#ababab]':'text-[#232323]'} hidden sm:flex`}>Inventory</span>
           </button>
+          </Link>
         </div>
         </Zoom>
         :<></>}
@@ -84,12 +90,12 @@ const Navbar = () => {
           <div className={`${theme?'text-[#ffffff]':'text-[#24243b]'} cursor-pointer`}>
           <i className={`fa-solid fa-star-and-crescent text-2xl mr-2 -rotate-45`} onClick={handleTheme}></i>
           </div>
-          <div className='lg:hidden'>
+          <div className='sm:hidden'>
             <Link to="/login">
               <button className= {`px-4 py-1 mr-2  border-[1.6px] text-white ${theme?' border-[#7878bc] bg-transparent shadow-[#7878bc]':'bg-[#7878bc]'}    shadow-sm hover:shadow-md hover:shadow-[#7878bc] rounded-md`} >Log in</button>
             </Link>
           </div>
-          <div className='lg:hidden'>
+          <div className='sm:hidden'>
             <Link to="/register">
               <button className="px-4 py-1 border-[1.5px] border-[#7878bc] bg-[#7878bc] shadow-[#ffffff] shadow-sm hover:shadow-md hover:shadow-[#ffffff] rounded-md text-white" >Sign up</button>
             </Link>

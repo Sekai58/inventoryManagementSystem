@@ -54,12 +54,14 @@ export const loginUser= async(user:Partial<IUser>)=>{
 export const authUser= async(user:Partial<IUser>,decoded:any)=>{
     try{
         // console.log("at auth user",decoded)
-        const {userName,email,role,gender} = decoded
+        const {_id,userName,email,role,gender,url} = decoded
         const userInfo = {
+            _id:_id,
             userName:userName,
             email:email,
             role:role,
-            gender:gender
+            gender:gender,
+            url:url
         }
         return userInfo
     }
@@ -105,7 +107,8 @@ export const listUser = async()=>{
                 firstname:1,
                 email:1,
                 gender:1,
-                role:1
+                role:1,
+                url:1
               }
             }
           ]).toArray();          
@@ -113,6 +116,34 @@ export const listUser = async()=>{
     }
     catch(err){
         throw err
+    }
+}
+
+export const listNotification= async()=>{
+    try{
+        const notification = database.collection('notification')
+        const message = await notification.find({}).toArray()
+        console.log(message)
+        return message
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}
+
+export const updateNotification = async(id:any)=>{
+    try{
+        const notification = database.collection('notification')
+        console.log()
+        const check = await notification.findOne({"_id":new ObjectId(String(id))})
+        if(check){
+            const update = await notification.updateOne({"_id":new ObjectId(String(id))},{"$set": { "status":"Read"}})
+            return update
+        }
+    }
+    catch(e){
+        throw e
     }
 }
 

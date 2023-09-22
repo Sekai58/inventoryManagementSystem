@@ -58,6 +58,24 @@ export const listUser = async (req:Request,res:Response)=>{
     }
 }
 
+export const listNotification = async (req:Request,res:Response)=>{
+    try{
+        res.status(201).json(await UserService.listNotification())
+    }
+    catch(e){
+        res.status(500).json(e)
+    }
+}
+
+export const updateNotification = async (req:Request,res:Response)=>{
+    try{
+        res.status(201).json(await UserService.updateNotification(req.params.id))
+    }
+    catch(e){
+        res.status(500).json(e)
+    }
+}
+
 // export const deleteItem = async (req:Request,res:Response)=>{
 //     try{
 //         res.status(201).json(await UserService.deleteItem(req.body))

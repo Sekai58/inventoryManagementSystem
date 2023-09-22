@@ -68,11 +68,28 @@ export const themeSlice = createSlice({
     }
 })
 
+const initialCount = {count:0,showCount:false}
+export const countSlice = createSlice({
+    name:"theme",
+    initialState:initialCount,
+    reducers:{
+        changeCount:(state,action)=>{
+            state =  {...state,count:action.payload}
+            return state
+        },
+        setShowCount:(state,action)=>{
+            state = {...state,showCount:action.payload}
+            return state
+        }
+    }
+})
+
 export const {showAuthenticate,authenticate,unauthenticate} = showSlice.actions
 export const {showItem} = itemSlice.actions
 export const {addItem} = addItemSlice.actions
 export const {showRole} = roleSlice.actions
 export const {changeTheme} = themeSlice.actions
+export const {changeCount,setShowCount} = countSlice.actions
 
 
-export default {first:showSlice.reducer,second:itemSlice.reducer,third:addItemSlice.reducer,role:roleSlice.reducer,theme:themeSlice.reducer}
+export default {first:showSlice.reducer,second:itemSlice.reducer,third:addItemSlice.reducer,role:roleSlice.reducer,theme:themeSlice.reducer,count:countSlice.reducer}

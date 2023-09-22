@@ -112,7 +112,7 @@ const Login: React.FC = () => {
     <LoadingBar color="#7878bc"  progress={progress} onLoaderFinished={() => setProgress(0)} />
     <div className='flex justify-center rounded-xl'>
       < div className='flex justify-center items-center w-[1000px] shadow-2xl shadow-[#555454] rounded-xl'>
-        <div className={`border-0 rounded-l-xl hidden lg:flex flex-col text-white w-[30%] h-[550px] ${theme?'bg-[#2c2c2c]':'bg-white'}`}>
+        <div className={`border-0 rounded-l-xl hidden sm:flex flex-col text-white w-[30%] h-[550px] ${theme?'bg-[#2c2c2c]':'bg-white'}`}>
         <div className='h-[30%] bg-[#7878bc] w-full border-0 rounded-br-[20px] rounded-tl-xl '></div>
         <div className=' bg-[#7878bc] w-full flex items-end justify-end'><button className={`rounded-l-full ${theme?'bg-[#2c2c2c]':'bg-white'} pl-7 pr-5 py-3 text-[#7878bc] font-semibold`}>LOGIN</button></div>
         <div className="bg-[#7878bc] w-full flex items-end justify-end rounded-tr-[20px]"><button className="rounded-l-full rounded-tr-[20px] px-5 py-3 text-[#ffffff]"><Link to='/register'>SIGN UP</Link></button></div>

@@ -42,7 +42,7 @@ export const listItems= async()=>{
 export const requestItem= async(item:any)=>{
     try{
         const requests = database.collection('requests')
-        const checkRequest = await requests.findOne({"product_id":new ObjectId(item.id),"userName":item.userName})
+        const checkRequest = await requests.findOne({"product_id":new ObjectId(item.id),"userName":new ObjectId(item.userName)})
         console.log("checkrequest",checkRequest)
         if(checkRequest){
             console.log("checking user",item.userName)
@@ -54,7 +54,7 @@ export const requestItem= async(item:any)=>{
         else{
             const notification = database.collection('notification')
             const addNotification = notification.insertOne({"message":item.message,"status":"Unread"})
-            const insertItem = await requests.insertOne({"product_id":new ObjectId(item.id),"userName":item.userName})
+            const insertItem = await requests.insertOne({"product_id":new ObjectId(item.id),"userName":new ObjectId(item.userName),"date":new Date().toLocaleDateString()})
             const updateItem = database.collection('inventory')
             const updated = await updateItem.updateOne({"_id":new ObjectId(item.id)},{"$inc":{"reserved":1}})
             return insertItem
@@ -68,6 +68,23 @@ export const requestItem= async(item:any)=>{
 
 export const listRequestedItem= async()=>{
     try{
+        // const pipeline = [
+        //     {
+        //       $lookup: {
+        //         from: 'inventory', 
+        //         localField: 'product_id', 
+        //         foreignField: '_id', 
+        //         as: 'productInfo',
+        //       },
+        //     },
+        //     {
+        //         $unwind: '$productInfo',
+        //       },
+        //       {
+        //         $addFields: { productInfo: '$productInfo' },
+        //       },
+        //   ];
+
         const pipeline = [
             {
               $lookup: {
@@ -78,11 +95,30 @@ export const listRequestedItem= async()=>{
               },
             },
             {
+                $lookup: {
+                  from: 'users', 
+                  localField: 'userName', 
+                  foreignField: '_id', 
+                  as: 'userInfo',
+                },
+              },
+            {
                 $unwind: '$productInfo',
-              },
-              {
+            },
+            {
+                $unwind: '$userInfo',
+            },
+            {
+                $project: { 
+                    "userInfo.userName":1,
+                    "userInfo.url":1,
+                    "productInfo":1,
+                    "date":1
+                },
+            },
+            {
                 $addFields: { productInfo: '$productInfo' },
-              },
+            },
           ];
 
         const result = await database.collection('requests').aggregate(pipeline).toArray();
@@ -129,21 +165,41 @@ export const approveItem= async(item:any)=>{
 
 export const listApprovedItem= async()=>{
     try{
+
         const pipeline = [
             {
               $lookup: {
                 from: 'inventory', 
-                localField: 'product_id',
-                foreignField: '_id',
+                localField: 'product_id', 
+                foreignField: '_id', 
                 as: 'productInfo',
               },
             },
             {
+                $lookup: {
+                  from: 'users', 
+                  localField: 'userName', 
+                  foreignField: '_id', 
+                  as: 'userInfo',
+                },
+              },
+            {
                 $unwind: '$productInfo',
-              },
-              {
+            },
+            {
+                $unwind: '$userInfo',
+            },
+            {
+                $project: { 
+                    "userInfo.userName":1,
+                    "userInfo.url":1,
+                    "productInfo":1,
+                    "date":1
+                },
+            },
+            {
                 $addFields: { productInfo: '$productInfo' },
-              },
+            },
           ];
 
         const result = await database.collection('approved').aggregate(pipeline).toArray();

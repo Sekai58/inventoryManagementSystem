@@ -62,6 +62,7 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
         <div className={`flex-1 ${user.role=="USER"?'hidden':'solid'}`}>User</div>
         <div className={`flex-1`}>Item</div>
         <div className={`flex-1 ${user.role=="USER"?'hidden':'solid'}`}>Action</div>
+        <div className={`flex-1 ${user.role=="USER"?'solid':'hidden'}`}>Date</div>
       </div>
       <div className={`h-[3px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} mb-3`}></div> 
       <div className={`h-[400px] overflow-auto scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-x-hidden`}>
@@ -73,9 +74,9 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
             <div key={idx} className={`flex flex-col justify-between py-4 ${item.productInfo.name.toLowerCase().includes(query)?'solid':'hidden'} ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
               <div className="flex flex-col justify-between">
               <div className={`flex justify-between items-center `}>
-                <div className="flex-1">{item.userName}</div>
+                <div className="flex-1 flex"><img src={item.userInfo.url} className="h-8 w-8 rounded-full mr-2"/>{item.userInfo.userName}</div>
                 <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
-                <div className="flex-1"><button className={`px-2 py-1 border-2 ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}  rounded-md  `} onClick={()=>{handleApprove(item._id,item.userName)}}>Approve</button></div>
+                <div className="flex-1"><button className={`px-2 py-1 border-2 ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}  rounded-md  `} onClick={()=>{handleApprove(item._id,item.userInfo.userName)}}>Approve</button></div>
               </div>
               </div>
               {/* <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div> */}
@@ -83,10 +84,11 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
             </Fade>
             :
             <Fade>
-            <div key={idx} className={`flex flex-col justify-between py-4 ${(item.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query))?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
+            <div key={idx} className={`flex flex-col justify-between py-4 ${(item.userInfo.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query))?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
               <div className="flex flex-col justify-between">
               <div className="flex justify-between items-center">
                 <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
+                <div className="flex-1 ">{item.date}</div>
               </div>
               </div>
               {/* <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div> */}
@@ -94,7 +96,7 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
             </Fade>
             }   
             </>
-            <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} ${(role=='USER')?(item.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query.toLowerCase()))?"solid":"hidden":item.productInfo.name.toLowerCase().includes(query.toLowerCase())?"solid":"hidden"}`}></div>
+            <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} ${(role=='USER')?(item.userInfo.userName.toLowerCase().includes(user.userName.toLowerCase()) && item.productInfo.name.toLowerCase().includes(query.toLowerCase()))?"solid":"hidden":item.productInfo.name.toLowerCase().includes(query.toLowerCase())?"solid":"hidden"}`}></div>
           </div>
         ))
       ) : (

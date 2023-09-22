@@ -13,6 +13,8 @@ const InventoryItemsUser = (props:any) => {
   const [data,setData] = useState<any[]>([])
   const [filteredData,setfilteredData] = useState<string[]>([])
 
+  console.log("at user line 16",props.user)
+
   const theme = useSelector((state:any)=>{
     return state.theme.dark
   })
@@ -44,7 +46,7 @@ const InventoryItemsUser = (props:any) => {
 
     fetchData();
     // console.log("data arrived",data)
-    setfilteredData(data.filter(item=>item.userName===props.user).map(a=>a.productInfo.name))
+    setfilteredData(data.filter(item=>item.userInfo.userName===props.user.userName).map(a=>a.productInfo.name))
     console.log("filtered data",filteredData)
 
   }, [items,request]);
@@ -53,14 +55,18 @@ const InventoryItemsUser = (props:any) => {
     // setRequest(!request)
     console.log("id here",id)
     if(available<=0)return 0
-    axios.post('http://localhost:7000/api/user/requests',{"id":id,"userName":props.user,"message":`${props.user} requested ${name}`})
+    axios.post('http://localhost:7000/api/user/requests',{"id":id,"userName":props.user._id,"message":`${props.user.userName} requested ${name}`},{
+      headers: {
+        Authorization: `${(localStorage.getItem('token'))}`,
+      },
+    })
     .then(response => {
         console.log(response.data)
         toast.success("Item successfully requested",{theme:"dark"})
         
         const socket = io('http://localhost:7000')
         console.log(socket)
-        const notify:string = `${props.user} requested ${name}`
+        const notify:string = `${props.user.userName} requested ${name}`
         socket?.emit("sendMessage",notify)
         setRequest(true)
     })
@@ -71,7 +77,7 @@ const InventoryItemsUser = (props:any) => {
   }
 
   return (
-  <div className={`h-[400px] scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-scroll overflow-x-hidden`}>
+  <div className={`h-[400px] scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-scroll sm:overflow-x-hidden`}>
     {!loading?<>
     {items.map((item,idx)=>{return<div key={idx}>
       <div className={`flex justify-between items-center py-4 ${(item.name.toLowerCase().includes(props.query.toLowerCase()))?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>

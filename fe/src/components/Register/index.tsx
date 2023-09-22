@@ -112,7 +112,7 @@ const Forms=()=> {
   return (
     <div className="flex justify-center rounded-xl">
     < div className='flex justify-center items-center w-full lg:w-[1000px] shadow-2xl shadow-[#555454] rounded-xl'>
-      <div className={`border-0 rounded-xl hidden lg:flex flex-col text-white w-[30%] h-[550px] ${theme?'bg-[#2c2c2c]':'bg-white'}`}>
+      <div className={`border-0 rounded-xl hidden sm:flex flex-col text-white w-[30%] h-[550px] ${theme?'bg-[#2c2c2c]':'bg-white'}`}>
         <div className='h-[30%] bg-[#7878bc] w-full border-0 rounded-tl-xl'></div>
         <div className=' bg-[#7878bc] w-full flex items-end justify-end rounded-br-[20px] '><button className='rounded-br-[20px] px-5 py-3 text-[#ffffff]'><Link to='/login'>LOGIN</Link></button></div>
         <div className="bg-[#7878bc] w-full flex items-end justify-end"><button className={`${theme?'bg-[#2c2c2c]':'bg-white'} rounded-l-full px-5 py-3 text-[#7878bc] font-semibold`}>SIGN UP</button></div>

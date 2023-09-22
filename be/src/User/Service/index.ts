@@ -123,6 +123,32 @@ export const listUser = async ()=>{
     }
 }
 
+export const listNotification = async ()=>{
+    try{
+        const allnotification = await UserRepository.listNotification()
+        const count = allnotification.filter((msg:any) => msg.status==='Unread').length
+        console.log("count is",count)
+        const result = {
+            messages:allnotification,
+            count:count
+        }
+        return result
+    }
+    catch(err){
+        throw err
+    }
+}
+
+
+export const updateNotification = (id:any)=>{
+    try{
+        return UserRepository.updateNotification(id)
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
 // export const deleteItem = (item:IItem)=>{
 //     try{
 //         return UserRepository.deleteItem(item)

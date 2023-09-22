@@ -13,6 +13,8 @@ const routes = () => {
     router.post('/user/resetpassword',UserController.resetPassword)
     router.post('/user/auth/resetpassword',verifyJwt,UserController.authReset)
     router.get('/admin/list-user',UserController.listUser)
+    router.get('/admin/list-message',UserController.listNotification)
+    router.put('/admin/update-message/:id',UserController.updateNotification)
     return router;
 }
 
