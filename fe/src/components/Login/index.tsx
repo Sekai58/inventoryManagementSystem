@@ -13,68 +13,6 @@ type LoginFormInput = {
   password: string;
 };
 
-//UNCOMMENT FOR DARK MODE
-
-// const Login: React.FC = () => {
-
-//   const dispatch = useDispatch()
-
-//   const {
-//     register,
-//     handleSubmit,
-//     reset,
-//     formState: { errors },
-//   } = useForm<LoginFormInput>();
-
-//   const navigate = useNavigate()
-//   const [progress,setProgress] =useState(0)
-
-//   const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
-//     setProgress(70)
-//     await axios.post("http://localhost:7000/api/user/login",data)
-//     .then(res=>{console.log(res.data.token)
-//       localStorage.setItem("token",res.data.token)
-//       toast.success(`Welcome ${data.userName}`,{theme:"dark"})
-//       dispatch(authenticate())
-//       navigate('/')
-//     })
-//     .catch(error=>{console.log(error)
-//     toast.error("User not found",{theme:"dark"})})
-//     setProgress(100)
-//     reset();
-//   };
-//   return (
-//     <>
-//     <LoadingBar color="#7878bc"  progress={progress} onLoaderFinished={() => setProgress(0)} />
-//     <Fade top cascade>
-//       <div className="flex justify-center items-center h-full w-full pt-12">
-      
-//       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5 w-[70%] sm:w-[30%]  border-2 border-[#888787] p-5 bg-[#706b6b] bg-opacity-10 z-[89] shadow-[#121212] shadow-2xl'>
-//       <h2 className="text-[#7878b2] font-semibold">LOG IN</h2>
-//         <div>
-//           <label className="text-[#ffffff] ">Username:</label>
-//           <input type="text" placeholder='Enter name' {...register('userName', { required: 'Username is required'})} className=" mb-2 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
-//           {errors.userName && <p className='text-red-400'>{errors.userName.message}</p>}
-//         </div>
-//         <div>
-//           <label className="text-[#ffffff] ">Password:</label>
-//           <input type="password" placeholder='Enter password' {...register('password', { required: 'Password is required',pattern:/^.{6,}$/ })} className=" mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full" />
-//           {errors.password && <p className='text-red-400'>{errors.password.message}</p>}
-//         </div>
-//         <a href='/forgetpassword' className='text-white'>Forget Password?</a>
-//         <button type="submit" className="border-2 border-[#888787] bg-[#7878b2] text-[#ffffff] rounded-2xl px-2 py-2 hover:shadow-md hover:shadow-white hover:border-0">Login</button>
-//         {/* <h2><Link to='/register'>Sign up</Link></h2> */}
-//   </form>
-//       </div>
-//       </Fade>
-
-//     </>
-//   );
-// };
-
-
-
-//COMMENT FOR ORIGINAL
 const Login: React.FC = () => {
 
   const dispatch = useDispatch()
@@ -98,12 +36,12 @@ const Login: React.FC = () => {
     await axios.post("http://localhost:7000/api/user/login",data)
     .then(res=>{console.log(res.data.token)
       localStorage.setItem("token",res.data.token)
-      toast.success(`Welcome ${data.userName}`,{theme:"dark"})
+      toast.success(`Welcome ${data.userName}`,{theme:theme?"dark":"light"})
       dispatch(authenticate())
       navigate('/')
     })
     .catch(error=>{console.log(error)
-    toast.error("User not found",{theme:"dark"})})
+    toast.error("User not found",{theme:theme?"dark":"light"})})
     setProgress(100)
     reset();
   };
@@ -146,6 +84,5 @@ const Login: React.FC = () => {
   );
 };
 
-//COMMENT UPTO HERE
 
 export default Login;

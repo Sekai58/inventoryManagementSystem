@@ -20,7 +20,10 @@ const Users:React.FC =()=>{
         <div className={`min-h-[300px] w-[95%] ${theme?'bg-[rgba(34,33,33,0.5)] shadow-black shadow-2xl':'bg-[#ededfc] shadow-xl'}  rounded-md`}>
             {!loading && !error?
             <div className={`p-3`}>
+                <div className="flex">
                 <div><button className={`px-3 py-1 mr-2 rounded-t-md text-[#636363] ${theme?'bg-[#232323]':'bg-[#ffffff]'}`}>All Users</button></div>
+                <div><button className={`px-3 py-1 mr-2 rounded-t-md text-[#636363] ${theme?'bg-[#232323]':'bg-[#ffffff]'}`}>Manage roles</button></div>
+                </div>
                 <div className={`${theme?'bg-[#232323] text-[#c3c3c4]':'bg-[#ffffff] text-[#464646]'} py-2 px-3 rounded-b-md rounded-r-md`}>
                 <div className='flex justify-between pb-2'>
                 <p className='flex-1'>Username</p>

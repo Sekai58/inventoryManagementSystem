@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { IUser } from '../../types/User';
 import {Zoom} from 'react-reveal'
 import { io } from 'socket.io-client';
 
@@ -29,7 +28,8 @@ const ProtectedRoute = () => {
   const [showAddItem,setShowAddItem] = useState(false)
   const [socket,setSocket] = useState<any>(null)
   const [notification,setNotification] = useState<any>([])
-  const [showNotification,setShowNotification] = useState(false)
+  const [showNotification,setShowNotification] = useState("")
+  const [userNotification,setUserNotification] = useState<any>([])
   const [message,setMessage] = useState(false)
   const [userInfo,setUserInfo] = useState(false)
 
@@ -66,13 +66,25 @@ const ProtectedRoute = () => {
     });
   },[])
 
+  //Reply by admin on approve
+  useEffect(()=>{
+    socket?.on('getReply', (message:any) => {
+      // console.log('Received message from server:', message);
+      const newArr = [...userNotification]
+      newArr.push(message)
+      setUserNotification(newArr)
+      setShowNotification("user")
+    });
+
+  })
+
   //Get notification and show in admin side
   useEffect(()=>{
     socket?.on('getMessage',(message:any)=>{console.log("notification from user",message)
     const newArr = [...notification]
     newArr.push(message)
     setNotification(newArr)
-    setShowNotification(true)
+    setShowNotification("admin")
     dispatch(setShowCount(true))
     // localStorage.setItem("count",JSON.stringify(1))
   })  
@@ -103,6 +115,8 @@ const ProtectedRoute = () => {
     }
   }, []);
 
+  console.log("notificaton at user and admin",notification)
+
   return (
     <>
     <div className='sm:px-10 fixed  w-[95%]'>
@@ -115,20 +129,33 @@ const ProtectedRoute = () => {
       <Zoom>
       <div className={`min-h-[300px] ${theme?'bg-[rgba(34,33,33,0.5)] shadow-black shadow-2xl':'bg-[#ededfc] shadow-md'}  rounded-md`}>
       
-      {/* REAL TIME NOTIFICATION BLOCK UPTO:124 */}
-      {(showNotification==true && role==='ADMIN')?<>
+      {/* REAL TIME NOTIFICATION BLOCK UPTO:155 */}
+      {(showNotification=="admin" && role==='ADMIN')?<>
         <div className={`absolute top-1 left-0 z-10 flex flex-col justify-center  w-full sm:w-[50%] lg:w-[30%] p-1 ${theme?'shadow-[#616060] shadow-2xl bg-[#3d3d3d] border-[#575757]':'shadow-[#898888] shadow-2xl bg-[#c0c0c0]'} rounded-lg`}>
         <div className={`text-xl ${theme?'text-white':'text-[#24243b]'} px-[6px] rounded-full`} >
-                <i className="fa-solid fa-xmark hover:bg-red-500 rounded-full p-1" onClick={()=>{setShowNotification(false);setNotification([])}}></i>
+                <i className="fa-solid fa-xmark hover:bg-red-500 rounded-full p-1" onClick={()=>{setShowNotification("");setNotification([])}}></i>
               </div>
-          <div className={`${theme?'bg-[#3d3d3d] border-[#575757] text-white':'bg-[#c0c0c0] border-[#b1b0b0] text-black'} w-full  shadow-lg rounded-sm px-1 py-1`} onClick={()=>setShowNotification(true)}>
+          <div className={`${theme?'bg-[#3d3d3d] border-[#575757] text-white':'bg-[#c0c0c0] border-[#b1b0b0] text-black'} w-full  shadow-lg rounded-sm px-1 py-1`} onClick={()=>setShowNotification("")}>
             {notification.map((msg:any,idx:number)=>{return<div key={idx} className={`${theme?'bg-black bg-opacity-20':'bg-[#dbdbfa]'} shadow-md rounded-md mb-1 flex justify-between py-[10px] pl-2`}>
               <div>{msg}</div>
               </div>})}
           </div>
         </div>
         </>
-        :<></>}
+        :<>
+        {(showNotification=='user' && role==='USER' && userNotification.every((str:any)=>str.includes(data.userName)))?<>
+        <div className={`absolute top-1 left-0 z-10 flex flex-col justify-center  w-full sm:w-[50%] lg:w-[30%] p-1 ${theme?'shadow-[#616060] shadow-2xl bg-[#3d3d3d] border-[#575757]':'shadow-[#898888] shadow-2xl bg-[#c0c0c0]'} rounded-lg`}>
+        <div className={`text-xl ${theme?'text-white':'text-[#24243b]'} px-[6px] rounded-full`} >
+                <i className="fa-solid fa-xmark hover:bg-red-500 rounded-full p-1" onClick={()=>{setShowNotification("");setUserNotification([])}}></i>
+              </div>
+          <div className={`${theme?'bg-[#3d3d3d] border-[#575757] text-white':'bg-[#c0c0c0] border-[#b1b0b0] text-black'} w-full  shadow-lg rounded-sm px-1 py-1`} onClick={()=>setShowNotification("")}>
+            {userNotification.map((msg:any,idx:number)=>{return<div key={idx} className={`${theme?'bg-black bg-opacity-20':'bg-[#dbdbfa]'} shadow-md rounded-md mb-1 flex justify-between py-[10px] pl-2`}>
+              <div>{msg}</div>
+              </div>})}
+          </div>
+        </div>
+        </>:<></>}
+        </>}
 
         <div className='w-full rounded-t-md flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center px-2 py-2'>
 

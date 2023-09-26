@@ -5,6 +5,8 @@ import axios from "axios";
 import {Fade } from "react-reveal";
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
+import { io } from 'socket.io-client';
+
 
 export interface IRequestedItems{
   user:IUser,
@@ -40,19 +42,22 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
     setApprove(false)
   }, [approve]);
 
-  const handleApprove =(id:any,userName:string)=>{
+  const handleApprove =(id:any,userName:string,name:string)=>{
     axios.delete(`http://localhost:7000/api/user/requests/${id}`,{data:{
       product_id:id,
       userName:userName
     }})
     .then(response => {
         console.log(response.data)
-        toast.success("Item successfully approved",{theme:"dark"})
+        toast.success("Item successfully approved",{theme:theme?"dark":"light"})
         setApprove(true)
+        const socket = io('http://localhost:7000')
+        const notify:string = `${userName}, ${name} was approved`
+        socket?.emit("replyMessage",notify)
     })
     .catch(error => {
       console.error('Error:', error);
-      toast.error("Unauthorized",{theme:"dark"})
+      toast.error("Unauthorized",{theme:theme?"dark":"light"})
     })
   }
 
@@ -76,7 +81,7 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
               <div className={`flex justify-between items-center `}>
                 <div className="flex-1 flex"><img src={item.userInfo.url} className="h-8 w-8 rounded-full mr-2"/>{item.userInfo.userName}</div>
                 <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
-                <div className="flex-1"><button className={`px-2 py-1 border-2 ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}  rounded-md  `} onClick={()=>{handleApprove(item._id,item.userInfo.userName)}}>Approve</button></div>
+                <div className="flex-1"><button className={`px-2 py-1 border-2 ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}  rounded-md  `} onClick={()=>{handleApprove(item._id,item.userInfo.userName,item.productInfo.name)}}>Approve</button></div>
               </div>
               </div>
               {/* <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div> */}

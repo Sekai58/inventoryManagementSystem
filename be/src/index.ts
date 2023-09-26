@@ -34,6 +34,11 @@ io.on("connection", (socket:any) => {
     console.log('Received message from user:', message);
     io.emit('getMessage',message)
   })
+
+  socket.on('replyMessage',(message:any)=>{
+    console.log('Received message from admin:', message);
+    io.emit('getReply',message)
+  })
   
   socket.on("disconnect",()=>{
     console.log("someone has left")
