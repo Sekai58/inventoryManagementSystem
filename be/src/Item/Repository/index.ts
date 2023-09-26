@@ -3,10 +3,8 @@ import {IItem} from "./Item.types"
 const { MongoClient } = require("mongodb");
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcrypt');
-// import { ObjectId } from "mongodb";
 
 //connection to database
-// const uri = "mongodb+srv://fellow:yvq1V3UUdLwvlaEz@webdevelopment.tuy8pst.mongodb.net/";
 const uri ="mongodb+srv://sekai:pkQPAJ6iYRtXODVZ@cluster0.n4wsw5o.mongodb.net/";
 const client = new MongoClient(uri);
 const database = client.db('webdevelopment')
@@ -35,7 +33,6 @@ export const listItems= async()=>{
     catch(e){
         console.log(e)
         throw e
-        return e
     }
 }
 
@@ -68,23 +65,6 @@ export const requestItem= async(item:any)=>{
 
 export const listRequestedItem= async()=>{
     try{
-        // const pipeline = [
-        //     {
-        //       $lookup: {
-        //         from: 'inventory', 
-        //         localField: 'product_id', 
-        //         foreignField: '_id', 
-        //         as: 'productInfo',
-        //       },
-        //     },
-        //     {
-        //         $unwind: '$productInfo',
-        //       },
-        //       {
-        //         $addFields: { productInfo: '$productInfo' },
-        //       },
-        //   ];
-
         const pipeline = [
             {
               $lookup: {
@@ -122,7 +102,6 @@ export const listRequestedItem= async()=>{
           ];
 
         const result = await database.collection('requests').aggregate(pipeline).toArray();
-        // console.log(result);
         return result
     }
     catch(e){
@@ -136,9 +115,7 @@ export const approveItem= async(item:any)=>{
         const requests = database.collection('requests')
         const approved = database.collection('approved')
         console.log(item)
-        // const checkItem = await requests.findOne({"product_id":new ObjectId(item.product_id),"userName":item.userName})
         const checkItem = await requests.findOne({"_id":new ObjectId(item)})
-        // const checkItem = await requests.findOne(item)
         console.log("check item to delete",checkItem,item)
         if (checkItem){
             const approvedItem = await approved.insertOne({...checkItem,"date":new Date().toLocaleDateString()})
@@ -203,7 +180,6 @@ export const listApprovedItem= async()=>{
           ];
 
         const result = await database.collection('approved').aggregate(pipeline).toArray();
-        // console.log(result);
         return result
     }
     catch(e){
@@ -216,7 +192,6 @@ export const countItems= async()=>{
     try{
         const countRequests = await database.collection('requests').countDocuments()
         const countUsers = await database.collection('users').countDocuments()
-        // console.log(countRequests)
         const pipeline = [
             {
               $group: {
@@ -230,7 +205,6 @@ export const countItems= async()=>{
           ];
         
         const available = await database.collection('inventory').aggregate(pipeline).toArray((err:any,result:any)=>{console.log(result)})
-        // console.log("aavailable",available)
         return {requests:countRequests,users:countUsers,available:available[0].totalItems}
     }
     catch(e){
@@ -276,6 +250,5 @@ export const deleteItem= async(item:string)=>{
     }
     catch(e){
         throw e
-        return e
     }
 }

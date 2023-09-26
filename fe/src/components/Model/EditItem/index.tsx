@@ -1,4 +1,3 @@
-// AddItemModal.tsx
 import React, { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IItems } from '../../../types/User';
@@ -49,7 +48,7 @@ const EditItemModal: React.FC<EditItemModalProps> = ({onClose}) => {
       };
 
       const handleClick =(state:string)=>{
-        if(state="close")
+        if(state=="close")
         {
           onClose()
         }
@@ -82,7 +81,6 @@ const EditItemModal: React.FC<EditItemModalProps> = ({onClose}) => {
       <button type="submit" className={`border-2 border-[#888787] bg-[#7878b2] text-[#ffffff] rounded-2xl px-2 py-2 hover:shadow-md ${theme?'hover:shadow-white':'hover:shadow-[#24243b]'} hover:border-0 font-sans`}>EDIT ITEM</button>
     </form>
     </div>
-    {/* </div> */}
     </>
   );
 };

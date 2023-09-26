@@ -20,8 +20,3 @@ export interface IItem{
     available:number,
     reserved:number
 }
-
-// export interface IItemRequested{
-//     userName:string,
-//     name:string
-// }

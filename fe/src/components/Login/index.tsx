@@ -58,7 +58,6 @@ const Login: React.FC = () => {
       </div>
       <Fade>
       <div className={`w-full lg:w-[70%] h-[550px] ${theme?'bg-[#2c2c2c] bg-opacity-70':'bg-hero-pattern bg-cover'} rounded-r-xl rounded-tr-2xl`}>
-        {/* <div className='w-full h-full'></div> */}
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center px-20 gap-5 border-0 rounded-r-xl w-full h-full p-5 bg-transparent bg-opacity-10'>
       <h2 className="text-[#7878b2] font-semibold text-xl">LOG IN</h2>
         <div>

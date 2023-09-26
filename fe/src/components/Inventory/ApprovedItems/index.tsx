@@ -56,7 +56,6 @@ const ApprovedItems: React.FC<IRequestedItems> = ({user,query}) => {
                 <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
                 <div className="flex-1">{item.date}</div>
               </div>
-              {/* <div className={`mt-2 h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} mt-2`}></div> */}
             </div>
             </Fade>
             :
@@ -66,7 +65,6 @@ const ApprovedItems: React.FC<IRequestedItems> = ({user,query}) => {
               <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
               <div className="flex-1">{item.date}</div>
               </div>
-              {/* <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} mt-2`}></div> */}
             </div>
             </Fade>
             }  

@@ -36,9 +36,7 @@ export const itemSlice = createSlice({
     initialState:editItem,
     reducers:{
         showItem:(state,action)=>{
-            // console.log("payload here",action.payload)
            state ={ ...state, ...action.payload}
-        //    console.log("state here",state)
            return state
         },
     }
@@ -92,4 +90,4 @@ export const {changeTheme} = themeSlice.actions
 export const {changeCount,setShowCount} = countSlice.actions
 
 
-export default {first:showSlice.reducer,second:itemSlice.reducer,third:addItemSlice.reducer,role:roleSlice.reducer,theme:themeSlice.reducer,count:countSlice.reducer}
+export default {show:showSlice.reducer,edit:itemSlice.reducer,add:addItemSlice.reducer,role:roleSlice.reducer,theme:themeSlice.reducer,count:countSlice.reducer}

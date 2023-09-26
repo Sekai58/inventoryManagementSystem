@@ -26,7 +26,6 @@ const Forms=()=> {
   const {
     register,
     handleSubmit,
-   // watch,
     reset,
     formState: { errors },
   } = useForm<Inputs>()
@@ -54,15 +53,10 @@ const Forms=()=> {
         <div className='h-full bg-[#7878bc] w-full rounded-tr-[20px] border-0 text-end rounded-bl-xl'></div>
       </div>
     <Fade>
-    {/* <div className="sticky flex justify-center items-center h-full w-full"> */}
     <div className={`${theme?'bg-[#2c2c2c] bg-opacity-70':'bg-hero-pattern bg-cover'} w-full lg:w-[70%] h-[550px] rounded-r-xl`}>
-      {/* <div className="fixed top-30 right-0 z"> <ToastContainer position="bottom-right"/>
-    </div> */}
-    {/* <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 w-[70%] sm:w-[35%]  border-2 border-[#888787] p-5 bg-[#706b6b] bg-opacity-10 shadow-[#121212] shadow-2xl"> */}
     <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center px-20 gap-3 border-0 rounded-r-xl w-full h-full p-5'>
-      
       <h2 className="text-[#7878b2] font-semibold text-xl">SIGN UP</h2>
-
+      
       <div>
       <label className={`${theme?'text-[#d5d5d5]':'text-[#191919]'}`}>Fullname:</label>
       <input defaultValue="" placeholder="Enter name" {...register("firstName",{required:true})} className={`${theme?'text-[#d5d5d5]':'text-[#191919]'} py-2 px-2 bg-opacity-20 border-0  border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full`} />

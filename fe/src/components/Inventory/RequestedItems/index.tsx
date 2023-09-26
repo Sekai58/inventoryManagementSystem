@@ -84,7 +84,6 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
                 <div className="flex-1"><button className={`px-2 py-1 border-2 ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}  rounded-md  `} onClick={()=>{handleApprove(item._id,item.userInfo.userName,item.productInfo.name)}}>Approve</button></div>
               </div>
               </div>
-              {/* <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div> */}
             </div>
             </Fade>
             :
@@ -96,7 +95,6 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
                 <div className="flex-1 ">{item.date}</div>
               </div>
               </div>
-              {/* <div className={`h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div> */}
             </div>
             </Fade>
             }   

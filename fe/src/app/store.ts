@@ -3,9 +3,9 @@ import showSlice from "../features/showSlice";
 
 export const store = configureStore({
     reducer:{
-        show:showSlice.first,
-        item:showSlice.second,
-        addItem:showSlice.third,
+        show:showSlice.show,
+        item:showSlice.edit,
+        addItem:showSlice.add,
         role:showSlice.role,
         theme:showSlice.theme,
         count:showSlice.count
