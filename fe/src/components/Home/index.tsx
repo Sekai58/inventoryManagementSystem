@@ -1,7 +1,7 @@
 import {DoughnutChart,BarChart} from "../Chart"
 import useAxios from "../../libs/useAxios"
 import {useSelector} from 'react-redux'
-import { Navigate } from "react-router-dom"
+import { Navigate} from "react-router-dom"
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Home = ()=>{
