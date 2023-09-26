@@ -3,11 +3,8 @@ import useAxios from "../../libs/useAxios"
 import {useSelector} from 'react-redux'
 import { Navigate } from "react-router-dom"
 import ClipLoader from "react-spinners/ClipLoader";
-// import Notifications from "../Notification";
-
 
 const Home = ()=>{
-    
     const {itemsCount,error,loading} = useAxios('http://localhost:7000/api/count-item')
     const theme = useSelector((state:any)=>{
         return state.theme.dark
@@ -23,7 +20,6 @@ const Home = ()=>{
         {!loading && !error?
         <>
         <div className={`grid gap-5 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 py-5 px-2 sm:px-10 ${theme?'text-white':'text-[#efeded]'}`}>
-            {/* {<Notifications/>} */}
             <div className={`${theme?'bg-[rgba(226,104,248,0.2)] shadow-[rgba(226,104,248,1)]':'bg-[#0071ff] shadow-[#7c7c7c]'} min-h-32 shadow-md  rounded-md hover:scale-105 flex flex-col justify-between`}>
                 <div className="p-5 text-xl">AVAILABLE ITEMS</div>
                 <div className="p-5  text-xl text-end">{itemsCount && itemsCount.available}</div>

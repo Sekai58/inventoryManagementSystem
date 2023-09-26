@@ -9,8 +9,7 @@ interface IPiechart {
     reserved:number
 }
 
-
-
+//DoughnutChart
 export const DoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
   const theme = useSelector((state:any)=>{
     return state.theme.dark
@@ -19,7 +18,6 @@ export const DoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
   const colorNeutral = theme?'rgba(120,120,188,0.3)':'rgba(120,120,188,0.7)'
   const colorReserved = theme?'rgba(209,13,72,0.3)':'rgba(209,13,72,0.7)'
   const colorAvailable = theme?'rgba(29, 207, 165,0.3)':'rgba(29, 207, 165,0.7)'
-  // console.log("data",available,reserved)
  
   const [chartData, setChartData] = useState({
     // labels: ['Unallocated','Reserved'],
@@ -109,8 +107,6 @@ export const BarChart = () => {
         beginAtZero: true,
       },
     },
-    // maintainAspectRatio: false, // Disable the default aspect ratio
-    // responsive: true,
   };
 
   return (
@@ -120,4 +116,3 @@ export const BarChart = () => {
   );
 };
 
-// export default BarChart;

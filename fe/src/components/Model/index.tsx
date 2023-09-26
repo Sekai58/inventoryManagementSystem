@@ -1,4 +1,3 @@
-// AddItemModal.tsx
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IItems } from '../../types/User';
@@ -42,7 +41,7 @@ const AddItemModal: React.FC<AddItemModalProps> = ({onClose}) => {
       };
 
       const handleClick =(state:string)=>{
-        if(state="close")
+        if(state=="close")
         {
           onClose()
         }

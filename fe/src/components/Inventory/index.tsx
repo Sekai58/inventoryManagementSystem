@@ -10,19 +10,19 @@ import RequestedItems from './RequestedItems';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem,setShowCount,showRole } from '../../features/showSlice';
 import ApprovedItems from './ApprovedItems';
-// import { toast } from 'react-toastify';
 import Notifications from '../Notification';
 
-// interface IUserInfo {
-//   firstname:string,
-//   userName:string,
-//   email:string,
-//   role:string,
-//   gender:string
-// }
+interface IUserInfo {
+  firstname:string,
+  userName:string,
+  email:string,
+  role:string,
+  gender:string,
+url:string
+}
 
 const ProtectedRoute = () => {
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState<IUserInfo>();
   const [field,setField] = useState('allitems')
   const [query,setQuery] = useState('')
   const [showAddItem,setShowAddItem] = useState(false)
@@ -39,7 +39,6 @@ const ProtectedRoute = () => {
   })
 
   const count = useSelector((state:any)=>{
-    console.log("redux here at notify",state.count.count)
     return state.count.count
   })
 
@@ -69,7 +68,6 @@ const ProtectedRoute = () => {
   //Reply by admin on approve
   useEffect(()=>{
     socket?.on('getReply', (message:any) => {
-      // console.log('Received message from server:', message);
       const newArr = [...userNotification]
       newArr.push(message)
       setUserNotification(newArr)
@@ -86,7 +84,6 @@ const ProtectedRoute = () => {
     setNotification(newArr)
     setShowNotification("admin")
     dispatch(setShowCount(true))
-    // localStorage.setItem("count",JSON.stringify(1))
   })  
   })
 
@@ -119,6 +116,7 @@ const ProtectedRoute = () => {
 
   return (
     <>
+    {data?
     <div className='sm:px-10 fixed  w-[95%]'>
         {/* DIV TO ADD ITEM TO INVENTORY:FOR ADMIN ONLY LINE:3       */}
         <div className={`${showAddItem?'solid':'hidden'}`}>
@@ -211,6 +209,7 @@ const ProtectedRoute = () => {
           </div>          
         </div>
 
+        {/* LOAD DATA TO DISPLAY */}
         {((field=='requested'&& showAddItem==false && data)?<>
         <div className={`${theme?'bg-[#232323] text-[#c3c3c4]':'bg-[#ffffff] text-[#464646]'} py-2 px-3 rounded-b-md rounded-r-md`}>
           <RequestedItems user={data} query={query}/>
@@ -240,6 +239,7 @@ const ProtectedRoute = () => {
       </div>
       </Zoom>
     </div>
+    :<></>}
     </>
   );
 };

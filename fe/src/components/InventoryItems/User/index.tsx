@@ -27,12 +27,6 @@ const InventoryItemsUser = (props:any) => {
     setRequest(false)
   },[request])
 
-  // useEffect(()=>{
-  //   // const socket = io('http://localhost:7000')
-  //   // console.log(socket)
-  //   // socket?.emit("sendMessage","sekai58")
-  // },[])
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,14 +39,12 @@ const InventoryItemsUser = (props:any) => {
     };
 
     fetchData();
-    // console.log("data arrived",data)
     setfilteredData(data.filter(item=>item.userInfo.userName===props.user.userName).map(a=>a.productInfo.name))
     console.log("filtered data",filteredData)
 
   }, [items,request]);
 
   const handleRequest =(id:string,name:string,available:number)=>{
-    // setRequest(!request)
     console.log("id here",id)
     if(available<=0)return 0
     axios.post('http://localhost:7000/api/user/requests',{"id":id,"userName":props.user._id,"message":`${props.user.userName} requested ${name}`},{

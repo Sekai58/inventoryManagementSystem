@@ -28,7 +28,6 @@ export const requestItem = async (req:Request,res:Response,next:NextFunction)=>{
     catch(e){
         console.log(e)
        next(e)
-        //res.status(500).json(e)
     }
 }
 
@@ -39,7 +38,6 @@ export const listRequestedItem = async (req:Request,res:Response,next:NextFuncti
     catch(e){
         console.log(e)
        next(e)
-        //res.status(500).json(e)
     }
 }
 
@@ -51,7 +49,6 @@ export const approveItem = async (req:Request,res:Response,next:NextFunction)=>{
     catch(e){
         console.log(e)
        next(e)
-        //res.status(500).json(e)
     }
 }
 
@@ -62,7 +59,6 @@ export const listApprovedItem = async (req:Request,res:Response,next:NextFunctio
     catch(e){
         console.log(e)
        next(e)
-        //res.status(500).json(e)
     }
 }
 
@@ -72,7 +68,7 @@ export const countItems = async (req:Request,res:Response)=>{
     }
     catch(e){
         console.log(e)
-        //res.status(500).json(e)
+        res.status(500).json(e)
     }
 }
 

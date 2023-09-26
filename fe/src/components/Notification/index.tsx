@@ -1,8 +1,6 @@
-// import React, { useEffect, useState } from "react";
 import { useSelector,useDispatch } from 'react-redux';
 import {Fade } from "react-reveal";
 import ClipLoader from "react-spinners/ClipLoader";
-// import useAxios from "../../libs/useAxios";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { changeCount, setShowCount } from '../../features/showSlice';
@@ -57,12 +55,10 @@ const Notifications: React.FC= () => {
             <>
             <Fade>
             <div key={idx} className={` pt-4 pb-2  ${theme?'hover:bg-[#3a3a3a] text-[#a1a1a1]':'hover:bg-[#e9e9fe] text-[#424242]'}`}>
-              {/* <div className="flex justify-between"> */}
                 <div className="px-3 mb-0">{item.message}</div>
                 {item.status==='Unread'?
                 <div className={`px-3 text-right text-[10px] underline hover:scale-105 ${theme?'':' text-[#5c5b5b]'}`}><button className='hover:scale-105 underline' onClick={()=>handleCount(item._id)}>Mark as read</button></div>
                 :<></>}
-                {/* </div> */}
             </div>
             </Fade>
             </>
