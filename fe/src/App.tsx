@@ -30,8 +30,6 @@ function App() {
 
   return (
     <div className={`p-4 pl-9 ${theme?'bg-gradient-to-r from-[#0b0b0b] via-[#383838] to-[#060606]':'bg-[#f5f7fb]'}`}>
-    {/* <div className='p-4 pl-9 bg-[#f6f5f5]'> */}
-    {/* // <div className='p-4 pl-9 bg-hero-pattern bg-cover'> */}
       <main className='py-20 min-h-screen'>
       <BrowserRouter>
       <Navbar />

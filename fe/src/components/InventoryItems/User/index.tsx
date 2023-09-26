@@ -62,7 +62,7 @@ const InventoryItemsUser = (props:any) => {
     })
     .then(response => {
         console.log(response.data)
-        toast.success("Item successfully requested",{theme:"dark"})
+        toast.success("Item successfully requested",{theme:theme?"dark":"light"})
         
         const socket = io('http://localhost:7000')
         console.log(socket)
@@ -72,7 +72,7 @@ const InventoryItemsUser = (props:any) => {
     })
     .catch(error => {
       console.error('Error:', error);
-      toast.error("Item already requested",{theme:"dark"})
+      toast.error("Item already requested",{theme:theme?"dark":"light"})
     }),[]
   }
 

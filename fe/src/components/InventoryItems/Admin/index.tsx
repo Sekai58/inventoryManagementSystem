@@ -37,16 +37,22 @@ const InventoryItemsAdmin = (props:any) => {
   },[del,addItemState,itemValue])
 
   const handleDelete =(id:string)=>{
-    axios.delete(`http://localhost:7000/api/admin/delete-item/${id}`)
-    .then(response => {
-        console.log(response.data)
-        toast.success("Item successfully deleted",{theme:"dark"})
-        setDel(true)
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      toast.error("Unauthorized",{theme:"dark"})
-    })
+    const confirmDelete = confirm("Are you sure you want to delete this item?");
+    if(confirmDelete){
+      axios.delete(`http://localhost:7000/api/admin/delete-item/${id}`)
+      .then(response => {
+          console.log(response.data)
+          toast.success("Item successfully deleted",{theme:theme?"dark":"light"})
+          setDel(true)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        toast.error("Unauthorized",{theme:theme?"dark":"light"})
+      })
+    }
+    else{
+      return
+    }
   }
 
   const handleEditClose =()=>{

@@ -43,7 +43,7 @@ const EditItemModal: React.FC<EditItemModalProps> = ({onClose}) => {
           onClose()
         })
         .catch(error=>{console.log(error)
-        toast.error(error.message)})
+        toast.error(error.message,{theme:theme?'dark':'light'})})
         dispatch(showItem({_id:'',name:'',available:0,reserved:0}))
         reset();
       };

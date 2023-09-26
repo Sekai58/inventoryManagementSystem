@@ -32,11 +32,11 @@ const AddItemModal: React.FC<AddItemModalProps> = ({onClose}) => {
           },
         })
         .then(res=>{console.log("Ack state",res.data)
-          toast.success("Success")
+          toast.success("Success",{theme:theme?"dark":"light"})
           onClose()
         })
         .catch(error=>{console.log(error)
-        toast.error(error.message)})
+        toast.error(error.message,{theme:theme?'dark':'light'})})
         console.log(data);
         reset();
       };

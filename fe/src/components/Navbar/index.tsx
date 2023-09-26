@@ -60,13 +60,16 @@ const Navbar = () => {
           </Link>
           <Link to='/users'>
           <button className={`${(role==='ADMIN')?'flex':'hidden'} items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(location.pathname=='/users')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`}>
-            <i className="fa-solid fa-users"></i>
+            {/* <i className="fa-solid fa-users"></i> */}
+            <i className="fa-solid fa-user-group"></i>
             <span className={`${theme?'text-[#ababab]':'text-[#232323]'} hidden sm:block`}>Users</span>
           </button>
           </Link>
           <Link to='/auth'>
           <button className={`flex items-center pr-3 pl-1 mr-4 border-r-[3px] rounded-[4px] ${(location.pathname=='/auth')?'border-[#7878bc] text-[#7878bc]':'border-[#ababab] text-[#555555]'}  hover:border-[#7878bc] hover:text-[#7878bc] hover:shadow-sm hover:shadow-[#7878bc]`}>
             <i className="fa-solid fa-boxes-stacked"></i>
+            {/* <i className="fa-solid fa-warehouse"></i> */}
+            {/* <i className="fa-solid fa-truck-moving"></i> */}
             <span className={`${theme?'text-[#ababab]':'text-[#232323]'} hidden sm:flex`}>Inventory</span>
           </button>
           </Link>
