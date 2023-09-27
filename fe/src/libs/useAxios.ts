@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from "axios"
 
-const useAxios = (url:string,title?:any,change?:any) => {
+const useAxios = (url:string,title?:any,change?:any,model?:any) => {
     const [itemsCount, setData] = useState<any>();
     const [error, setError] = useState<string>();
     const [loading, setLoading] = useState<boolean>(true);
@@ -14,7 +14,7 @@ const useAxios = (url:string,title?:any,change?:any) => {
       .finally(() => {
       setLoading(false);
       });
-    }, [url,title,change]);
+    }, [url,title,change,model]);
     return {itemsCount,error,loading}
 }
 

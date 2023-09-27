@@ -5,11 +5,14 @@ import ClipLoader from "react-spinners/ClipLoader";
 import {useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import ConfirmModal from "../Model/Confirm";
 
 const Users:React.FC =()=>{
     const [title,setTitle] = useState('all')
     const [change,setChange] = useState(false)
-    const {itemsCount,loading,error}  = useAxios('http://localhost:7000/api/admin/list-user',title,change)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [confirm,setConfirm] = useState<any>()
+    const {itemsCount,loading,error}  = useAxios('http://localhost:7000/api/admin/list-user',title,change,isModalOpen)
 
     const theme = useSelector((state:any)=>{
         return state.theme.dark
@@ -19,22 +22,32 @@ const Users:React.FC =()=>{
        return status.role.role
     })
 
-    const handleRoleChange = (id:any)=>{
-      const fetch = async() =>{
-        await axios.put(`http://localhost:7000/api/admin/change-role/${id}`)
-        .then(res=>{
-          console.log(res.data)
-          toast.success("Role successfully updated",{theme:theme?'dark':'light'})
-          setChange(false)
-        })
-        .catch(err=>{toast.error("Role update failed",{theme:theme?'dark':'light'});console.log(err)})
-    }
-    fetch()
-    }
+    const handleConfirm = () => {
+        const fetch = async() =>{
+          await axios.put(`http://localhost:7000/api/admin/change-role/${confirm}`)
+          .then(res=>{
+            console.log(res.data)
+            toast.success("Role successfully updated",{theme:theme?'dark':'light'})
+            setChange(false)
+          })
+          .catch(err=>{toast.error("Role update failed",{theme:theme?'dark':'light'});console.log(err)})
+      }
+      fetch()
+      setIsModalOpen(false); 
+    };
+  
+    const handleCancel = () => {
+      setIsModalOpen(false);
+      setChange(false)
+    };
+
+
 
     return(
       <>
       {(role==='ADMIN')?
+      <>
+        <ConfirmModal isOpen={isModalOpen} message="Are you sure you want to change Role?" onConfirm={handleConfirm} onCancel={handleCancel}/>
         <div className={`min-h-[300px] w-[95%] ${theme?'bg-[rgba(34,33,33,0.5)] shadow-black shadow-2xl':'bg-[#ededfc] shadow-xl'}  rounded-md`}>
             {!loading && !error?
             <div className={`p-3`}>
@@ -65,11 +78,10 @@ const Users:React.FC =()=>{
                         <div className="flex-1">{user.role}</div>
                         {(title==='manage')?
                         <div className="flex-1">
-                          <button className={`px-2 py-1 border-2 rounded-md ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}`} onClick={()=>{setChange(true);handleRoleChange(user._id)}}>{user.role==="ADMIN"?'Make USER':'Make ADMIN'}</button>
+                          <button className={`px-2 py-1 border-2 rounded-md ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}`} onClick={()=>{setChange(true);setConfirm(user._id);setIsModalOpen(true)}}>{user.role==="ADMIN"?'Make USER':'Make ADMIN'}</button>
                         </div>:<></>}
                       </div>
                       </div>
-                      {/* <div className={`mt-2 h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div> */}
                     </div>
                     <div className={` h-[0.8px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'}`}></div>
                     </div>
@@ -88,6 +100,7 @@ const Users:React.FC =()=>{
           </div>
             }
         </div>
+        </>
         :
         <Navigate to='/auth'></Navigate>
         }

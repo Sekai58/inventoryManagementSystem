@@ -70,7 +70,7 @@ const InventoryItemsUser = (props:any) => {
   }
 
   return (
-  <div className={`h-[400px] scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-scroll sm:overflow-x-hidden`}>
+  <div className={`h-[400px] min-w-[600px] overflow-auto scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-scroll overflow-x-hidden`}>
     {!loading?<>
     {items.map((item,idx)=>{return<div key={idx}>
       <div className={`flex justify-between items-center py-4 ${(item.name.toLowerCase().includes(props.query.toLowerCase()))?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>

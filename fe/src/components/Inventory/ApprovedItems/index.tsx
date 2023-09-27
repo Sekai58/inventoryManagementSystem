@@ -38,13 +38,13 @@ const ApprovedItems: React.FC<IRequestedItems> = ({user,query}) => {
 
   return (
     <div >
-      <div className={`flex justify-between items-center py-1`}>
+      <div className={`flex justify-between items-center py-1 min-w-[600px]`}>
         <div className={`flex-1 ${user.role=="USER"?'hidden':'solid'}`}>User</div>
         <div className={`flex-1`}>Item</div>
         <div className="flex-1">Date</div>
       </div>
-      <div className={`h-[3px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} mb-3`}></div> 
-      <div className={`h-[400px] overflow-auto scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-x-hidden`}>
+      <div className={`h-[3px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} mb-3 min-w-[600px]`}></div> 
+      <div className={`h-[400px] min-w-[600px] overflow-auto scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-x-hidden`}>
       {!loading ? (
         requests.map((item, idx) => (
           <div key={idx} className="flex flex-col">

@@ -50,7 +50,7 @@ export const requestItem= async(item:any)=>{
         }
         else{
             const notification = database.collection('notification')
-            const addNotification = notification.insertOne({"message":item.message,"status":"Unread"})
+            const addNotification = notification.insertOne({"user_id":new ObjectId(item.userName),"message":item.message,"status":"Unread"})
             const insertItem = await requests.insertOne({"product_id":new ObjectId(item.id),"userName":new ObjectId(item.userName),"date":new Date().toLocaleDateString()})
             const updateItem = database.collection('inventory')
             const updated = await updateItem.updateOne({"_id":new ObjectId(item.id)},{"$inc":{"reserved":1}})
