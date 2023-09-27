@@ -148,3 +148,12 @@ export const updateNotification = (id:any)=>{
         console.log(e)
     }
 }
+
+export const changeRole = async(id:any)=>{
+    try{
+        return await UserRepository.changeRole(id)
+    }
+    catch(e){
+        throw e
+    }
+}

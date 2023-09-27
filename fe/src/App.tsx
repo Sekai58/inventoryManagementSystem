@@ -58,7 +58,7 @@ function App() {
           <Route path="/forgetpassword/*" element={<Suspense><ForgetPassword /></Suspense>} />
           {/* <Route path="/forgetpassword/*" element={<ForgetPassword />} /> */}
           <Route path="/resetpassword/*" element={<Suspense><ResetPassword/></Suspense>} />
-          <Route path="/resetpassword/*" element={<ResetPassword/>} />
+          {/* <Route path="/resetpassword/*" element={<ResetPassword/>} /> */}
         </Routes>
       </BrowserRouter>
       </main>
