@@ -30,7 +30,7 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:7000/api/list-requested-item');
-        console.log("requestdatahere",response.data);
+        // console.log("requestdatahere",response.data);
         setRequests(response.data);
         console.log(requests)
         setLoading(false);
@@ -43,10 +43,7 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
   }, [approve]);
 
   const handleApprove =(id:any,userName:string,name:string)=>{
-    axios.delete(`http://localhost:7000/api/user/requests/${id}`,{data:{
-      product_id:id,
-      userName:userName
-    }})
+    axios.delete(`http://localhost:7000/api/user/requests/${id}`)
     .then(response => {
         console.log(response.data)
         toast.success("Item successfully approved",{theme:theme?"dark":"light"})

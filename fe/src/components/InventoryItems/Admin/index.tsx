@@ -28,13 +28,18 @@ const InventoryItemsAdmin = (props:any) => {
 
   //Get inventory data as items
   useEffect(()=>{
-    axios.get('http://localhost:7000/api/admin/list-item')
-    .then(res=>{setItems(res.data)
-    setLoading(false)})
+    const fetch = async()=>{
+    await axios.get('http://localhost:7000/api/admin/list-item')
+      .then(res=>{setItems(res.data || [])
+    setLoading(false)
+    })
     .catch(e=>console.log(e))
     setDel(false)
     dispatch(addItem(false))
-  },[del,addItemState,itemValue])
+    }
+    fetch()
+    console.log("items here",items)
+  },[del,addItemState,itemValue,items])
 
   const handleDelete =(id:string)=>{
     const confirmDelete = confirm("Are you sure you want to delete this item?");
@@ -70,7 +75,7 @@ const InventoryItemsAdmin = (props:any) => {
     <div className={`${showEditItem?'solid':'hidden'}`}>
       <EditItemModal onClose={()=>handleEditClose()}/>
     </div>
-    {!loading?(items.map((item,idx)=>{return<div key={idx}><div className={`flex justify-between items-center py-4 ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
+    {!loading?(items && items.map((item,idx)=>{return<div key={idx}><div className={`flex justify-between items-center py-4 ${item.name.toLowerCase().includes(props.query.toLowerCase())?"solid":"hidden"}  ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
     <Fade>
     <div className="flex-1 flex"><img src={item.url} className="h-8 w-10 mr-2"/>{item.name}</div>
     <div className="flex-1">{item.available}</div>

@@ -76,4 +76,12 @@ export const updateNotification = async (req:Request,res:Response)=>{
     }
 }
 
+export const changeRole = async(req:Request,res:Response)=>{
+    try{
+        res.status(201).json(await UserService.changeRole(req.params.id))
+    }
+    catch(e){
+        res.status(500).json(e)
+    }
+}
 

@@ -36,7 +36,7 @@ const EditItemModal: React.FC<EditItemModalProps> = ({onClose}) => {
       const dispatch =useDispatch()
       const onSubmit: SubmitHandler<IItems> = async (data,e) => {
         e?.preventDefault()
-        await axios.put("http://localhost:7000/api/admin/edit-item",{...data,"_id":itemValue._id})
+        await axios.put(`http://localhost:7000/api/admin/edit-item`,{...data,"_id":itemValue._id})
         .then(res=>{console.log("Ack state",res.data)
           toast.success("Successfully edited",{theme:theme?'dark':'light'})
           onClose()

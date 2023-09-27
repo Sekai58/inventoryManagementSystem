@@ -143,3 +143,28 @@ export const updateNotification = async(id:any)=>{
         throw e
     }
 }
+
+export const changeRole = async(id:any)=>{
+    try{
+        console.log("from fe",id)
+        const users = database.collection('users')
+        const user = await users.findOne({_id:new ObjectId(id)})
+        console.log(user)
+        if(user){
+            const checkrole = user.role
+            if(checkrole==='ADMIN'){
+                const updatedUser = users.updateOne({_id:new ObjectId(id)},{$set:{role:'USER'}})
+            }
+            else{
+                const updatedUser = users.updateOne({_id:new ObjectId(id)},{$set:{role:'ADMIN'}})
+            }
+        }
+        else{
+            throw Error("User not found")
+        }
+    }
+    catch(e){
+        throw e
+    }
+
+}

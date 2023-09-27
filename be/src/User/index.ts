@@ -15,6 +15,7 @@ const routes = () => {
     router.get('/admin/list-user',UserController.listUser)
     router.get('/admin/list-message',UserController.listNotification)
     router.put('/admin/update-message/:id',UserController.updateNotification)
+    router.put('/admin/change-role/:id',UserController.changeRole)
     return router;
 }
 

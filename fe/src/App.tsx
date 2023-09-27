@@ -1,15 +1,24 @@
 import { BrowserRouter,Navigate,Route, Routes,} from 'react-router-dom'
-import './App.css'
-import Navbar from './components/Navbar'
-import Login from './components/Login'
-import Forms from './components/Register'
-import ProtectedRoute from './components/Inventory'
-import ForgetPassword from './components/ForgetPassword';
-import ResetPassword from './components/ResetPassword';
-import Home from './components/Home';
+import { lazy ,Suspense} from 'react'
 import {useSelector,useDispatch} from 'react-redux'
+
+// import Navbar from './components/Navbar'
+const Navbar = lazy(()=> import ('./components/Navbar'))
+// import Login from './components/Login'
+const Login = lazy(()=> import('./components/Login'))
+// import Register from './components/Register'
+const Register = lazy(()=> import('./components/Register'))
+// import Inventory from './components/Inventory'
+const Inventory = lazy(()=> import('./components/Inventory'))
+// import ForgetPassword from './components/ForgetPassword';
+const ForgetPassword = lazy(()=> import('./components/ForgetPassword'));
+// import ResetPassword from './components/ResetPassword';
+const ResetPassword = lazy(()=> import("./components/ForgetPassword"))
+// import Home from './components/Home';
+const Home = lazy(()=> import("./components/Home"))
+// import Users from './components/Users'
+const Users = lazy(()=> import('./components/Users'))
 import { authenticate } from './features/showSlice'
-import Users from './components/Users'
 
 
 function App() {
@@ -34,14 +43,22 @@ function App() {
       <BrowserRouter>
       <Navbar />
         <Routes>
-          <Route path='/*' element={(data)?<Home/>:<Navigate to='/login'/>}></Route>
-          <Route path='/users/*' element={(data)?<Users/>:<Navigate to='/login'/>}></Route>
-          <Route path="/register/*" element={<Forms/>}></Route>
-          <Route path="/login/*" element={(data) ? <Navigate to="/auth" /> : <Login />} />
-          <Route path="/auth/*" element={data ? <ProtectedRoute /> : <Navigate to="/login" />} />
-          <Route path="/logout" element={<Navigate to='/login' replace />} />
-          <Route path="/forgetpassword/*" element={<ForgetPassword />} />
-          <Route path="/resetpassword/*" element={<ResetPassword/>} />
+          <Route path='/*' element={(data)?<Suspense><Home/></Suspense>:<Suspense><Navigate to='/login'/></Suspense>}></Route>
+          {/* <Route path='/*' element={(data)?<Home/>:<Navigate to='/login'/>}></Route> */}
+          <Route path='/users/*' element={(data)?<Suspense><Users/></Suspense>:<Suspense><Navigate to='/login'/></Suspense>}></Route>
+          {/* <Route path='/users/*' element={(data)?<Users/>:<Navigate to='/login'/>}></Route> */}
+          <Route path="/register/*" element={<Suspense><Register/></Suspense>}></Route>
+          {/* <Route path="/register/*" element={<Register/>}></Route> */}
+          <Route path="/login/*" element={(data) ? <Suspense><Navigate to="/auth" /></Suspense> : <Suspense><Login /></Suspense>} />
+          {/* <Route path="/login/*" element={(data) ? <Navigate to="/auth" />: <Login />} /> */}
+          <Route path="/auth/*" element={data ? <Suspense><Inventory /></Suspense> : <Suspense><Navigate to="/login" /></Suspense>} />
+          {/* <Route path="/auth/*" element={data ?<Inventory />: <Navigate to="/login" />} /> */}
+          <Route path="/logout" element={<Suspense><Navigate to='/login' replace /></Suspense>} />
+          {/* <Route path="/logout" element={<Navigate to='/login' replace />} /> */}
+          <Route path="/forgetpassword/*" element={<Suspense><ForgetPassword /></Suspense>} />
+          {/* <Route path="/forgetpassword/*" element={<ForgetPassword />} /> */}
+          <Route path="/resetpassword/*" element={<Suspense><ResetPassword/></Suspense>} />
+          {/* <Route path="/resetpassword/*" element={<ResetPassword/>} /> */}
         </Routes>
       </BrowserRouter>
       </main>

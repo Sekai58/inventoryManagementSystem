@@ -216,7 +216,6 @@ export const countItems= async()=>{
 
 export const editItem= async(item:any)=>{
     try{
-        console.log("from fe",item)
         const inventory = database.collection('inventory')
         const checkItem = await inventory.findOne({"_id":new ObjectId(item._id)})
         console.log(checkItem)

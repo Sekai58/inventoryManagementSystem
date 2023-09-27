@@ -25,6 +25,7 @@ const InventoryItemsUser = (props:any) => {
     })
     .catch(e=>console.log(e))
     setRequest(false)
+    console.log("items",items)
   },[request])
 
   useEffect(() => {

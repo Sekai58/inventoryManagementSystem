@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import {Zoom} from 'react-reveal'
 import { io } from 'socket.io-client';
 
 import InventoryItemsUser from '../InventoryItems/User';
+// const InventoryItemsUser = lazy(()=> import('../InventoryItems/User'))
 import InventoryItemsAdmin from '../InventoryItems/Admin';
+// const InventoryItemsAdmin = lazy(()=> import('../InventoryItems/Admin'))
 import AddItemModal from '../Model';
+// const AddItemModal = lazy(()=> import('../Model'))
 import RequestedItems from './RequestedItems';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItem,setShowCount,showRole } from '../../features/showSlice';
+// const RequestedItems = lazy(()=> import('./RequestedItems'))
 import ApprovedItems from './ApprovedItems';
+// const ApprovedItems = lazy(()=> import('./ApprovedItems'))
 import Notifications from '../Notification';
+// const Notifications = lazy(()=> import('../Notification'))
+import { addItem,setShowCount,showRole } from '../../features/showSlice';
 
 interface IUserInfo {
   firstname:string,
@@ -133,7 +139,7 @@ const ProtectedRoute = () => {
         <div className={`text-xl ${theme?'text-white':'text-[#24243b]'} px-[6px] rounded-full`} >
                 <i className="fa-solid fa-xmark hover:bg-red-500 rounded-full p-1" onClick={()=>{setShowNotification("");setNotification([])}}></i>
               </div>
-          <div className={`${theme?'bg-[#3d3d3d] border-[#575757] text-white':'bg-[#c0c0c0] border-[#b1b0b0] text-black'} w-full  shadow-lg rounded-sm px-1 py-1`} onClick={()=>setShowNotification("")}>
+          <div className={`${theme?'bg-[#3d3d3d] border-[#575757] text-white':'bg-[#c0c0c0] border-[#b1b0b0] text-black'} w-full  shadow-lg rounded-sm px-1 py-1`}>
             {notification.map((msg:any,idx:number)=>{return<div key={idx} className={`${theme?'bg-black bg-opacity-20':'bg-[#dbdbfa]'} shadow-md rounded-md mb-1 flex justify-between py-[10px] pl-2`}>
               <div>{msg}</div>
               </div>})}
@@ -146,7 +152,7 @@ const ProtectedRoute = () => {
         <div className={`text-xl ${theme?'text-white':'text-[#24243b]'} px-[6px] rounded-full`} >
                 <i className="fa-solid fa-xmark hover:bg-red-500 rounded-full p-1" onClick={()=>{setShowNotification("");setUserNotification([])}}></i>
               </div>
-          <div className={`${theme?'bg-[#3d3d3d] border-[#575757] text-white':'bg-[#c0c0c0] border-[#b1b0b0] text-black'} w-full  shadow-lg rounded-sm px-1 py-1`} onClick={()=>setShowNotification("")}>
+          <div className={`${theme?'bg-[#3d3d3d] border-[#575757] text-white':'bg-[#c0c0c0] border-[#b1b0b0] text-black'} w-full  shadow-lg rounded-sm px-1 py-1`} >
             {userNotification.map((msg:any,idx:number)=>{return<div key={idx} className={`${theme?'bg-black bg-opacity-20':'bg-[#dbdbfa]'} shadow-md rounded-md mb-1 flex justify-between py-[10px] pl-2`}>
               <div>{msg}</div>
               </div>})}
@@ -212,7 +218,7 @@ const ProtectedRoute = () => {
         {/* LOAD DATA TO DISPLAY */}
         {((field=='requested'&& showAddItem==false && data)?<>
         <div className={`${theme?'bg-[#232323] text-[#c3c3c4]':'bg-[#ffffff] text-[#464646]'} py-2 px-3 rounded-b-md rounded-r-md`}>
-          <RequestedItems user={data} query={query}/>
+        <RequestedItems user={data} query={query}/>
         </div>
         </>
         :<>

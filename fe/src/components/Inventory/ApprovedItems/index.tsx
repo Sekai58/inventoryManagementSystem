@@ -25,7 +25,7 @@ const ApprovedItems: React.FC<IRequestedItems> = ({user,query}) => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:7000/api/list-approved-item');
-        console.log("requestdatahere",response.data);
+        console.log("approvedatahere",response.data);
         setRequests(response.data);
         console.log(requests)
         setLoading(false);

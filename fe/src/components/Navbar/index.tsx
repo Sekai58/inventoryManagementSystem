@@ -1,10 +1,8 @@
 import {Zoom} from 'react-reveal'
-import { Link } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
 import {changeTheme, showRole, unauthenticate} from '../../features/showSlice';
 import { useLocation } from 'react-router-dom';
-
-
 
 const Navbar = () => {
   const dispatch = useDispatch()
