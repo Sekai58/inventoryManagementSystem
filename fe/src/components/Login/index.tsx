@@ -58,7 +58,7 @@ const Login: React.FC = () => {
       </div>
       <Fade>
       <div className={`w-full lg:w-[70%] h-[550px] ${theme?'bg-[#2c2c2c] bg-opacity-70':'bg-hero-pattern bg-cover'} rounded-r-xl rounded-tr-2xl`}>
-      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center px-20 gap-5 border-0 rounded-r-xl w-full h-full p-5 bg-transparent bg-opacity-10'>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center px-20 gap-5 border-0 rounded-r-xl w-full h-full p-5 bg-transparent bg-opacity-10 backdrop-blur-[2px]'>
       <h2 className="text-[#7878b2] font-semibold text-xl">LOG IN</h2>
         <div>
           <label className={`${theme?'text-[#d5d5d5]':'text-[#24243b]'}`}>Username:</label>
@@ -67,7 +67,7 @@ const Login: React.FC = () => {
         </div>
         <div>
           <label className={`${theme?'text-[#d5d5d5]':'text-[#24243b]'}`}>Password:</label>
-          <input type="password" placeholder='Enter password' {...register('password', { required: 'Password is required',pattern:/^.{6,}$/ })} className={`${theme?'text-[#d5d5d5]':'text-[#000000]'} mb-3 py-2 px-2 bg-opacity-20 text-[#c4c3c3] border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full`} />
+          <input type="password" placeholder='Enter password' {...register('password', { required: 'Password is required',pattern:/^.{6,}$/ })} className={`${theme?'text-[#d5d5d5]':'text-[#000000]'} mb-3 py-2 px-2 bg-opacity-20 border-0 border-b-2 border-[#888787] focus:border-[#888787] focus:border-b-0 bg-black w-full`} />
           {errors.password && <p className='text-red-400'>{errors.password.message}</p>}
         </div>
         <div className='flex justify-between'>

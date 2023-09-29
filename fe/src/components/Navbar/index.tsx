@@ -41,7 +41,9 @@ const Navbar = () => {
     <div className={`flex px-3 py-3 justify-between sm:px-10 sm:py-5 items-center`}>
         <div className="flex gap-6 items-center">
           <div className="flex items-center">
-            <i className={`fa-regular fa-snowflake bg-transparent ${theme?'text-[#7878bc]':'text-[#7878bc]'} text-2xl`}></i>
+            {/* <i className={`fa-regular fa-snowflake bg-transparent ${theme?'text-[#7878bc]':'text-[#7878bc]'} text-2xl`}></i> */}
+            {/* <i className={`fa-brands fa-battle-net bg-transparent ${theme?'text-[#7878bc]':'text-[#7878bc]'} text-2xl`}></i> */}
+            <i className={`fa-solid fa-biohazard bg-transparent ${theme?'text-[#7878bc]':'text-[#7878bc]'} text-2xl`}></i>
             <div className={`font-bold text:xl sm:text-2xl lg:text-3xl ${theme?'text-white':'text-[#24243b]'}`}>inventory</div>
           </div>
         </div>
@@ -77,7 +79,7 @@ const Navbar = () => {
             </div>
             <div>
               <Link to='/logout'>
-                <button className={`px-4 py-1 mr-2 border-[#7878bc] ${theme?'text-white  shadow-[#7878bc] hover:shadow-[#7878bc]':'bg-[#7878bc] shadow-[#7878bc] text-[#ffffff] hover:shadow-[#7878bc]'} rounded-md  border-[1.6px]  shadow-sm hover:shadow-md `} onClick={handleLogout} >Log out</button>
+                <button className={`px-1 sm:px-4 py-1 mr-2 border-[#7878bc] ${theme?'text-white  shadow-[#7878bc] hover:shadow-[#7878bc]':'bg-[#7878bc] shadow-[#7878bc] text-[#ffffff] hover:shadow-[#7878bc]'} rounded-md  border-[1.6px]  shadow-sm hover:shadow-md `} onClick={handleLogout} >Log out</button>
               </Link>
             </div>
           </div>

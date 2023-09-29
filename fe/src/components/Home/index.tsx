@@ -1,11 +1,27 @@
-import {DoughnutChart,BarChart} from "../Chart"
+import {DoughnutChart,ScatterChart} from "../Chart"
 import useAxios from "../../libs/useAxios"
 import {useSelector} from 'react-redux'
 import { Navigate} from "react-router-dom"
 import ClipLoader from "react-spinners/ClipLoader";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Home = ()=>{
     const {itemsCount,error,loading} = useAxios('http://localhost:7000/api/count-item')
+    const [items,setItems] = useState<any>([])
+
+    useEffect(()=>{
+        axios.get('http://localhost:7000/api/admin/list-item')
+        .then(res=>{setItems(res.data)
+        })
+        .catch(e=>console.log(e))
+        console.log("items",items)
+      },[])
+
+    const data = items && items.map((obj:any) => ({ x: obj.available, y: obj.reserved ,label:obj.name}));
+    // console.log("sactter chart here",data)
+
+
     const theme = useSelector((state:any)=>{
         return state.theme.dark
       })
@@ -41,7 +57,7 @@ const Home = ()=>{
             <div className="flex flex-grow">
                 <div className={`flex-1 ${theme?'bg-[rgba(36,36,59,0.5)] shadow-black':'bg-[#eeeefc]'} shadow-2xl rounded-md`}>
                 <div><h2 className={`${theme?'text-[#ffffff]':'text-[#232323]'} py-5 px-2`}>Inventory Items</h2><div className="h-[0.8px] bg-[#444444]"></div></div>
-                    <div className="p-3"><BarChart/></div>
+                    <div className="p-3"><ScatterChart item={data}/></div>
                 </div>
             </div>
             <div className={`${theme?'bg-[rgba(36,36,59,0.5)] shadow-black':'bg-[#eeeefc]'} shadow-2xl rounded-md`}>
@@ -54,6 +70,9 @@ const Home = ()=>{
                 </div>
                 <div className="h-[0.8px] bg-[#444444] mx-4"></div>
             </div>
+        </div>
+        <div>
+            {/* <ScatterChart /> */}
         </div>
         </>
         :

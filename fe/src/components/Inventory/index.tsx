@@ -104,6 +104,7 @@ const ProtectedRoute = () => {
       .then(response => {
           console.log("user data here at inventory 88",response.data)
           localStorage.setItem("role",response.data.role)
+          localStorage.setItem("user",response.data.userName)
           dispatch(showRole({"role":response.data.role,"userName":response.data.userName}))
         setData(response.data);
       })
@@ -121,7 +122,7 @@ const ProtectedRoute = () => {
   return (
     <>
     {data?
-    <div className='sm:px-10 fixed  w-[95%]'>
+    <div className='pr-8 sm:px-10 fixed  w-[95%]'>
         {/* DIV TO ADD ITEM TO INVENTORY:FOR ADMIN ONLY LINE:3       */}
         <div className={`${showAddItem?'solid':'hidden'}`}>
           <AddItemModal onClose={handleClose}/>
@@ -176,10 +177,10 @@ const ProtectedRoute = () => {
             <div className={`${(data.role=='ADMIN' && message===true)?'solid':'hidden'} sm:w-[300px] sm:h-[100px] rounded-md absolute top-10 right-0 z-10`}><Notifications/></div>
             </div>
             {/* USER PROFILE INFO UPTO 155 */}
-            <div className='h-8 w-8 rounded-full flex justify-center items-center text-xl text-[#ebebfe] cursor-pointer'>
+            <div className='h-8 w-8 rounded-full flex justify-center items-center text-xl text-[#ebebfe] cursor-pointer relative'>
               <img src={data.url} className='h-8 w-8 rounded-full' onClick={()=>{setUserInfo(!userInfo);setMessage(false)}} />
               
-              <div className={` z-10 ${(userInfo===true)?'solid':'hidden'} w-[300px] h-[300px] rounded-md ${theme?'bg-[#161616]':'bg-[#f3f2f2] border-[1px] border-[#b1b0b0]'}  p-3 absolute top-10 right-[40%] sm:right-5 `} onClick={()=>setUserInfo(true)}>
+              <div className={` z-10 ${(userInfo===true)?'solid':'hidden'} w-[300px] h-[300px] rounded-md ${theme?'bg-[#161616]':'bg-[#f3f2f2] border-[1px] border-[#b1b0b0]'}  p-3 absolute top-10 left-0 sm:-left-72 `} onClick={()=>setUserInfo(true)}>
                 <div className={`${theme?'bg-[#24243b]':'bg-[#d2d1d1]'} w-full h-12 py-1 px-2 rounded-t-md`}><img src={data.url} className={`w-24 h-24 rounded-full ${theme?'bg-[#161616]':'bg-[#f3f2f2]'}  p-2`}/></div>
                 <div className={`${theme?'bg-[#000000] text-[#e0dfdf]':'bg-[#ededfc] text-[#232323]'} mt-12 rounded-md p-3`}>
                   <p>{data.userName}</p>
@@ -209,7 +210,7 @@ const ProtectedRoute = () => {
             <button className={`px-3 py-1 rounded-t-md ${(field=='approved')?theme?'bg-[#232323]':'bg-[#ffffff] text-[#636363]':theme?'bg-[#24243b]':'bg-[#d2d1d1] text-[#636363]'}`} onClick={()=>{setField("approved")}}>Approved</button>
           </div>
           <div className={`${data.role==='ADMIN'?'solid':'hidden'}`}>
-            <button className={`mr-1 px-2 py-[2px] border-2 rounded-md text-[#ffffff] border-[#7878bc] ${theme?'hover:bg-[#7878bc]':'bg-[#7878bc]'}  hover:scale-105 '`} onClick={()=>setShowAddItem(true)}><i className="fa-solid fa-plus mr-1"></i>Add Item</button>
+            <button className={`mr-1 px-2 py-[2px] border-2 rounded-md text-[#ffffff] border-[#7878bc] ${theme?'hover:bg-[#7878bc]':'bg-[#7878bc]'}  hover:scale-105 '`} onClick={()=>setShowAddItem(true)}><i className="fa-solid fa-plus mr-1"></i><span className='hidden sm:inline'>Add Item</span></button>
           </div>          
         </div>
 

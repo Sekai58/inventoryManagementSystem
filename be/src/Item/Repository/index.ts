@@ -51,7 +51,7 @@ export const requestItem= async(item:any)=>{
         else{
             const notification = database.collection('notification')
             const addNotification = notification.insertOne({"user_id":new ObjectId(item.userName),"message":item.message,"status":"Unread"})
-            const insertItem = await requests.insertOne({"product_id":new ObjectId(item.id),"userName":new ObjectId(item.userName),"date":new Date().toLocaleDateString()})
+            const insertItem = await requests.insertOne({"product_id":new ObjectId(item.id),"userName":new ObjectId(item.userName),"date":new Date().toLocaleDateString(),"status":"Pending"})
             const updateItem = database.collection('inventory')
             const updated = await updateItem.updateOne({"_id":new ObjectId(item.id)},{"$inc":{"reserved":1}})
             return insertItem
@@ -93,7 +93,8 @@ export const listRequestedItem= async()=>{
                     "userInfo.userName":1,
                     "userInfo.url":1,
                     "productInfo":1,
-                    "date":1
+                    "date":1,
+                    "status":1
                 },
             },
             {
@@ -116,16 +117,21 @@ export const approveItem= async(item:any)=>{
         const approved = database.collection('approved')
         console.log(item)
         const checkItem = await requests.findOne({"_id":new ObjectId(item)})
-        console.log("check item to delete",checkItem,item)
+        // console.log("check item to delete",checkItem,item)
         if (checkItem){
-            const approvedItem = await approved.insertOne({...checkItem,"date":new Date().toLocaleDateString()})
-            const items = await requests.deleteOne(checkItem)
-            console.log("checking item name",item)
+            // const approvedItem = await approved.insertOne({...checkItem,"date":new Date().toLocaleDateString(),"status":"Approved"})
+            // const items = await requests.deleteOne(checkItem)
+            // console.log("checking item name",item)
             const inventory = database.collection('inventory')
             const checkavailable = await inventory.findOne({"_id":new ObjectId(checkItem.product_id)})
-            console.log("availablecheck",checkavailable)
+            // console.log("availablecheck",checkavailable)
             if(checkavailable.available>0 && checkavailable.reserved>0){
                 const updateItem = await inventory.updateOne({"_id":new ObjectId(checkItem.product_id)},{"$inc":{"available":-1,"reserved":-1}})
+                const approvedItem = await approved.insertOne({...checkItem,"date":new Date().toLocaleDateString(),"status":"Approved"})
+                const items = await requests.deleteOne(checkItem)
+            }
+            else{
+                throw Error("No items available")
             }
         }
         else{
@@ -171,7 +177,8 @@ export const listApprovedItem= async()=>{
                     "userInfo.userName":1,
                     "userInfo.url":1,
                     "productInfo":1,
-                    "date":1
+                    "date":1,
+                    "status":1
                 },
             },
             {
@@ -184,6 +191,26 @@ export const listApprovedItem= async()=>{
     }
     catch(e){
         console.log(e)
+        throw e
+    }
+}
+
+export const declineItem = async(item:any)=>{
+    try{
+        const requests = database.collection('requests')
+        const approved = database.collection('approved')
+        const checkItem = await requests.findOne({"_id":new ObjectId(item)})
+        if(checkItem){
+            const approvedItem = await approved.insertOne({...checkItem,"date":new Date().toLocaleDateString(),"status":"Declined"})
+            const items = await requests.deleteOne(checkItem)
+            // const updateStatus = requests.updateOne({"_id":new ObjectId(item)},{$set:{status:"Declined"}})
+            // console.log("updatedhere",updateStatus.updatedId,updateStatus)
+        }
+        else{
+            throw Error("Invalid action")
+        }
+    }
+    catch(e){
         throw e
     }
 }
@@ -238,7 +265,7 @@ export const deleteItem= async(item:string)=>{
         const inventory = database.collection('inventory')
         console.log("id here at repo",item)
         const checkItem = await inventory.findOne({"_id":new ObjectId(String(item))})
-        if (checkItem){
+        if (checkItem && !(checkItem.reserved>0)){
             const deleteItem = await inventory.deleteOne({"_id":new ObjectId(String(item))})
         }
         else{

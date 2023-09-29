@@ -57,7 +57,7 @@ const InventoryItemsAdmin = (props:any) => {
       })
       .catch(error => {
         console.error('Error:', error);
-        toast.error("Unauthorized",{theme:theme?"dark":"light"})
+        toast.error("Clear reserved item",{theme:theme?"dark":"light"})
       })
       setIsModalOpen(false);
     // }
