@@ -1,6 +1,7 @@
 // All of the logic to be passed to the reducer
 import {createSlice} from "@reduxjs/toolkit"
 
+// CHECK IF USER LOGIN WITH CORRECT CREDENTIALS
 const initialState ={value:false}
 export const showSlice = createSlice({
     name: "show",
@@ -18,6 +19,7 @@ export const showSlice = createSlice({
     }
 })
 
+//SET ROLE
 const initialRole={}
 export const roleSlice = createSlice({
     name: "role",
@@ -30,6 +32,7 @@ export const roleSlice = createSlice({
     }
 })
 
+//VALUE FOR ITEM TO EDIT
 const editItem ={_id:'',name:'',available:0,reserved:0}
 export const itemSlice = createSlice({
     name: "item",
@@ -42,6 +45,7 @@ export const itemSlice = createSlice({
     }
 })
 
+//
 const initialaddItem:any = {value:false}
 export const addItemSlice = createSlice({
     name:"addItem",
@@ -54,6 +58,7 @@ export const addItemSlice = createSlice({
     }
 })
 
+//THEME FOR APP
 const initialTheme = {dark:true}
 export const themeSlice = createSlice({
     name:"theme",
@@ -66,6 +71,7 @@ export const themeSlice = createSlice({
     }
 })
 
+//NOTIFICATION COUNT
 const initialCount = {count:0,showCount:false}
 export const countSlice = createSlice({
     name:"theme",

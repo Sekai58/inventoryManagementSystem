@@ -12,6 +12,7 @@ const routes = () => {
     router.post('/admin/add-item',verifyJwt,UserController.addItem)
     router.get('/admin/list-item',UserController.listItems)
     router.delete('/user/requests/:id',UserController.approveItem)
+    router.put("/admin/decline-item/:id",UserController.declineItem)
     router.get('/count-item',UserController.countItems)
     router.put("/admin/edit-item",UserController.editItem)
     router.delete('/admin/delete-item/:id',UserController.deleteItem)

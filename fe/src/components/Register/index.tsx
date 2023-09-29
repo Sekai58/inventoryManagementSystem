@@ -54,7 +54,7 @@ const Forms=()=> {
       </div>
     <Fade>
     <div className={`${theme?'bg-[#2c2c2c] bg-opacity-70':'bg-hero-pattern bg-cover'} w-full lg:w-[70%] h-[550px] rounded-r-xl`}>
-    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center px-20 gap-3 border-0 rounded-r-xl w-full h-full p-5'>
+    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center px-20 gap-3 border-0 rounded-r-xl w-full h-full p-5 backdrop-blur-[2px]'>
       <h2 className="text-[#7878b2] font-semibold text-xl">SIGN UP</h2>
       
       <div>

@@ -118,10 +118,35 @@ export const listUser = async()=>{
 
 export const listNotification= async()=>{
     try{
-        const notification = database.collection('notification')
-        const message = await notification.find({}).toArray()
-        console.log(message)
-        return message
+        const pipeline = [
+            {
+                $lookup: {
+                  from: 'users', 
+                  localField: 'user_id', 
+                  foreignField: '_id', 
+                  as: 'userInfo',
+                },
+              },
+              {
+                $addFields: { 
+                    "userName":"$userInfo.userName",
+                    "url":"$userInfo.url"
+                },
+            },
+            {
+                $unwind:"$userName"
+            },
+            {
+                $project:{
+                    "userName":1,
+                    "url":1,
+                    "message":1,
+                    "status":1
+                }
+            },
+        ]
+        const notification = await database.collection('notification').aggregate(pipeline).toArray()
+        return notification
     }
     catch(e){
         console.log(e)
@@ -132,7 +157,6 @@ export const listNotification= async()=>{
 export const updateNotification = async(id:any)=>{
     try{
         const notification = database.collection('notification')
-        console.log()
         const check = await notification.findOne({"_id":new ObjectId(String(id))})
         if(check){
             const update = await notification.updateOne({"_id":new ObjectId(String(id))},{"$set": { "status":"Read"}})

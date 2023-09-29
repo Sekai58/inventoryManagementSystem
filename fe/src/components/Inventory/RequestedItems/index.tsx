@@ -17,6 +17,7 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
   const [requests, setRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [approve,setApprove] =useState(false)
+  const [decline,setDecline] =useState(false)
 
   const theme = useSelector((state:any)=>{
     return state.theme.dark
@@ -40,7 +41,8 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
     };
     fetchData();
     setApprove(false)
-  }, [approve]);
+    setDecline(false)
+  }, [approve,decline]);
 
   const handleApprove =(id:any,userName:string,name:string)=>{
     axios.delete(`http://localhost:7000/api/user/requests/${id}`)
@@ -54,20 +56,34 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
     })
     .catch(error => {
       console.error('Error:', error);
+      toast.error("Unauthorized! Check items in inventory",{theme:theme?"dark":"light"})
+    })
+  }
+
+  const handleDecline =(id:any)=>{
+    axios.put(`http://localhost:7000/api/admin/decline-item/${id}`)
+    .then(response => {
+        console.log(response.data)
+        toast.success("Item successfully declined",{theme:theme?"dark":"light"})
+        setDecline(true)
+    })
+    .catch(error => {
+      console.error('Error:', error);
       toast.error("Unauthorized",{theme:theme?"dark":"light"})
     })
   }
 
   return (
     <div >
-      <div className="flex justify-between items-center py-1">
+      <div className="flex justify-between items-center py-1 min-w-[600px]">
         <div className={`flex-1 ${user.role=="USER"?'hidden':'solid'}`}>User</div>
         <div className={`flex-1`}>Item</div>
         <div className={`flex-1 ${user.role=="USER"?'hidden':'solid'}`}>Action</div>
         <div className={`flex-1 ${user.role=="USER"?'solid':'hidden'}`}>Date</div>
+        <div className={`flex-1 ${user.role=="USER"?'solid':'hidden'}`}>Status</div>
       </div>
-      <div className={`h-[3px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} mb-3`}></div> 
-      <div className={`h-[400px] overflow-auto scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-x-hidden`}>
+      <div className={`h-[3px] ${theme?'bg-[#444444]':'bg-[#c3c3c4]'} mb-3 min-w-[600px]`}></div> 
+      <div className={`h-[400px] min-w-[600px] overflow-auto scrollbar-thin ${theme?'scrollbar-thumb-[#24243b]':'scrollbar-thumb-[#c3c3c4]'}  scrollbar-track-[#7878bc] overflow-x-hidden`}>
       {!loading ? (
         requests.map((item, idx) => (
           <div key={idx} className="flex flex-col">
@@ -75,10 +91,13 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
             {(user.role==='ADMIN')?<Fade>
             <div key={idx} className={`flex flex-col justify-between py-4 ${item.productInfo.name.toLowerCase().includes(query)?'solid':'hidden'} ${theme?'hover:bg-[#3a3a3a]':'hover:bg-[#e9e9fe]'}`}>
               <div className="flex flex-col justify-between">
-              <div className={`flex justify-between items-center `}>
+              <div className={`flex justify-between items-center`}>
                 <div className="flex-1 flex"><img src={item.userInfo.url} className="h-8 w-8 rounded-full mr-2"/>{item.userInfo.userName}</div>
                 <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
-                <div className="flex-1"><button className={`px-2 py-1 border-2 ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}  rounded-md  `} onClick={()=>{handleApprove(item._id,item.userInfo.userName,item.productInfo.name)}}>Approve</button></div>
+                <div className="flex-1 flex">
+                  <button className={`px-2 py-1 border-2 mr-1 ${theme?'bg-[#cbbf34] border-[#cbbf34] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#fae653] border-[#fae653] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}  rounded-md  `} onClick={()=>{handleApprove(item._id,item.userInfo.userName,item.productInfo.name)}}>Approve</button>
+                  <button className={`px-2 py-1 border-2 ${theme?'bg-[#cb3434] border-[#cb3434] bg-opacity-10 hover:bg-opacity-30 hover:text-white':'bg-[#cb3434] border-[#cb3434] bg-opacity-90 hover:bg-opacity-100 hover:text-[#191919]'}  rounded-md  `} onClick={()=>handleDecline(item._id)}>Decline</button>
+                </div>
               </div>
               </div>
             </div>
@@ -90,6 +109,7 @@ const RequestedItems: React.FC<IRequestedItems> = ({user,query}) => {
               <div className="flex justify-between items-center">
                 <div className="flex-1 flex"><img src={item.productInfo.url} className="h-8 w-10 mr-2"/>{item.productInfo.name}</div>
                 <div className="flex-1 ">{item.date}</div>
+                <div className={`flex-1 text-yellow-500`}>{item.status}</div>
               </div>
               </div>
             </div>

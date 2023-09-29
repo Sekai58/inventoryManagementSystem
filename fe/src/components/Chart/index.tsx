@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Scatter } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto'
 import {useSelector} from 'react-redux'
@@ -9,6 +9,9 @@ interface IPiechart {
     reserved:number
 }
 
+interface IScatter{
+  item:any
+}
 //DoughnutChart
 export const DoughnutChart:React.FC<IPiechart> = ({available,reserved}) => {
   const theme = useSelector((state:any)=>{
@@ -112,6 +115,49 @@ export const BarChart = () => {
   return (
     <div>
       <Bar data={data} options={options} />
+    </div>
+  );
+};
+
+
+
+export const ScatterChart:React.FC<IScatter> = ({item}) => {
+
+  const theme = useSelector((state:any)=>{
+    return state.theme.dark
+  })
+
+  console.log("datahereitem",item)
+
+  const data = {
+    datasets: [{
+      label: 'Products',
+      data: item,
+      backgroundColor: theme?'rgba(120,120,188,0.5)':'rgba(120,120,188,1)',
+      borderColor: 'rgba(120,120,188,1)',
+      pointRadius: 6,
+    }],
+  };
+
+  const options = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: (tooltipItem:any) => {
+            const dataPoint = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex];
+            return `${dataPoint.label}: (available: ${dataPoint.x}, reserved: ${dataPoint.y})`;
+          },
+        },
+      },
+    },
+  }
+
+  return (
+    <div>
+      <Scatter data={data} options={options} />
     </div>
   );
 };
